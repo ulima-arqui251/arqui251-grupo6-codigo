@@ -13,11 +13,11 @@ COPY tsconfig*.json ./
 COPY plans-service ./plans-service
 COPY libs ./libs
 
-# Install dependencies
-RUN npm ci --only=production
+# Install dependencies (including dev dependencies for nx build)
+RUN npm ci
 
 # Build the application
-RUN npx nx build plans-service --prod
+RUN npx nx build plans-service --prod --outputPath=dist
 
 # Production stage
 FROM node:18-alpine AS production
@@ -30,16 +30,16 @@ WORKDIR /app
 
 # Create non-root user
 RUN addgroup -g 1001 -S nodejs
-RUN adduser -S nextjs -u 1001
+RUN adduser -S plansservice -u 1001
 
-# Copy built application
-COPY --from=builder /app/dist/apps/plans-service ./
+# Copy built application and production node_modules
+COPY --from=builder /app/dist ./
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/libs ./libs
 
 # Change ownership
-RUN chown -R nextjs:nodejs /app
-USER nextjs
+RUN chown -R plansservice:nodejs /app
+USER plansservice
 
 # Expose port
 EXPOSE 3006
