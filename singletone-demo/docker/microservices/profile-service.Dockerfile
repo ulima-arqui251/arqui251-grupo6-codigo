@@ -10,7 +10,7 @@ COPY nx.json ./
 COPY tsconfig*.json ./
 
 # Copy source code
-COPY apps/profile-service ./apps/profile-service
+COPY profile-service ./profile-service
 COPY libs ./libs
 
 # Install dependencies

@@ -8,7 +8,7 @@ services:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: password
     ports:
-      - "5433:5432"  # Cambiado de 5432 a 5433 para evitar conflicto
+      - "5433:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./docker/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
@@ -25,7 +25,7 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: password
       MONGO_INITDB_DATABASE: singletone_music
     ports:
-      - "27018:27017"  # Cambiado de 27017 a 27018 para evitar conflictos
+      - "27018:27017"
     volumes:
       - mongodb_data:/data/db
       - ./docker/mongodb/init.js:/docker-entrypoint-initdb.d/init.js:ro
@@ -38,7 +38,7 @@ services:
     image: redis:7-alpine
     container_name: singletone_redis
     ports:
-      - "6380:6379"  # Cambiado de 6379 a 6380 para evitar conflictos
+      - "6380:6379"
     volumes:
       - redis_data:/data
     networks:
@@ -78,6 +78,40 @@ services:
     networks:
       - singletone_network
     restart: unless-stopped
+
+  # Microservicio - library (CORREGIDO)
+  library-service:
+    build:
+      context: .
+      dockerfile: ./docker/microservices/library-service.Dockerfile  # Ruta corregida
+    container_name: singletone_library_service
+    ports:
+      - "3004:3004"
+    environment:
+      - NODE_ENV=production
+      - PORT=3004
+      # Variables para conectar a las bases de datos
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+      - POSTGRES_DB=singletone_db
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=password
+      - MONGODB_URL=mongodb://admin:password@mongodb:27017/singletone_music
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    depends_on:
+      - postgres
+      - mongodb
+      - redis
+    networks:
+      - singletone_network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3004/health"]
+      interval: 30s
+      timeout: 3s
+      start_period: 5s
+      retries: 3
 
 volumes:
   postgres_data:

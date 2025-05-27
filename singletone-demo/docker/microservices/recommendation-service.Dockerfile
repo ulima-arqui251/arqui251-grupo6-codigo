@@ -10,7 +10,7 @@ COPY nx.json ./
 COPY tsconfig*.json ./
 
 # Copy source code
-COPY apps/recommendation-service ./apps/recommendation-service
+COPY recommendation-service ./recommendation-service
 COPY libs ./libs
 
 # Install dependencies

@@ -10,7 +10,7 @@ COPY nx.json ./
 COPY tsconfig*.json ./
 
 # Copy source code
-COPY apps/music-service ./apps/music-service
+COPY music-service ./music-service
 COPY libs ./libs
 
 # Install dependencies

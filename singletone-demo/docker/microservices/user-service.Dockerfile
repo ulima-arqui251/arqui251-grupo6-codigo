@@ -10,7 +10,7 @@ COPY nx.json ./
 COPY tsconfig*.json ./
 
 # Copy source code
-COPY apps/user-service ./apps/user-service
+COPY user-service ./user-service
 COPY libs ./libs
 
 # Install dependencies

@@ -10,7 +10,7 @@ COPY nx.json ./
 COPY tsconfig*.json ./
 
 # Copy source code
-COPY apps/plans-service ./apps/plans-service
+COPY plans-service ./plans-service
 COPY libs ./libs
 
 # Install dependencies
