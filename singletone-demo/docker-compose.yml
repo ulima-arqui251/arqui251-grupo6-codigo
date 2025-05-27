@@ -221,6 +221,74 @@ services:
       start_period: 5s
       retries: 3
 
+  # Microservicio - recommendation-service
+  recommendation-service:
+    build:
+      context: .
+      dockerfile: ./docker/microservices/recommendation-service.Dockerfile
+    container_name: singletone_recommendation_service
+    ports:
+      - "3005:3005"
+    environment:
+      - NODE_ENV=production
+      - PORT=3006
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+      - POSTGRES_DB=singletone_db
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=password
+      - MONGODB_URL=mongodb://admin:password@mongodb:27017/singletone_music
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    depends_on:
+      - postgres
+      - mongodb
+      - redis
+    networks:
+      - singletone_network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3005/health"]
+      interval: 30s
+      timeout: 3s
+      start_period: 5s
+      retries: 3
+
+  # Microservicio - user-service
+  user-service:
+    build:
+      context: .
+      dockerfile: ./docker/microservices/user-service.Dockerfile
+    container_name: singletone_user_service
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=production
+      - PORT=3006
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+      - POSTGRES_DB=singletone_db
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=password
+      - MONGODB_URL=mongodb://admin:password@mongodb:27017/singletone_music
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    depends_on:
+      - postgres
+      - mongodb
+      - redis
+    networks:
+      - singletone_network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3001/health"]
+      interval: 30s
+      timeout: 3s
+      start_period: 5s
+      retries: 3
+
+  
+
 volumes:
   postgres_data:
   mongodb_data:
