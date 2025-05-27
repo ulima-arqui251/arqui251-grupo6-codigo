@@ -79,7 +79,15 @@ services:
       - singletone_network
     restart: unless-stopped
 
-  # Microservicio - library (CORREGIDO)
+  # Frontend
+  frontend:
+    build:
+      context: .
+      dockerfile: docker/frontend/frontend.Dockerfile
+    ports:
+      - "3000:80"
+
+  # Microservicio - library
   library-service:
     build:
       context: .
@@ -108,6 +116,73 @@ services:
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:3004/health"]
+      interval: 30s
+      timeout: 3s
+      start_period: 5s
+      retries: 3
+  
+  # Microservicio - music-service
+  music-service:
+    build:
+      context: .
+      dockerfile: ./docker/microservices/music-service.Dockerfile
+    container_name: singletone_music_service
+    ports:
+      - "3003:3003"
+    environment:
+      - NODE_ENV=production
+      - PORT=3003
+      # Variables para conectar a las bases de datos
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+      - POSTGRES_DB=singletone_db
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=password
+      - MONGODB_URL=mongodb://admin:password@mongodb:27017/singletone_music
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    depends_on:
+      - postgres
+      - mongodb
+      - redis
+    networks:
+      - singletone_network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3003/health"]
+      interval: 30s
+      timeout: 3s
+      start_period: 5s
+      retries: 3
+    
+  # Microservicio - plans-service
+  plans-service:
+    build:
+      context: .
+      dockerfile: ./docker/microservices/plans-service.Dockerfile
+    container_name: singletone_plans_service
+    ports:
+      - "3006:3006"
+    environment:
+      - NODE_ENV=production
+      - PORT=3006
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+      - POSTGRES_DB=singletone_db
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=password
+      - MONGODB_URL=mongodb://admin:password@mongodb:27017/singletone_music
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    depends_on:
+      - postgres
+      - mongodb
+      - redis
+    networks:
+      - singletone_network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3006/health"]
       interval: 30s
       timeout: 3s
       start_period: 5s
