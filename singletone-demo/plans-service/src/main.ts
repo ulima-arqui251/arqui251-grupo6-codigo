@@ -84,6 +84,7 @@ app.post('/api/plans/:userId/upgrade', (req, res) => {
     message: 'Upgrade procesado exitosamente (Demo)',
     userId,
     planId,
+    paymentMethodId, // Agregar esta línea
     transaction: {
       id: 'demo_txn_' + Date.now(),
       status: 'completed',
