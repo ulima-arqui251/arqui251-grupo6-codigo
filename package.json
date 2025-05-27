@@ -1,0 +1,7 @@
+{
+  "devDependencies": {
+    "@nx/express": "^21.1.2",
+    "@nx/node": "^21.1.2",
+    "@nx/react": "^21.1.2"
+  }
+}
