@@ -1,0 +1,89 @@
+services:
+  # PostgreSQL - Para datos relacionales (Usuarios, Planes)
+  postgres:
+    image: postgres:15-alpine
+    container_name: singletone_postgres
+    environment:
+      POSTGRES_DB: singletone_db
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5433:5432"  # Cambiado de 5432 a 5433 para evitar conflicto
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./docker/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - singletone_network
+    restart: unless-stopped
+
+  # MongoDB - Para datos musicales (Artistas, Álbumes, Canciones)
+  mongodb:
+    image: mongo:6.0
+    container_name: singletone_mongodb
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_INITDB_DATABASE: singletone_music
+    ports:
+      - "27018:27017"  # Cambiado de 27017 a 27018 para evitar conflictos
+    volumes:
+      - mongodb_data:/data/db
+      - ./docker/mongodb/init.js:/docker-entrypoint-initdb.d/init.js:ro
+    networks:
+      - singletone_network
+    restart: unless-stopped
+
+  # Redis - Para caché y sesiones
+  redis:
+    image: redis:7-alpine
+    container_name: singletone_redis
+    ports:
+      - "6380:6379"  # Cambiado de 6379 a 6380 para evitar conflictos
+    volumes:
+      - redis_data:/data
+    networks:
+      - singletone_network
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+
+  # pgAdmin - Interfaz web para PostgreSQL (opcional)
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: singletone_pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@singletone.com
+      PGADMIN_DEFAULT_PASSWORD: admin123
+    ports:
+      - "8080:80"
+    depends_on:
+      - postgres
+    networks:
+      - singletone_network
+    restart: unless-stopped
+
+  # Mongo Express - Interfaz web para MongoDB (opcional)
+  mongo-express:
+    image: mongo-express:latest
+    container_name: singletone_mongo_express
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: admin
+      ME_CONFIG_MONGODB_ADMINPASSWORD: password
+      ME_CONFIG_MONGODB_URL: mongodb://admin:password@mongodb:27017/
+      ME_CONFIG_BASICAUTH_USERNAME: admin
+      ME_CONFIG_BASICAUTH_PASSWORD: admin123
+    ports:
+      - "8081:8081"
+    depends_on:
+      - mongodb
+    networks:
+      - singletone_network
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+  mongodb_data:
+  redis_data:
+
+networks:
+  singletone_network:
+    driver: bridge
