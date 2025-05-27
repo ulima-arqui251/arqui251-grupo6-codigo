@@ -5,13 +5,17 @@
   "scripts": {},
   "private": true,
   "dependencies": {
+    "@stripe/stripe-js": "^7.3.0",
+    "axios": "^1.9.0",
     "react": "19.0.0",
     "react-dom": "19.0.0",
-    "react-router-dom": "6.29.0"
+    "react-router-dom": "^6.29.0"
   },
   "devDependencies": {
+    "@nx/express": "^21.1.2",
     "@nx/js": "21.1.2",
-    "@nx/react": "21.1.2",
+    "@nx/node": "^21.1.2",
+    "@nx/react": "^21.1.2",
     "@nx/vite": "21.1.2",
     "@nx/web": "21.1.2",
     "@nx/workspace": "21.1.2",
@@ -19,8 +23,8 @@
     "@swc/core": "~1.5.7",
     "@swc/helpers": "~0.5.11",
     "@types/node": "^20.0.0",
-    "@types/react": "19.0.0",
-    "@types/react-dom": "19.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
     "@vitejs/plugin-react": "^4.2.0",
     "@vitest/ui": "^3.0.0",
     "jiti": "2.4.2",
