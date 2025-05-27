@@ -28,7 +28,9 @@ npm install -D @types/react @types/react-dom
 
 #### Probando microservicios
 - Correr:  
- npx nx serve profile-service
+npm run serve frontend
+
+npx nx serve profile-service
 npx nx serve music-service
 npx nx serve library-service
 npx nx serve recommendation-service
@@ -65,3 +67,7 @@ docker-compose logs redis
 docker-compose exec postgres psql -U admin -d singletone_db -c "\dt users.*"
 docker-compose exec mongodb mongosh -u admin -p password --authenticationDatabase admin singletone_music --eval "db.artists.find().limit(2)"
 docker-compose exec redis redis-cli ping
+
+#### Docker
+- **Construir**: docker compose up --build
+- 
