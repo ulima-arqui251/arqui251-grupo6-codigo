@@ -1,0 +1,66 @@
+{
+  "name": "@singletone-demo/plans-service",
+  "version": "0.0.1",
+  "private": true,
+  "nx": {
+    "targets": {
+      "build": {
+        "executor": "@nx/esbuild:esbuild",
+        "outputs": [
+          "{options.outputPath}"
+        ],
+        "defaultConfiguration": "production",
+        "options": {
+          "platform": "node",
+          "outputPath": "plans-service/dist",
+          "format": [
+            "cjs"
+          ],
+          "bundle": false,
+          "main": "plans-service/src/main.ts",
+          "tsConfig": "plans-service/tsconfig.app.json",
+          "assets": [
+            "plans-service/src/assets"
+          ],
+          "esbuildOptions": {
+            "sourcemap": true,
+            "outExtension": {
+              ".js": ".js"
+            }
+          }
+        },
+        "configurations": {
+          "development": {},
+          "production": {
+            "esbuildOptions": {
+              "sourcemap": false,
+              "outExtension": {
+                ".js": ".js"
+              }
+            }
+          }
+        }
+      },
+      "serve": {
+        "continuous": true,
+        "executor": "@nx/js:node",
+        "defaultConfiguration": "development",
+        "dependsOn": [
+          "build"
+        ],
+        "options": {
+          "buildTarget": "@singletone-demo/plans-service:build",
+          "runBuildTargetDependencies": false
+        },
+        "configurations": {
+          "development": {
+            "buildTarget": "@singletone-demo/plans-service:build:development"
+          },
+          "production": {
+            "buildTarget": "@singletone-demo/plans-service:build:production"
+          }
+        }
+      }
+    }
+  }
+}
