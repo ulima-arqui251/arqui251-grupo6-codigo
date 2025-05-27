@@ -1,0 +1,66 @@
+{
+  "name": "@singletone-demo/library-service",
+  "version": "0.0.1",
+  "private": true,
+  "nx": {
+    "targets": {
+      "build": {
+        "executor": "@nx/esbuild:esbuild",
+        "outputs": [
+          "{options.outputPath}"
+        ],
+        "defaultConfiguration": "production",
+        "options": {
+          "platform": "node",
+          "outputPath": "library-service/dist",
+          "format": [
+            "cjs"
+          ],
+          "bundle": false,
+          "main": "library-service/src/main.ts",
+          "tsConfig": "library-service/tsconfig.app.json",
+          "assets": [
+            "library-service/src/assets"
+          ],
+          "esbuildOptions": {
+            "sourcemap": true,
+            "outExtension": {
+              ".js": ".js"
+            }
+          }
+        },
+        "configurations": {
+          "development": {},
+          "production": {
+            "esbuildOptions": {
+              "sourcemap": false,
+              "outExtension": {
+                ".js": ".js"
+              }
+            }
+          }
+        }
+      },
+      "serve": {
+        "continuous": true,
+        "executor": "@nx/js:node",
+        "defaultConfiguration": "development",
+        "dependsOn": [
+          "build"
+        ],
+        "options": {
+          "buildTarget": "@singletone-demo/library-service:build",
+          "runBuildTargetDependencies": false
+        },
+        "configurations": {
+          "development": {
+            "buildTarget": "@singletone-demo/library-service:build:development"
+          },
+          "production": {
+            "buildTarget": "@singletone-demo/library-service:build:production"
+          }
+        }
+      }
+    }
+  }
+}
