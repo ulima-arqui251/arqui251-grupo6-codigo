@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Last.fm Album Explorer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .api-notice {
+            background: #fff3cd;
+            color: #856404;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 4px solid #ffc107;
+        }
+        
+        .search-section {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            align-items: center;
+        }
+        
+        input[type="text"] {
+            flex: 1;
+            padding: 15px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 50px;
+            font-size: 16px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        
+        input[type="text"]:focus {
+            border-color: #ff6b6b;
+            box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.1);
+        }
+        
+        button {
+            padding: 15px 30px;
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255, 107, 107, 0.3);
+        }
+        
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .section {
+            margin: 30px 0;
+            padding: 25px;
+            background: #f8f9ff;
+            border-radius: 15px;
+            border-left: 5px solid #ff6b6b;
+        }
+        
+        .section h2 {
+            margin-bottom: 20px;
+            color: #333;
+            font-size: 1.8rem;
+        }
+        
+        .albums-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+        
+        .album-card {
+            background: white;
+            border-radius: 15px;
+            padding: 0;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            overflow: hidden;
+        }
+        
+        .album-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            border-color: #ff6b6b;
+        }
+        
+        .album-cover-small {
+            width: 100%;
+            height: 200px;
+            background: #f0f0f0;
+            position: relative;
+        }
+        
+        .album-cover-small img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .album-card-info {
+            padding: 20px;
+        }
+        
+        .album-title {
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: #333;
+            margin-bottom: 8px;
+        }
+        
+        .album-info {
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        
+        .album-detail {
+            display: flex;
+            gap: 40px;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .album-cover {
+            flex-shrink: 0;
+        }
+        
+        .album-cover img {
+            width: 350px;
+            height: 350px;
+            object-fit: cover;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+        
+        .album-details {
+            flex: 1;
+        }
+        
+        .album-details h3 {
+            font-size: 2.2rem;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .album-meta {
+            color: #666;
+            margin-bottom: 25px;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+        
+        .tracklist {
+            margin-top: 25px;
+        }
+        
+        .tracklist h4 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+        
+        .track-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            margin: 8px 0;
+            background: #f8f9ff;
+            border-radius: 12px;
+            transition: all 0.2s ease;
+        }
+        
+        .track-item:hover {
+            background: #e8e9ff;
+            transform: translateX(5px);
+        }
+        
+        .track-number {
+            font-weight: bold;
+            color: #ff6b6b;
+            min-width: 35px;
+            font-size: 1.1rem;
+        }
+        
+        .track-title {
+            flex: 1;
+            margin-left: 20px;
+            color: #333;
+            font-size: 1.05rem;
+        }
+        
+        .track-duration {
+            color: #888;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 50px;
+            color: #ff6b6b;
+            font-size: 1.3rem;
+        }
+        
+        .error {
+            background: #ffe6e6;
+            color: #d63031;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+            border-left: 4px solid #d63031;
+            font-size: 1.1rem;
+        }
+        
+        .success {
+            background: #e6ffe6;
+            color: #00b894;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+            border-left: 4px solid #00b894;
+            font-size: 1.1rem;
+        }
+        
+        .back-btn {
+            background: linear-gradient(45deg, #74b9ff, #0984e3);
+            margin-bottom: 25px;
+        }
+        
+        .download-btn {
+            background: linear-gradient(45deg, #00b894, #00a085);
+            margin-top: 20px;
+        }
+        
+        .artist-info {
+            background: linear-gradient(45deg, #a29bfe, #6c5ce7);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        
+        .artist-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 15px;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        @media (max-width: 768px) {
+            .album-detail {
+                flex-direction: column;
+                text-align: center;
+                padding: 25px;
+                gap: 25px;
+            }
+            
+            .album-cover img {
+                width: 280px;
+                height: 280px;
+            }
+            
+            .search-section {
+                flex-direction: column;
+            }
+            
+            .albums-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎸 Last.fm Album Explorer</h1>
+        
+        <div class="api-notice">
+            <strong>ℹ️ Note:</strong> This app uses Last.fm API which provides cleaner data with only studio albums (no live/EPs) and reliable cover art. 
+            Enter any artist name to explore their discography!
+        </div>
+        
+        <div class="search-section">
+            <input type="text" id="artistSearch" placeholder="Search for an artist (e.g., Pink Floyd, Queen, Radiohead...)" value="Pink Floyd">
+            <button id="searchBtn" onclick="searchArtist()">Search Artist</button>
+            <button id="downloadBtn" onclick="downloadJSON()" disabled class="download-btn">Download JSON</button>
+        </div>
+        
+        <div id="results"></div>
+    </div>
+
+    <script>
+        // Last.fm API key (you can get your own free API key from last.fm)
+        const LASTFM_API_KEY = '8e4db7b5ffbfe23fb87987ffa6b5ec7e'; // Demo key - get your own!
+        const LASTFM_API = 'https://ws.audioscrobbler.com/2.0/';
+        
+        let currentArtistData = null;
+        let currentAlbumsData = [];
+        let currentAlbumData = null;
+        
+        async function searchArtist() {
+            const searchTerm = document.getElementById('artistSearch').value.trim();
+            if (!searchTerm) {
+                showError('Please enter an artist name');
+                return;
+            }
+            
+            const searchBtn = document.getElementById('searchBtn');
+            searchBtn.disabled = true;
+            searchBtn.textContent = 'Searching...';
+            
+            try {
+                showLoading(`Searching for ${searchTerm}...`);
+                
+                // Get artist info
+                const artistInfoUrl = `${LASTFM_API}?method=artist.getinfo&artist=${encodeURIComponent(searchTerm)}&api_key=${LASTFM_API_KEY}&format=json`;
+                const artistResponse = await fetch(artistInfoUrl);
+                
+                if (!artistResponse.ok) {
+                    throw new Error(`Artist search failed: ${artistResponse.status}`);
+                }
+                
+                const artistData = await artistResponse.json();
+                
+                if (artistData.error) {
+                    throw new Error(artistData.message || 'Artist not found');
+                }
+                
+                currentArtistData = artistData.artist;
+                
+                // Get artist's top albums
+                await getArtistAlbums(searchTerm);
+                
+            } catch (error) {
+                console.error('Search error:', error);
+                showError(`Search failed: ${error.message}`);
+            } finally {
+                searchBtn.disabled = false;
+                searchBtn.textContent = 'Search Artist';
+            }
+        }
+        
+        async function getArtistAlbums(artistName) {
+            try {
+                showLoading(`Getting albums for ${artistName}...`);
+                
+                const albumsUrl = `${LASTFM_API}?method=artist.gettopalbums&artist=${encodeURIComponent(artistName)}&api_key=${LASTFM_API_KEY}&format=json&limit=20`;
+                const albumsResponse = await fetch(albumsUrl);
+                
+                if (!albumsResponse.ok) {
+                    throw new Error(`Albums fetch failed: ${albumsResponse.status}`);
+                }
+                
+                const albumsData = await albumsResponse.json();
+                
+                if (albumsData.error) {
+                    throw new Error(albumsData.message || 'Albums not found');
+                }
+                
+                if (!albumsData.topalbums || !albumsData.topalbums.album || albumsData.topalbums.album.length === 0) {
+                    showError('No albums found for this artist.');
+                    return;
+                }
+                
+                // Filter out compilations, live albums, etc. (basic filtering)
+                const filteredAlbums = albumsData.topalbums.album.filter(album => {
+                    const name = album.name.toLowerCase();
+                    return !name.includes('live') && 
+                           !name.includes('compilation') && 
+                           !name.includes('greatest hits') && 
+                           !name.includes('best of') &&
+                           !name.includes('collection') &&
+                           !name.includes('anthology');
+                });
+                
+                currentAlbumsData = filteredAlbums;
+                displayAlbums(artistName, filteredAlbums);
+                
+            } catch (error) {
+                console.error('Albums fetch error:', error);
+                showError(`Failed to get albums: ${error.message}`);
+            }
+        }
+        
+        function displayAlbums(artistName, albums) {
+            const resultsDiv = document.getElementById('results');
+            
+            // Artist info section
+            let html = `
+                <div class="artist-info">
+                    <h3>${escapeHtml(currentArtistData.name)}</h3>
+                    <p>${currentArtistData.bio && currentArtistData.bio.summary ? 
+                        escapeHtml(currentArtistData.bio.summary.split('.')[0] + '.') : 
+                        'Explore the discography of this amazing artist.'}</p>
+                    <div class="stats">
+                        <div class="stat-item">
+                            <div class="stat-number">${albums.length}</div>
+                            <div class="stat-label">Studio Albums</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">${currentArtistData.stats ? parseInt(currentArtistData.stats.listeners).toLocaleString() : 'N/A'}</div>
+                            <div class="stat-label">Listeners</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">${currentArtistData.stats ? parseInt(currentArtistData.stats.playcount).toLocaleString() : 'N/A'}</div>
+                            <div class="stat-label">Plays</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            html += `
+                <div class="section">
+                    <h2>Studio Albums by ${escapeHtml(artistName)}</h2>
+                    <div class="albums-grid">
+            `;
+            
+            albums.forEach((album, index) => {
+                const coverImage = album.image && album.image.length > 0 ? 
+                    album.image[album.image.length - 1]['#text'] || album.image[2]['#text'] || '' : '';
+                
+                html += `
+                    <div class="album-card" onclick="selectAlbum('${escapeHtml(album.name)}', '${escapeHtml(artistName)}', ${index})">
+                        <div class="album-cover-small">
+                            ${coverImage ? 
+                                `<img src="${coverImage}" alt="Album Cover" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDMwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjMwMCIgaGVpZ2h0PSIzMDAiIGZpbGw9IiNmNGY0ZjQiLz48cGF0aCBkPSJNMTUwIDc1Yzc1IDAgMTM1IDYwIDEzNSAxMzVzLTYwIDEzNS0xMzUgMTM1UzE1IDI2MCAxNSAxODUgNzUgNTAgMTUwIDUweiIgZmlsbD0iI2RkZCIvPjxjaXJjbGUgY3g9IjE1MCIgY3k9IjE1MCIgcj0iNDAiIGZpbGw9IiNiYmIiLz48L3N2Zz4='" loading="lazy">` :
+                                `<img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDMwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjMwMCIgaGVpZ2h0PSIzMDAiIGZpbGw9IiNmNGY0ZjQiLz48cGF0aCBkPSJNMTUwIDc1Yzc1IDAgMTM1IDYwIDEzNSAxMzVzLTYwIDEzNS0xMzUgMTM1UzE1IDI2MCAxNSAxODUgNzUgNTAgMTUwIDUweiIgZmlsbD0iI2RkZCIvPjxjaXJjbGUgY3g9IjE1MCIgY3k9IjE1MCIgcj0iNDAiIGZpbGw9IiNiYmIiLz48L3N2Zz4=" alt="No Cover">`
+                            }
+                        </div>
+                        <div class="album-card-info">
+                            <div class="album-title">${escapeHtml(album.name)}</div>
+                            <div class="album-info">
+                                Play count: ${parseInt(album.playcount).toLocaleString()}<br>
+                                Listeners: ${parseInt(album.listeners || 0).toLocaleString()}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            html += `
+                    </div>
+                </div>
+            `;
+            
+            resultsDiv.innerHTML = html;
+            document.getElementById('downloadBtn').disabled = false;
+            showSuccess(`Found ${albums.length} studio albums. Click on any album to view the tracklist.`);
+        }
+        
+        async function selectAlbum(albumName, artistName, albumIndex) {
+            try {
+                showLoading(`Loading tracklist for "${albumName}"...`);
+                
+                // Get album info with tracks
+                const albumInfoUrl = `${LASTFM_API}?method=album.getinfo&artist=${encodeURIComponent(artistName)}&album=${encodeURIComponent(albumName)}&api_key=${LASTFM_API_KEY}&format=json`;
+                const albumResponse = await fetch(albumInfoUrl);
+                
+                if (!albumResponse.ok) {
+                    throw new Error(`Album details fetch failed: ${albumResponse.status}`);
+                }
+                
+                const albumData = await albumResponse.json();
+                
+                if (albumData.error) {
+                    throw new Error(albumData.message || 'Album details not found');
+                }
+                
+                currentAlbumData = {
+                    ...albumData.album,
+                    originalIndex: albumIndex
+                };
+                
+                displayAlbumDetails(albumData.album, currentAlbumsData[albumIndex]);
+                
+            } catch (error) {
+                console.error('Album details error:', error);
+                showError(`Failed to load album details: ${error.message}`);
+            }
+        }
+        
+        function displayAlbumDetails(album, originalAlbum) {
+            const resultsDiv = document.getElementById('results');
+            
+            // Get the best quality cover image
+            const coverImage = album.image && album.image.length > 0 ? 
+                album.image[album.image.length - 1]['#text'] || album.image[2]['#text'] || '' : '';
+            
+            const tracks = album.tracks && album.tracks.track ? 
+                (Array.isArray(album.tracks.track) ? album.tracks.track : [album.tracks.track]) : [];
+            
+            let html = `
+                <button class="back-btn" onclick="searchArtist()">← Back to Albums</button>
+                <div class="section">
+                    <div class="album-detail">
+                        <div class="album-cover">
+                            ${coverImage ? 
+                                `<img src="${coverImage}" alt="Album Cover" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzUwIiBoZWlnaHQ9IjM1MCIgdmlld0JveD0iMCAwIDM1MCAzNTAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjM1MCIgaGVpZ2h0PSIzNTAiIGZpbGw9IiNmNGY0ZjQiLz48cGF0aCBkPSJNMTc1IDg3LjVjODcuNSAwIDE1NyA3MCA1NyAxNTdzLTcwIDE1Ny0xNTcgMTU3UzE4IDMwNSAxOCAyMTcuNSA4OCA2MC41ITE3NSA2MC41eiIgZmlsbD0iI2RkZCIvPjxjaXJjbGUgY3g9IjE3NSIgY3k9IjE3NSIgcj0iNDciIGZpbGw9IiNiYmIiLz48L3N2Zz4='">` :
+                                `<img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzUwIiBoZWlnaHQ9IjM1MCIgdmlld0JveD0iMCAwIDM1MCAzNTAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjM1MCIgaGVpZ2h0PSIzNTAiIGZpbGw9IiNmNGY0ZjQiLz48cGF0aCBkPSJNMTc1IDg3LjVjODcuNSAwIDE1NyA3MCA1NyAxNTdzLTcwIDE1Ny0xNTcgMTU3UzE4IDMwNSAxOCAyMTcuNSA4OCA2MC41ITE3NSA2MC41eiIgZmlsbD0iI2RkZCIvPjxjaXJjbGUgY3g9IjE3NSIgY3k9IjE3NSIgcj0iNDciIGZpbGw9IiNiYmIiLz48L3N2Zz4=" alt="No Cover Art">`
+                            }
+                        </div>
+                        <div class="album-details">
+                            <h3>${escapeHtml(album.name)}</h3>
+                            <div class="album-meta">
+                                <strong>Artist:</strong> ${escapeHtml(album.artist)}<br>
+                                <strong>Listeners:</strong> ${album.listeners ? parseInt(album.listeners).toLocaleString() : 'N/A'}<br>
+                                <strong>Play Count:</strong> ${album.playcount ? parseInt(album.playcount).toLocaleString() : 'N/A'}<br>
+                                <strong>Total Tracks:</strong> ${tracks.length}
+                            </div>
+                            
+                            <div class="tracklist">
+                                <h4>🎵 Tracklist</h4>
+            `;
+            
+            if (tracks.length > 0) {
+                tracks.forEach((track, index) => {
+                    const duration = track.duration ? formatDuration(parseInt(track.duration)) : '';
+                    html += `
+                        <div class="track-item">
+                            <span class="track-number">${index + 1}</span>
+                            <span class="track-title">${escapeHtml(track.name)}</span>
+                            <span class="track-duration">${duration}</span>
+                        </div>
+                    `;
+                });
+            } else {
+                html += '<div class="track-item">Tracklist not available for this album</div>';
+            }
+            
+            html += `
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            resultsDiv.innerHTML = html;
+        }
+        
+        function formatDuration(seconds) {
+            if (!seconds || seconds === 0) return '';
+            const minutes = Math.floor(seconds / 60);
+            const remainingSeconds = seconds % 60;
+            return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+        }
+        
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        
+        function showLoading(message) {
+            document.getElementById('results').innerHTML = `<div class="loading">🎶 ${message}</div>`;
+        }
+        
+        function showError(message) {
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = `<div class="error">❌ ${message}</div>`;
+        }
+        
+        function showSuccess(message) {
+            const resultsDiv = document.getElementById('results');
+            const successDiv = document.createElement('div');
+            successDiv.className = 'success';
+            successDiv.innerHTML = `✅ ${message}`;
+            resultsDiv.insertBefore(successDiv, resultsDiv.firstChild);
+            setTimeout(() => successDiv.remove(), 5000);
+        }
+        
+        function downloadJSON() {
+            const jsonData = {
+                timestamp: new Date().toISOString(),
+                artist: currentArtistData,
+                albums: currentAlbumsData,
+                selectedAlbum: currentAlbumData,
+                searchTerm: document.getElementById('artistSearch').value,
+                api: 'Last.fm'
+            };
+            
+            const dataStr = JSON.stringify(jsonData, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(dataBlob);
+            link.download = `lastfm_${currentArtistData.name.replace(/[^a-z0-9]/gi, '_').toLowerCase()}_${new Date().toISOString().split('T')[0]}.json`;
+            link.click();
+            
+            showSuccess('JSON data downloaded successfully!');
+        }
+        
+        // Allow Enter key to trigger search
+        document.getElementById('artistSearch').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchArtist();
+            }
+        });
+        
+        // Auto-search on page load
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                searchArtist();
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

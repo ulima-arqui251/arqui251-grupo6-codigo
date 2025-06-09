@@ -21,3 +21,11 @@ Otros:
 2. **Kubernetes**:
 3. **Api REST (comunicación síncrona)**:
 4. **Scikit learn, Tensorflow, Pytorch**:
+5. **Auth0(idp)**:
+6. **Stripe(pasarela de pagos)**:
+
+## Patrones de arquitectura
+1. 
+
+## Manual de uso
+1. 
