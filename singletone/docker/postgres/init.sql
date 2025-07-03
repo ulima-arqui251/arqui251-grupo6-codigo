@@ -4,14 +4,6 @@ CREATE TABLE UserProfile (
     creation_date DATE
 );
 
-CREATE TABLE UserStats (
-    stats_id INT PRIMARY KEY,
-    profile_id INT,
-    n_songs INT,
-    n_albums INT,
-    n_artist INT
-);
-
 CREATE TABLE BasicData (
     data_id INT PRIMARY KEY,
     profile_id INT,
