@@ -14,21 +14,86 @@ services:
     volumes:
       - ./docker/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
 
-  mongo:
+  mongo-music:
     image: mongo:6
-    container_name: mongo
+    container_name: mongo-music
     restart: always
     ports:
       - "27017:27017"
     volumes:
-      - ./docker/mongo/init.js:/docker-entrypoint-initdb.d/init.js
+      - ./docker/mongo/music-init.js:/docker-entrypoint-initdb.d/init.js
 
-  redis:
-    image: redis:7
-    container_name: redis
+  mongo-library:
+    image: mongo:6
+    container_name: mongo-library
     restart: always
     ports:
-      - "6379:6379"
+      - "27018:27017"
+    volumes:
+      - ./docker/mongo/library-init.js:/docker-entrypoint-initdb.d/init.js
+
+  redis-user:
+    image: redis:7
+    container_name: redis-user
+    restart: always
+    ports:
+      - "6380:6379"
+    volumes:
+      - ./docker/redis/redis-user.conf:/usr/local/etc/redis/redis.conf
+
+  redis-profile:
+    image: redis:7
+    container_name: redis-profile
+    restart: always
+    ports:
+      - "6381:6379"
+    volumes:
+      - ./docker/redis/redis-profile.conf:/usr/local/etc/redis/redis.conf
+
+  redis-music:
+    image: redis:7
+    container_name: redis-music
+    restart: always
+    ports:
+      - "6382:6379"
+    volumes:
+      - ./docker/redis/redis-music.conf:/usr/local/etc/redis/redis.conf
+
+  redis-library:
+    image: redis:7
+    container_name: redis-library
+    restart: always
+    ports:
+      - "6383:6379"
+    volumes:
+      - ./docker/redis/redis-library.conf:/usr/local/etc/redis/redis.conf
+
+  redis-recommendation:
+    image: redis:7
+    container_name: redis-recommendation
+    restart: always
+    ports:
+      - "6384:6379"
+    volumes:
+      - ./docker/redis/redis-recommendation.conf:/usr/local/etc/redis/redis.conf
+
+  redis-plan:
+    image: redis:7
+    container_name: redis-plan
+    restart: always
+    ports:
+      - "6385:6379"
+    volumes:
+      - ./docker/redis/redis-plan.conf:/usr/local/etc/redis/redis.conf
+
+  redis-gateway:
+    image: redis:7
+    container_name: redis-gateway
+    restart: always
+    ports:
+      - "6386:6379"
+    volumes:
+      - ./docker/redis/redis-gateway.conf:/usr/local/etc/redis/redis.conf
 
   nginx:
     image: nginx:latest
@@ -46,9 +111,12 @@ services:
       - "3000:3000"
     depends_on:
       - postgres
+      - redis-user
     environment:
       - POSTGRES_HOST=postgres
       - POSTGRES_PORT=5432
       - POSTGRES_USER=singletone
       - POSTGRES_PASSWORD=singletonepass
       - POSTGRES_DB=singletone
+      - REDIS_HOST=redis-user
+      - REDIS_PORT=6379
