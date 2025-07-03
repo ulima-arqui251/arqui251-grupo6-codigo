@@ -1,0 +1,27 @@
+{
+  "name": "plan-service",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "plan-service/src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "serve": {
+      "continuous": true,
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "dependsOn": ["build"],
+      "options": {
+        "buildTarget": "plan-service:build",
+        "runBuildTargetDependencies": false
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "plan-service:build:development"
+        },
+        "production": {
+          "buildTarget": "plan-service:build:production"
+        }
+      }
+    }
+  }
+}
