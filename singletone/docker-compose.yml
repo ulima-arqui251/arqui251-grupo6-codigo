@@ -1,0 +1,39 @@
+version: '3.9'
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: singletone
+      POSTGRES_PASSWORD: singletonepass
+      POSTGRES_DB: singletone
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./docker/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  mongo:
+    image: mongo:6
+    container_name: mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./docker/mongo/init.js:/docker-entrypoint-initdb.d/init.js
+
+  redis:
+    image: redis:7
+    container_name: redis
+    restart: always
+    ports:
+      - "6379:6379"
+
+  nginx:
+    image: nginx:latest
+    container_name: apigateway
+    ports:
+      - "80:80"
+    volumes:
+      - ./apps/apigateway/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
