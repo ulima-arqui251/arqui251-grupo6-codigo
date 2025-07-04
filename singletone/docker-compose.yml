@@ -170,3 +170,21 @@ services:
       - PORT=3006
       - REDIS_HOST=redis-recommendation
       - REDIS_PORT=6379
+
+  # Microservicio: Music
+  music-service:
+    build:
+      context: .
+      dockerfile: apps/music-service/Dockerfile
+    ports:
+      - "3002:3002"
+    depends_on:
+      - mongo-music
+      - redis-music
+    environment:
+      - PORT=3002
+      - MONGO_HOST=mongo-music
+      - MONGO_PORT=27017
+      - MONGO_DB=music
+      - REDIS_HOST=redis-music
+      - REDIS_PORT=6379

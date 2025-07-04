@@ -31,7 +31,8 @@ function createAlbumWithSongs(artistId, albumData, songNames) {
         genre: albumData.genreId,
         release_year: albumData.releaseYear,
         cover_url: albumData.coverUrl,
-        songs: songIds
+        songs: songIds,
+        artist_id: artistId
     });
 
     songNames.forEach((songName, index) => {
