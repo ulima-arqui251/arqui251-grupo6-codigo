@@ -187,5 +187,8 @@ RF29 - Valoraciones ilimitadas Premium
 RF31-RF35 - Sistema de recomendaciones  
 
 ## Manual de uso
-1. 
-
+1. Para bajarse todo y volver a subirlo (para borrar cosas guardadas muy util)
+```
+docker compose down --volumes
+docker compose up --build
+```
