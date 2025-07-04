@@ -1,5 +1,3 @@
-version: '3.9'
-
 services:
   # Base de datos PostgreSQL
   postgres:
@@ -187,4 +185,22 @@ services:
       - MONGO_PORT=27017
       - MONGO_DB=music
       - REDIS_HOST=redis-music
+      - REDIS_PORT=6379
+
+  # Microservicio: Library
+  library-service:
+    build:
+      context: .
+      dockerfile: apps/library-service/Dockerfile
+    ports:
+      - "3003:3003"
+    depends_on:
+      - mongo-library
+      - redis-library
+    environment:
+      - PORT=3003
+      - MONGO_HOST=mongo-library
+      - MONGO_PORT=27017
+      - MONGO_DB=library
+      - REDIS_HOST=redis-library
       - REDIS_PORT=6379
