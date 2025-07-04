@@ -5,6 +5,6 @@ const router = Router();
 
 router.get('/users', getUsers);
 router.get('/users/full', getAllDataUsers);
-router.get('/users/:id', getUserById); // ⬅️ nuevo
+router.get('/users/:id', getUserById);
 
 export default router;
