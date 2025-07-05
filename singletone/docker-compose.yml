@@ -223,6 +223,18 @@ services:
       - "4200:4200"
     networks:
       - singletone-network
+  
+  auth-service:
+    build:
+      context: .
+      dockerfile: apps/auth-service/Dockerfile
+    container_name: auth-service
+    ports:
+      - "3010:3010"
+    env_file:
+      - apps/auth-service/.env
+    networks:
+      - singletone-network
 
 networks:
   singletone-network:
