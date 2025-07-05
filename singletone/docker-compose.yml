@@ -12,6 +12,8 @@ services:
       - "5432:5432"
     volumes:
       - ./docker/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - singletone-network
 
   # MongoDB para music
   mongo-music:
@@ -22,6 +24,8 @@ services:
       - "27017:27017"
     volumes:
       - ./docker/mongo/music-init.js:/docker-entrypoint-initdb.d/init.js
+    networks:
+      - singletone-network
 
   # MongoDB para library
   mongo-library:
@@ -32,6 +36,8 @@ services:
       - "27018:27017"
     volumes:
       - ./docker/mongo/library-init.js:/docker-entrypoint-initdb.d/init.js
+    networks:
+      - singletone-network
 
   # Redis para cada microservicio
   redis-user:
@@ -42,6 +48,8 @@ services:
       - "6380:6379"
     volumes:
       - ./docker/redis/redis-user.conf:/usr/local/etc/redis/redis.conf
+    networks:
+      - singletone-network
 
   redis-profile:
     image: redis:7
@@ -51,6 +59,8 @@ services:
       - "6381:6379"
     volumes:
       - ./docker/redis/redis-profile.conf:/usr/local/etc/redis/redis.conf
+    networks:
+      - singletone-network
 
   redis-music:
     image: redis:7
@@ -60,6 +70,8 @@ services:
       - "6382:6379"
     volumes:
       - ./docker/redis/redis-music.conf:/usr/local/etc/redis/redis.conf
+    networks:
+      - singletone-network
 
   redis-library:
     image: redis:7
@@ -69,6 +81,8 @@ services:
       - "6383:6379"
     volumes:
       - ./docker/redis/redis-library.conf:/usr/local/etc/redis/redis.conf
+    networks:
+      - singletone-network
 
   redis-recommendation:
     image: redis:7
@@ -78,6 +92,8 @@ services:
       - "6384:6379"
     volumes:
       - ./docker/redis/redis-recommendation.conf:/usr/local/etc/redis/redis.conf
+    networks:
+      - singletone-network
 
   redis-plan:
     image: redis:7
@@ -87,6 +103,8 @@ services:
       - "6385:6379"
     volumes:
       - ./docker/redis/redis-plan.conf:/usr/local/etc/redis/redis.conf
+    networks:
+      - singletone-network
 
   redis-gateway:
     image: redis:7
@@ -96,15 +114,22 @@ services:
       - "6386:6379"
     volumes:
       - ./docker/redis/redis-gateway.conf:/usr/local/etc/redis/redis.conf
+    networks:
+      - singletone-network
 
   # Gateway NGINX
   nginx:
     image: nginx:latest
     container_name: apigateway
     ports:
-      - "80:80"
+      - "8080:80"  # CAMBIADO AQUÍ 🔥
     volumes:
+      - ./apps/apigateway/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
       - ./apps/apigateway/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - user-service
+    networks:
+      - singletone-network
 
   # Microservicio: User
   user-service:
@@ -124,6 +149,8 @@ services:
       - POSTGRES_DB=singletone
       - REDIS_HOST=redis-user
       - REDIS_PORT=6379
+    networks:
+      - singletone-network
 
   # Microservicio: Profile
   profile-service:
@@ -140,6 +167,8 @@ services:
       - REDIS_HOST=redis-profile
       - REDIS_PORT=6379
       - USER_SERVICE_URL=http://user-service:3000
+    networks:
+      - singletone-network
 
   # Microservicio: Plan
   plan-service:
@@ -154,6 +183,8 @@ services:
       - PORT=3004
       - REDIS_HOST=redis-plan
       - REDIS_PORT=6379
+    networks:
+      - singletone-network
 
   # Microservicio: Recommendation
   recommendation-service:
@@ -168,6 +199,8 @@ services:
       - PORT=3006
       - REDIS_HOST=redis-recommendation
       - REDIS_PORT=6379
+    networks:
+      - singletone-network
 
   # Microservicio: Music
   music-service:
@@ -186,6 +219,8 @@ services:
       - MONGO_DB=music
       - REDIS_HOST=redis-music
       - REDIS_PORT=6379
+    networks:
+      - singletone-network
 
   # Microservicio: Library
   library-service:
@@ -204,3 +239,23 @@ services:
       - MONGO_DB=library
       - REDIS_HOST=redis-library
       - REDIS_PORT=6379
+    networks:
+      - singletone-network
+
+  # Frontend
+  frontend:
+    build:
+      context: .
+      dockerfile: apps/frontend/Dockerfile
+    container_name: singletone-frontend
+    restart: unless-stopped
+    depends_on:
+      - nginx
+    ports:
+      - "4200:4200"
+    networks:
+      - singletone-network
+
+networks:
+  singletone-network:
+    driver: bridge
