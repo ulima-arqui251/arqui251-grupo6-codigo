@@ -192,3 +192,18 @@ RF31-RF35 - Sistema de recomendaciones
 docker compose down --volumes
 docker compose up --build
 ```
+
+2. Para verificar el Mock de Auth0:
+```
+curl http://localhost:8080/api/auth/health
+
+curl -X POST http://localhost:8080/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"email":"test@singletone.com","password":"123456"}'
+```
+
+3. Gateway funcionando 
+
+```
+curl http://localhost:8080/api/health
+```
