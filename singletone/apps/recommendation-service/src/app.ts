@@ -4,6 +4,6 @@ import recommendationRoutes from './routes/recommendation.routes'; // ✅
 const app = express();
 
 app.use(express.json());
-app.use('/api', recommendationRoutes);
+app.use('/', recommendationRoutes);
 
 export default app;
