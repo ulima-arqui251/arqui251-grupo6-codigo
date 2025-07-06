@@ -108,6 +108,14 @@ services:
       - ./apps/apigateway/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
     depends_on:
       - user-service
+      - profile-service
+      - music-service
+      - library-service
+      - plan-service
+      - recommendation-service
+      - auth-service
+      - billing-service
+      - huggingface-service
     networks:
       - singletone-network
 
@@ -248,6 +256,20 @@ services:
       - "3007:3007"
     environment:
       - PORT=3007
+    networks:
+      - singletone-network
+  
+  # Microservicio: LLms (Mock de HugginFace)
+  huggingface-service:
+    build:
+      context: .
+      dockerfile: apps/huggingface-service/Dockerfile
+    container_name: huggingface-service
+    restart: unless-stopped
+    ports:
+      - "3008:3008"
+    environment:
+      - PORT=3008
     networks:
       - singletone-network
 
