@@ -1,10 +1,12 @@
 # 5. Tácticas
 En esta página se resumen las tácticas tomadas para la arquitectura del aplicativo "Singletone".
 
-## Módulo 01: Gestión de usuarios (por completar) — (4/13)
+## Módulo 01: Gestión de usuarios (objetico cumplido) — (6/13)
 | ID              | Atributo de calidad         | Táctica elegida                                                     | Alternativas    | Decisión         |
 |-----------------|--------------------------|------------------------------------------------------------|------------------------------------------|-----------------------------------|
+| ESC-GU-01 | Disponibilidad | Redundancia Activa (Hot Spare) | 1. Heartbeat + Reintentos, 2. Redundancia Activa (Hot Spare) | 2. Redundancia Activa (Hot Spare) |
 | ESC-GU-03 | Mantenibilidad | División en submódulos (Node.js) | 1. Código Monolítico, 2. Microservicios Especializados | 2. Microservicios Especializados | 
+| ESC-GU-04 | Mantenibilidad | Wrapper JWT (TypeScript) | 1. Uso Directo, 2. Wrapper Abstracto | 2. Wrapper JWT |
 | ESC-GU-05 | Interoperabilidad | Orquestar | 1. Orquestación Centralizada con Controlador de Usuario, 2. Comunicación Directa entre Microservicios | 1. Orquestación Centralizada con Controlador de Usuario |
 | ESC-GU-06 | Rendimiento | Pool de conexiones optimizado en Sequelize | 1. Pool de conexiones optimizado en Sequelize, 2. Implementación de cola asincrónica con BullMQ | 1. Pool de conexiones optimizado en Sequelize | 
 | ESC-GU-07 | Rendimiento | Caching con Redis y TTL de 1 hora | 1. Caching con Redis y TTL de 1 hora, 2. Replicación local diaria de la lista de géneros | 1. Caching con Redis y TTL de 1 hora |
