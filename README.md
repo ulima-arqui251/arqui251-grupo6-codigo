@@ -223,5 +223,9 @@ curl http://localhost:8080/api/billing/status/mock-session-001
 5. Para verificar el Mock de HuggingFace
 
 ```
-a
+curl http://localhost:8080/api/huggingface/health/
+
+curl -X POST http://localhost:8080/api/huggingface/generate \
+  -H "Content-Type: application/json" \
+  -d '{"prompt": "Hola, ¿cómo estás?"}'
 ```
