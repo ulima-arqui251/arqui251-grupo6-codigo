@@ -59,6 +59,7 @@
     "mongodb": "^6.17.0",
     "pg": "^8.16.3",
     "react": "19.0.0",
-    "react-dom": "19.0.0"
+    "react-dom": "19.0.0",
+    "react-router-dom": "^7.6.3"
   }
 }
