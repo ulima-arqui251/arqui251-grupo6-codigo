@@ -1,0 +1,34 @@
+{
+    "name": "billing-service",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "apps/billing-service/src",
+    "projectType": "application",
+    "tags": [],
+    "targets": {
+        "serve": {
+        "executor": "@nx/js:node",
+        "defaultConfiguration": "development",
+        "dependsOn": ["build"],
+        "options": {
+            "buildTarget": "billing-service:build"
+        },
+        "configurations": {
+            "development": {
+            "buildTarget": "billing-service:build:development"
+            },
+            "production": {
+            "buildTarget": "billing-service:build:production"
+            }
+        }
+        },
+        "build": {
+        "executor": "@nx/js:tsc",
+        "options": {
+            "outputPath": "dist/apps/billing-service",
+            "main": "apps/billing-service/src/main.ts",
+            "tsConfig": "apps/billing-service/tsconfig.app.json",
+            "assets": ["apps/billing-service/src/assets"]
+        }
+        }
+    }
+}

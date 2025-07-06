@@ -5,7 +5,7 @@ export const getUserProfile = async (req: Request, res: Response) => {
     try {
         const { userId } = req.params;
 
-        const userResponse = await axios.get(`${process.env.USER_SERVICE_URL}/api/users/${userId}`);
+        const userResponse = await axios.get(`${process.env.USER_SERVICE_URL}/users/${userId}`);
         const user = userResponse.data;
 
         res.json({

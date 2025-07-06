@@ -3,6 +3,6 @@ import { checkHealth } from '../controllers/recommendation.controller'; // ✅
 
 const router = Router();
 
-router.get('/health', checkHealth);
+router.get('/recommendations/health', checkHealth);
 
 export default router;

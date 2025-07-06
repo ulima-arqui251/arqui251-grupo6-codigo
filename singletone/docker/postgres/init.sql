@@ -1,9 +1,11 @@
+-- Tabla principal de perfiles de usuario
 CREATE TABLE UserProfile (
     profile_id INT PRIMARY KEY,
     user_id INT,
     creation_date DATE
 );
 
+-- Datos básicos del usuario
 CREATE TABLE BasicData (
     data_id INT PRIMARY KEY,
     profile_id INT,
@@ -11,9 +13,11 @@ CREATE TABLE BasicData (
     last_name VARCHAR,
     nickname VARCHAR,
     mail VARCHAR,
-    picture VARCHAR
+    picture VARCHAR,
+    password VARCHAR
 );
 
+-- Tipo de suscripción y vencimiento
 CREATE TABLE Suscription (
     sub_id INT,
     profile_id INT PRIMARY KEY,
@@ -21,12 +25,14 @@ CREATE TABLE Suscription (
     expiration_date DATE
 );
 
+-- Biblioteca musical del usuario
 CREATE TABLE MusicLibrary (
     library_id INT,
     profile_id INT PRIMARY KEY,
     list_id VARCHAR
 );
 
+-- Usuarios preexistentes
 INSERT INTO UserProfile (profile_id, user_id, creation_date) VALUES
 (1, 101, '2024-05-10'),
 (2, 102, '2023-11-02'),
@@ -34,13 +40,15 @@ INSERT INTO UserProfile (profile_id, user_id, creation_date) VALUES
 (4, 104, '2022-08-25'),
 (5, 105, '2024-06-01');
 
-INSERT INTO BasicData (data_id, profile_id, name, last_name, nickname, mail, picture) VALUES
-(1, 1, 'Valentina', 'Ruiz', 'valen', 'valen@mail.com', 'https://cdn.example.com/pics/valen.jpg'),
-(2, 2, 'Diego', 'Montoya', 'dieguito', 'diego@mail.com', 'https://cdn.example.com/pics/diego.jpg'),
-(3, 3, 'Lucía', 'Fernández', 'luci', 'lucia@mail.com', 'https://cdn.example.com/pics/lucia.jpg'),
-(4, 4, 'Javier', 'Ortega', 'javo', 'javier@mail.com', 'https://cdn.example.com/pics/javier.jpg'),
-(5, 5, 'Camila', 'Soto', 'cami', 'camila@mail.com', 'https://cdn.example.com/pics/camila.jpg');
+-- Datos básicos, con contraseña incluida
+INSERT INTO BasicData (data_id, profile_id, name, last_name, nickname, mail, picture, password) VALUES
+(1, 1, 'Valentina', 'Ruiz', 'valen', 'valen@mail.com', 'https://cdn.example.com/pics/valen.jpg', '1234'),
+(2, 2, 'Diego', 'Montoya', 'dieguito', 'diego@mail.com', 'https://cdn.example.com/pics/diego.jpg', '1234'),
+(3, 3, 'Lucía', 'Fernández', 'luci', 'lucia@mail.com', 'https://cdn.example.com/pics/lucia.jpg', '1234'),
+(4, 4, 'Javier', 'Ortega', 'javo', 'javier@mail.com', 'https://cdn.example.com/pics/javier.jpg', '1234'),
+(5, 5, 'Camila', 'Soto', 'cami', 'camila@mail.com', 'https://cdn.example.com/pics/camila.jpg', '1234');
 
+-- Subscripciones mock
 INSERT INTO Suscription (sub_id, profile_id, type, expiration_date) VALUES
 (201, 1, 'premium', '2025-07-30'),
 (202, 2, 'free', NULL),

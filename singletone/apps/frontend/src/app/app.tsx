@@ -1,35 +1,45 @@
-import { useEffect, useState } from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import Header from '../components/Header';
+import Login from '../pages/Login';
+import Register from '../pages/Register';
+import HomePage from '../pages/HomePage';
+import LandingPage01 from '../pages/LandingPage01';
+import LandingPage02 from '../pages/LandingPage02';
+import LandingPage03 from '../pages/LandingPage03';
+import Profile from '../pages/Profile';
+import EditProfile from '../pages/EditProfile';
+import ProfileAlbums from '../pages/ProfileAlbums';
+import ProfileArtists from '../pages/ProfileArtists';
+import Artist from '../pages/Artist';
+import Album from '../pages/Album';
+import Search from '../pages/Search';
+import Recommendation from '../pages/Recommendation';
 
-export function App() {
-  const [status, setStatus] = useState('Conectando...');
-
-  useEffect(() => {
-    const fetchAll = async () => {
-      try {
-        const users = await fetch('http://localhost/api/users').then(res => res.json());
-        console.log('🎧 Usuario:', users);
-
-        // const artists = await fetch('http://localhost/api/music/artists').then(res => res.json());
-        // console.log('🎤 Artistas:', artists);
-
-        // const albums = await fetch('http://localhost/api/music/albums').then(res => res.json());
-        // console.log('🎵 Biblioteca:', albums);
-
-        setStatus('✅ Conexión exitosa. Ver consola del navegador.');
-      } catch (error) {
-        console.error('❌ Error al conectar con la API Gateway:', error);
-        setStatus('❌ Error al conectar. Revisa consola.');
-      }
-    };
-
-    fetchAll();
-  }, []);
-
+function App() {
   return (
-    <div style={{ padding: '2rem', fontFamily: 'sans-serif' }}>
-      <h1>Singletone Frontend 🎶</h1>
-      <p>{status}</p>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Navigate to="/login" replace />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+
+        <Route path="/landing_page_01" element={<LandingPage01 />} />
+        <Route path="/landing_page_02" element={<LandingPage02 />} />
+        <Route path="/landing_page_03" element={<LandingPage03 />} />
+
+        <Route element={<Header />}>
+          <Route path="/home_page" element={<HomePage />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/edit_profile" element={<EditProfile />} />
+          <Route path="/profile_albums" element={<ProfileAlbums />} />
+          <Route path="/profile_artists" element={<ProfileArtists />} />
+          <Route path="/artist" element={<Artist />} />
+          <Route path="/album" element={<Album />} />
+          <Route path="/search" element={<Search />} />
+          <Route path="/recommendation" element={<Recommendation />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 

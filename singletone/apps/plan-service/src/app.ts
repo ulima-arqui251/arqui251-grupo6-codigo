@@ -3,6 +3,6 @@ import planRoutes from './routes/plan.routes';
 
 const app = express();
 app.use(express.json());
-app.use('/api', planRoutes);
+app.use('/', planRoutes);
 
 export default app;
