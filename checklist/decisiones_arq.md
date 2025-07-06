@@ -1,16 +1,5 @@
 # 4. Decisiones Iniciales de Arquitectura
-- [Volver al inicio](/README.md)
-
 En esta página se resumen las decisiones tomadas para la arquitectura del aplicativo "Singletone".
-
-## Índice: 
-1. [Asignación de Responsabilidades](/4/4.1/4.1.md)
-2. [Modelo de Coordinación](/4/4.2/4.2.md)
-3. [Modelo de Datos](/4/4.3/4.3.md)
-4. [Mapeo entre elementos de Arquitectura](/4/4.4/4.4.md)
-5. [Elección de Tecnología](/4/4.5/4.5.md)
-
-Sin embargo, de manera adicional se realizó las presentes tablas para resumir nuestras decisiones de arquitectura.
 
 ## Generalidades (completado)
 | Tipo de decisión         | Título                                                     | Alternativas    | Decisión         |

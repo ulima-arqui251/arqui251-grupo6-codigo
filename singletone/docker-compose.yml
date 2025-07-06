@@ -119,15 +119,32 @@ services:
     networks:
       - singletone-network
 
-  # Microservicio: User
+  # Microservicio: User principal
   user-service:
+    container_name: user-service
     build:
       context: .
       dockerfile: apps/user-service/Dockerfile
-    depends_on:
-      - postgres
-      - redis-user
     environment:
+      - INSTANCE_NAME=user-main
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+      - POSTGRES_USER=singletone
+      - POSTGRES_PASSWORD=singletonepass
+      - POSTGRES_DB=singletone
+      - REDIS_HOST=redis-user
+      - REDIS_PORT=6379
+    networks:
+      - singletone-network
+
+  # Microservicio: User (réplica)
+  user-service-replica:
+    container_name: user-service-replica
+    build:
+      context: .
+      dockerfile: apps/user-service/Dockerfile
+    environment:
+      - INSTANCE_NAME=user-replica-1
       - POSTGRES_HOST=postgres
       - POSTGRES_PORT=5432
       - POSTGRES_USER=singletone

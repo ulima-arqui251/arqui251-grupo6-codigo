@@ -4,7 +4,10 @@ import { pg } from '../db/postgres';
 export async function getUsers(req: Request, res: Response) {
     try {
         const result = await pg.query('SELECT * FROM UserProfile');
-        res.json(result.rows);
+        res.json({
+            instance: process.env.INSTANCE_NAME || 'default',
+            users: result.rows
+        });
     } catch (err) {
         res.status(500).json({ error: 'Error querying UserProfile', details: err });
     }
