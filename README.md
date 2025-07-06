@@ -207,3 +207,15 @@ curl -X POST http://localhost:8080/api/auth/login \
 ```
 curl http://localhost:8080/api/health
 ```
+
+4. Para verificar el Mock de Stripe
+
+``
+curl http://localhost:8080/api/billing/health
+
+curl -X POST http://localhost:8080/api/billing/checkout \
+  -H "Content-Type: application/json" \
+  -d '{"planId": "basic-monthly"}'
+
+curl http://localhost:8080/api/billing/status/mock-session-001
+```

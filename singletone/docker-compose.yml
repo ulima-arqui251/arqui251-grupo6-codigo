@@ -224,6 +224,7 @@ services:
     networks:
       - singletone-network
   
+  # Microservicio: Auth0
   auth-service:
     build:
       context: .
@@ -233,6 +234,20 @@ services:
       - "3010:3010"
     env_file:
       - apps/auth-service/.env
+    networks:
+      - singletone-network
+
+  # Microservicio: Billing (Mock de Stripe)
+  billing-service:
+    build:
+      context: .
+      dockerfile: apps/billing-service/Dockerfile
+    container_name: billing-service
+    restart: unless-stopped
+    ports:
+      - "3007:3007"
+    environment:
+      - PORT=3007
     networks:
       - singletone-network
 
