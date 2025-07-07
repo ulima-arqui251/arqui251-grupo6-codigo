@@ -1,7 +1,8 @@
 import express from 'express';
 import userRoutes from './routes/user.routes';
-import { verifyJWT } from './middleware/auth.middleware'; // ✅ Activado nuevamente
-console.log('🟨 Versión app.ts ejecutándose –', new Date().toISOString());
+import { verifyJWT } from './middleware/auth.middleware';
+
+console.log('☢️ VERSIÓN app.ts ejecutándose ACTUAL 4 –', new Date().toISOString());
 
 const app = express();
 app.use(express.json());
@@ -12,27 +13,25 @@ app.use((req, res, next) => {
     next();
 });
 
-// 🔐 Protección con JWT para todas las rutas excepto las públicas
+// 🔐 Middleware de autenticación para rutas protegidas
 app.use('/users', (req, res, next) => {
-    const openRoutes = [
-        { method: 'POST', path: '/users' },
+    const publicRoutes = [
+        { method: 'POST', path: '/users/register' },
         { method: 'POST', path: '/users/credentials' },
-        { method: 'GET', path: '/users/full' }
     ];
 
-    const isPublic = openRoutes.some(
-        route =>
-            route.method === req.method &&
-            req.originalUrl === route.path
+    const cleanPath = `/users${req.path.replace(/\/+$/, '') || '/'}`;
+    const isPublic = publicRoutes.some(
+        route => route.method === req.method && route.path === cleanPath
     );
 
-    console.log(`🔐 Evaluando: ${req.method} ${req.originalUrl} → Pública: ${isPublic}`);
-
+    console.log(`🔐 Evaluando: ${req.method} ${cleanPath} → Pública: ${isPublic}`);
     if (isPublic) return next();
+
     return verifyJWT(req, res, next);
 });
 
-// ✅ Rutas de usuario
+// ✅ Montamos las rutas bajo /users
 app.use('/users', userRoutes);
 
 export default app;

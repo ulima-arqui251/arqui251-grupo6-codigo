@@ -206,6 +206,8 @@ docker compose up -d \
 
   Y PARA CACHE
   npx nx reset
+
+  rm -rf node_modules/.cache/nx
 ```
 
 2. Para verificar el Mock de Auth0:
