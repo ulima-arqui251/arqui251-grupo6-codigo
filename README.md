@@ -191,6 +191,21 @@ RF31-RF35 - Sistema de recomendaciones
 ```
 docker compose down --volumes
 docker compose up --build
+
+o RAM
+
+docker compose up -d \
+  postgres \
+  redis-user \
+  redis-gateway \
+  user-service \
+  user-service-replica \
+  auth-service \
+  nginx \
+  frontend
+
+  Y PARA CACHE
+  npx nx reset
 ```
 
 2. Para verificar el Mock de Auth0:
