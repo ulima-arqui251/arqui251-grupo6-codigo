@@ -254,3 +254,5 @@ docker exec -it redis-gateway redis-cli
 KEYS *
 GET 106
 ```
+
+7. Funciona el bloque de rutas del frontend, necesitas el token de logeo

@@ -16,45 +16,62 @@ export default function Login() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email, password }),
         });
-
         const data = await res.json();
-
         if (!res.ok) {
             alert(data.error || 'Error de autenticación');
             return;
         }
-
         localStorage.setItem('token', data.token);
-        navigate('/home_page');
+            navigate('/home_page');
         } catch (err) {
         alert('Fallo en el login');
-        console.error(err);
+            console.error(err);
         }
-    };
+};
 
     return (
         <div className="login-container">
-        <div className="login-form">
-            <h1>Singletone</h1>
-            <div className="logo-placeholder">LOGO</div>
-            <form onSubmit={handleLogin}>
-            <input
-                type="text"
-                placeholder="Correo electrónico"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-            />
-            <input
-                type="password"
-                placeholder="Contraseña"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-            />
-            <button type="submit">Iniciar Sesión</button>
-            </form>
-            <p className="register-link">¿No tienes cuenta? <a href="/register">Créala aquí</a></p>
-        </div>
-        <div className="login-image" />
+            <div className="login-form">
+                <h1 className="title">Singletone</h1>
+                
+                <div className="logo-container">
+                <img src="/src/assets/singletone-logo-grey.svg" alt="Logo" className="logo-image" />
+                </div>
+
+                <form onSubmit={handleLogin}>
+                <div className="input-group">
+                    <label htmlFor="email">Usuario</label>
+                    <input
+                    id="email"
+                    type="text"
+                    placeholder="{ escribe aquí }"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    />
+                </div>
+                
+                <div className="input-group">
+                    <label htmlFor="password">Contraseña</label>
+                    <input
+                    id="password"
+                    type="password"
+                    placeholder="{ escribe aquí }"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    />
+                </div>
+                
+                <button type="submit" className="login-button">Iniciar Sesión</button>
+                </form>
+                
+                <p className="register-link">
+                    <a href="/register">Crea una cuenta aquí</a>
+                </p>
+            </div>
+            
+            <div className="login-image">
+                <img src="/src/assets/album_login_background.png" alt="Vinyl Records Background" />
+            </div>
         </div>
     );
 }

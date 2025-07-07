@@ -14,6 +14,7 @@ import Artist from '../pages/Artist';
 import Album from '../pages/Album';
 import Search from '../pages/Search';
 import Recommendation from '../pages/Recommendation';
+import PrivateRoute from '../components/PrivateRoute';
 
 function App() {
   return (
@@ -27,17 +28,82 @@ function App() {
         <Route path="/landing_page_02" element={<LandingPage02 />} />
         <Route path="/landing_page_03" element={<LandingPage03 />} />
 
-        <Route element={<Header />}>
-          <Route path="/home_page" element={<HomePage />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/edit_profile" element={<EditProfile />} />
-          <Route path="/profile_albums" element={<ProfileAlbums />} />
-          <Route path="/profile_artists" element={<ProfileArtists />} />
-          <Route path="/artist" element={<Artist />} />
-          <Route path="/album" element={<Album />} />
-          <Route path="/search" element={<Search />} />
-          <Route path="/recommendation" element={<Recommendation />} />
-        </Route>
+        import PrivateRoute from '../components/PrivateRoute'; // crea este archivo
+
+      <Route element={<Header />}>
+        <Route
+          path="/home_page"
+          element={
+            <PrivateRoute>
+              <HomePage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <PrivateRoute>
+              <Profile />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/edit_profile"
+          element={
+            <PrivateRoute>
+              <EditProfile />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/profile_albums"
+          element={
+            <PrivateRoute>
+              <ProfileAlbums />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/profile_artists"
+          element={
+            <PrivateRoute>
+              <ProfileArtists />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/artist"
+          element={
+            <PrivateRoute>
+              <Artist />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/album"
+          element={
+            <PrivateRoute>
+              <Album />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/search"
+          element={
+            <PrivateRoute>
+              <Search />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/recommendation"
+          element={
+            <PrivateRoute>
+              <Recommendation />
+            </PrivateRoute>
+          }
+        />
+      </Route>
       </Routes>
     </BrowserRouter>
   );
