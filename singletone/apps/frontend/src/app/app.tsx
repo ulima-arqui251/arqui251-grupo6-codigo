@@ -72,7 +72,7 @@ function App() {
           }
         />
         <Route
-          path="/artist"
+          path="/artist/:artistId"
           element={
             <PrivateRoute>
               <Artist />
