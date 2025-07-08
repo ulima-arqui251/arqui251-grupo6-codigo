@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AlbumCard from '../components/AlbumCard';
+import ArtistCard from '../components/ArtistCard';
 import './Profile.css';
 
 const API_URL = import.meta.env.VITE_API_URL;
@@ -107,10 +108,13 @@ const Profile = () => {
                 ) : (
                     <div className="profile-artists-scroll">
                         {summary.artists.map((artist: any, index: number) => (
-                            <div key={index} className="artist-card">
-                                <img src={artist.picture_url} alt={artist.name} />
-                                <p>{artist.name}</p>
-                            </div>
+                            <ArtistCard
+                                key={index}
+                                artistId={artist.artistId}
+                                name={artist.name}
+                                picture_url={artist.picture_url}
+                                rank_state={artist.rank_state}
+                            />
                         ))}
                     </div>
                 )}

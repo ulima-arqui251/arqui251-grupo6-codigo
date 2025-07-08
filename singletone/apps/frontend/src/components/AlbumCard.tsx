@@ -5,7 +5,7 @@ interface AlbumCardProps {
     albumId: string;
     title: string;
     cover_url: string;
-    average_score: number | string;
+    average_score: string; // ← solo string, ya no necesitas | number
     rank_state?: 'valued' | 'to_value' | string;
 }
 

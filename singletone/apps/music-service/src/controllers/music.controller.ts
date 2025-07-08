@@ -45,7 +45,12 @@ export const getAlbumById = async (req: Request, res: Response) => {
     const db = await mongoClientPromise;
 
     try {
+        if (!albumId || !ObjectId.isValid(albumId)) {
+            return res.status(400).json({ error: 'ID de álbum inválido' });
+        }
+
         const album = await db.collection('Album').findOne({ _id: new ObjectId(albumId) });
+
         if (!album) {
             return res.status(404).json({ error: 'Álbum no encontrado' });
         }
@@ -53,5 +58,33 @@ export const getAlbumById = async (req: Request, res: Response) => {
         res.json(album);
     } catch (err) {
         res.status(500).json({ error: 'Error al obtener álbum', details: err });
+    }
+};
+
+export const getArtistById = async (req: Request, res: Response) => {
+    const { artistId } = req.params;
+    const db = await mongoClientPromise;
+
+    try {
+        const artist = await db.collection('Artist').findOne({ _id: new ObjectId(artistId) });
+        if (!artist) {
+            return res.status(404).json({ error: 'Artista no encontrado' });
+        }
+
+        res.json(artist);
+    } catch (err) {
+        res.status(500).json({ error: 'Error al obtener artista', details: err });
+    }
+};
+
+export const getSongsByArtist = async (req: Request, res: Response) => {
+    const { artistId } = req.params;
+    const db = await mongoClientPromise;
+
+    try {
+        const songs = await db.collection('Song').find({ artist_id: new ObjectId(artistId) }).toArray();
+        res.json(songs);
+    } catch (err) {
+        res.status(500).json({ error: 'Error al obtener canciones del artista', details: err });
     }
 };
