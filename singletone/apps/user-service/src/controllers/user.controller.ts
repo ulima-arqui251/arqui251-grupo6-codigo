@@ -106,7 +106,7 @@ export async function registerUser(req: Request, res: Response) {
             lastName,
             nickname,
             email,
-            'https://cdn.example.com/pics/default.jpg',
+            'src/assets/default.png',
             hashedPassword
         ]);
 

@@ -5,7 +5,8 @@ import {
     getSongs,
     getGenres,
     getAlbumsByArtist,
-    getSongsByAlbum
+    getSongsByAlbum,
+    getAlbumById
 } from '../controllers/music.controller';
 
 const router = Router();
@@ -16,5 +17,6 @@ router.get('/music/songs', getSongs);
 router.get('/music/genres', getGenres);
 router.get('/music/albums/artist/:artistId', getAlbumsByArtist);
 router.get('/music/songs/album/:albumId', getSongsByAlbum);
+router.get('/music/albums/album/:albumId', getAlbumById);
 
 export default router;

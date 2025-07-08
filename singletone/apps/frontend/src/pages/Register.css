@@ -6,9 +6,12 @@
 }
 
 body, html {
-    overflow-x: hidden;
     font-family: 'Roboto', sans-serif;
     height: 100%;
+    /* no pongas overflow-x: hidden aquí */
+}
+.register-container {
+    overflow-x: hidden;
 }
 
 /* Contenedor principal */

@@ -81,14 +81,14 @@ function createMultipleArtists(artistsData) {
 const artistsData = [
     {
         name: "Twenty One Pilots",
-        pictureUrl: "http://example.com/twenty-one-pilots.jpg",
+        pictureUrl: "https://portalpopline.com.br/wp-content/uploads/2025/05/twenty-one-pilots-breach-novo-album.png",
         debutYear: "2009-01-01",
         genre: "Alternative Rock",
         albums: [
         {
             title: "Twenty One Pilots",
             releaseYear: "2009",
-            coverUrl: "http://example.com/top-self-titled.jpg",
+            coverUrl: "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/ca/7a/d0/ca7ad083-e97a-de0c-a8f2-5e144662dc87/884501253109_cover.jpg/486x486bb.png",
             songs: [
             "Implicit Demand for Proof", "Fall Away", "The Pantaloon",
             "Addict With a Pen", "Friend, Please", "March to the Sea",
@@ -100,7 +100,7 @@ const artistsData = [
         {
             title: "Regional at Best",
             releaseYear: "2011",
-            coverUrl: "http://example.com/regional-at-best.jpg",
+            coverUrl: "https://lastfm.freetls.fastly.net/i/u/ar0/20a1fe31863658a168cccac6b419e99f.jpg",
             songs: [
             "Guns for Hands", "Holding On to You", "Ode to Sleep",
             "Slowtown", "Car Radio", "Forest", "Glowing Eyes",
@@ -110,7 +110,7 @@ const artistsData = [
         {
             title: "Vessel",
             releaseYear: "2013",
-            coverUrl: "http://example.com/vessel.jpg",
+            coverUrl: "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/73/a7/23/73a7230c-19df-02a4-ff4e-53944024f63d/075679957924.jpg/600x600bf-60.jpg",
             songs: [
             "Ode to Sleep", "Holding On to You", "Migraine",
             "House of Gold", "Car Radio", "Semi-Automatic",
@@ -121,7 +121,7 @@ const artistsData = [
         {
             title: "Blurryface",
             releaseYear: "2015",
-            coverUrl: "http://example.com/blurryface.jpg",
+            coverUrl: "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/8e/e2/89/8ee28904-0821-610d-5011-a61845f62756/075679926951.jpg/600x600bf-60.jpg",
             songs: [
             "Heavydirtysoul", "Stressed Out", "Ride", "Fairly Local",
             "Tear in My Heart", "Lane Boy", "The Judge", "Doubt",
@@ -132,7 +132,7 @@ const artistsData = [
         {
             title: "Trench",
             releaseYear: "2018",
-            coverUrl: "http://example.com/trench.jpg",
+            coverUrl: "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/a3/c0/2b/a3c02b76-baa1-e575-dcba-247509200424/075679864789.jpg/600x600bf-60.jpg",
             songs: [
             "Jumpsuit", "Levitate", "Morph", "My Blood",
             "Chlorine", "Smithereens", "Neon Gravestones",
@@ -143,7 +143,7 @@ const artistsData = [
         {
             title: "Scaled and Icy",
             releaseYear: "2021",
-            coverUrl: "http://example.com/scaled-and-icy.jpg",
+            coverUrl: "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/24/f2/15/24f215e3-52cc-078b-d799-d58d606feddd/075679786210.jpg/600x600bf-60.jpg",
             songs: [
             "Good 4 U", "Choker", "Shy Away", "The Outside",
             "Saturday", "Never Take It", "Mulberry Street",
@@ -153,7 +153,7 @@ const artistsData = [
         {
             title: "Clancy",
             releaseYear: "2024",
-            coverUrl: "http://example.com/clancy.jpg",
+            coverUrl: "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/8b/39/c6/8b39c655-00fd-1b52-52ea-a98de686f3ae/075679659729.jpg/600x600bf-60.jpg",
             songs: [
             "Overcompensate", "Next Semester", "Backslide",
             "Midwest Indigo", "Routines In The Night", "Vignette",
@@ -166,14 +166,14 @@ const artistsData = [
     },
     {
         name: "Imagine Dragons",
-        pictureUrl: "http://example.com/imagine-dragons.jpg",
+        pictureUrl: "https://cdn-images.dzcdn.net/images/artist/1ba025c23cae3dee14b51152990285fc/1900x1900-000000-80-0-0.jpg",
         debutYear: "2008-01-01",
         genre: "Pop Rock",
         albums: [
         {
             title: "Smoke + Mirrors",
             releaseYear: "2015",
-            coverUrl: "http://example.com/smoke-mirrors.jpg",
+            coverUrl: "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/c1/16/59/c116596f-f3fd-3499-6cc2-bcb5b4931e6e/14UMGIM61459.rgb.jpg/600x600bf-60.jpg",
             songs: [
             "Shots", "Gold", "Smoke and Mirrors", "I'm So Sorry",
             "I Bet My Life", "Polaroid", "Friction", "It Comes Back to You",
