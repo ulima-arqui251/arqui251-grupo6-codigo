@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // 👈 nuevo
+import { useNavigate } from 'react-router-dom';
+import AlbumCard from '../components/AlbumCard';
 import './Profile.css';
 
 const API_URL = import.meta.env.VITE_API_URL;
@@ -11,7 +12,7 @@ const Profile = () => {
     const [error, setError] = useState('');
 
     const token = localStorage.getItem('token');
-    const navigate = useNavigate(); // 👈 nuevo
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchProfileAndSummary = async () => {
@@ -73,18 +74,9 @@ const Profile = () => {
             )}
 
             <div className="profile-stats">
-                <div>
-                    <h3>N° Artistas</h3>
-                    <p>{summary.artistCount}</p>
-                </div>
-                <div>
-                    <h3>N° Albums</h3>
-                    <p>{summary.albumCount}</p>
-                </div>
-                <div>
-                    <h3>N° Canciones</h3>
-                    <p>{summary.songCount}</p>
-                </div>
+                <div><h3>N° Artistas</h3><p>{summary.artistCount}</p></div>
+                <div><h3>N° Albums</h3><p>{summary.albumCount}</p></div>
+                <div><h3>N° Canciones</h3><p>{summary.songCount}</p></div>
             </div>
 
             <div className="profile-section">
@@ -94,25 +86,14 @@ const Profile = () => {
                 ) : (
                     <div className="profile-albums-scroll">
                         {summary.albums.map((album: any, index: number) => (
-                            <div
+                            <AlbumCard
                                 key={index}
-                                className="album-card"
-                                onClick={() =>
-                                    navigate(`/album/${album.albumId}`, {
-                                        state: {
-                                            title: album.title,
-                                            cover_url: album.cover_url,
-                                            rank_state: album.rank_state,
-                                            average_score: album.average_score
-                                        }
-                                    })
-                                }
-                                style={{ cursor: 'pointer' }}
-                            >
-                                <img src={album.cover_url} alt={album.title} />
-                                <p>{album.title}</p>
-                                <p>Nota: {album.average_score}</p>
-                            </div>
+                                albumId={album.albumId}
+                                title={album.title}
+                                cover_url={album.cover_url}
+                                average_score={album.average_score}
+                                rank_state={album.rank_state}
+                            />
                         ))}
                     </div>
                 )}

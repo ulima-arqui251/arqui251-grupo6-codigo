@@ -19,6 +19,24 @@ export const getUserAlbums = async (req: Request, res: Response) => {
     res.json(result);
 };
 
+export const getUserAlbumRatings = async (req: Request, res: Response) => {
+    try {
+        const db = await mongoClientPromise;
+        const { userId, albumId } = req.params;
+
+        const ratings = await db.collection('SongUser').find({
+            user_id: parseInt(userId),
+            album_id: albumId
+        }).toArray();
+
+        const simplified = ratings.map(r => ({ song_id: r.song_id, score: r.score }));
+        res.json(simplified);
+    } catch (err) {
+        console.error('❌ Error al obtener valoraciones de canciones:', err);
+        res.status(500).json({ error: 'Error al obtener valoraciones de canciones' });
+    }
+};
+
 export const addAlbumToUser = async (req: Request, res: Response) => {
     try {
         const db = await mongoClientPromise;
@@ -79,10 +97,8 @@ export const rateAlbum = async (req: Request, res: Response) => {
         const token = req.headers.authorization || '';
         const musicServiceUrl = process.env.MUSIC_SERVICE_URL;
 
-        // Obtener tipo de suscripción desde redis-gateway
         const subscriptionType = await getUserSubscriptionType(userId);
 
-        // Si es FREE, validar el límite de valoraciones
         if (subscriptionType === 'free') {
             const key = getCurrentMonthKey(userId);
             const currentCount = parseInt(await redisLibrary.get(key) || '0');
@@ -91,10 +107,9 @@ export const rateAlbum = async (req: Request, res: Response) => {
                 return res.status(403).json({ error: 'Has alcanzado el límite de 10 valoraciones este mes.' });
             }
 
-            await redisLibrary.set(key, (currentCount + 1).toString(), 'EX', 60 * 60 * 24 * 31); // expira en ~1 mes
+            await redisLibrary.set(key, (currentCount + 1).toString(), 'EX', 60 * 60 * 24 * 31);
         }
 
-        // Obtener canciones del álbum
         const response = await axios.get(`${musicServiceUrl}/music/songs/album/${albumId}`, {
             headers: { Authorization: token }
         });
@@ -108,7 +123,6 @@ export const rateAlbum = async (req: Request, res: Response) => {
             return res.status(400).json({ error: 'Debe valorar todas las canciones del álbum' });
         }
 
-        // Guardar valoraciones
         for (const rating of ratings) {
             await db.collection('SongUser').insertOne({
                 _id: new ObjectId(),
@@ -120,13 +134,11 @@ export const rateAlbum = async (req: Request, res: Response) => {
             });
         }
 
-        // Marcar álbum como valorado
         await db.collection('AlbumUser').updateOne(
             { user_id: userId, album_id: albumId },
             { $set: { rank_state: 'valued', rank_date: new Date() } }
         );
 
-        // Incrementar completados y estado del artista
         await db.collection('ArtistUser').updateOne(
             { user_id: userId, artist_id: artistId },
             { $inc: { completed_albums: 1 } }
@@ -201,7 +213,6 @@ export const getUserSummary = async (req: Request, res: Response) => {
             };
         }).filter(Boolean);
 
-        // Lógica de valoraciones restantes (solo si es free)
         const subscriptionType = await getUserSubscriptionType(parseInt(userId));
         let remainingRatings = null;
         if (subscriptionType === 'free') {
@@ -221,5 +232,60 @@ export const getUserSummary = async (req: Request, res: Response) => {
     } catch (err: any) {
         console.error('❌ Error en summary:', err.message);
         res.status(500).json({ error: 'Error al obtener summary', details: err });
+    }
+};
+
+export const updateAlbumRating = async (req: Request, res: Response) => {
+    try {
+        const db = await mongoClientPromise;
+        const { userId, artistId, albumId, ratings } = req.body;
+        const token = req.headers.authorization || '';
+        const musicServiceUrl = process.env.MUSIC_SERVICE_URL;
+
+        const subscriptionType = await getUserSubscriptionType(userId);
+        if (subscriptionType === 'free') {
+            const key = getCurrentMonthKey(userId);
+            const currentCount = parseInt(await redisLibrary.get(key) || '0');
+            if (currentCount >= 10) {
+                return res.status(403).json({ error: 'Límite de valoraciones alcanzado' });
+            }
+            await redisLibrary.set(key, (currentCount + 1).toString(), 'EX', 60 * 60 * 24 * 31);
+        }
+
+        const response = await axios.get(`${musicServiceUrl}/music/songs/album/${albumId}`, {
+            headers: { Authorization: token }
+        });
+
+        const realSongs = response.data;
+        if (!realSongs || realSongs.length === 0 || ratings.length !== realSongs.length) {
+            return res.status(400).json({ error: 'Datos incompletos' });
+        }
+
+        for (const rating of ratings) {
+            await db.collection('SongUser').updateOne(
+                {
+                    user_id: userId,
+                    song_id: rating.songId,
+                    album_id: albumId
+                },
+                {
+                    $set: {
+                        artist_id: artistId,
+                        score: rating.score
+                    }
+                },
+                { upsert: true }
+            );
+        }
+
+        await db.collection('AlbumUser').updateOne(
+            { user_id: userId, album_id: albumId },
+            { $set: { rank_state: 'valued' } }
+        );
+
+        res.json({ message: 'Valoración actualizada.' });
+    } catch (error: any) {
+        console.error('❌ Error al actualizar valoración:', error?.response?.data || error.message);
+        res.status(500).json({ error: 'Error interno al actualizar valoración', details: error });
     }
 };
