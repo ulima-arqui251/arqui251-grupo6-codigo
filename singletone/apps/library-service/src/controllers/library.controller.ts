@@ -49,7 +49,6 @@ export const addAlbumToUser = async (req: Request, res: Response) => {
             rank_state: 'to_value'
         });
 
-        // 👇 Asegurar que rank_state del artista sea "to_value" si tiene álbumes pendientes
         const updated = await db.collection('ArtistUser').findOne({ user_id: userId, artist_id: artistId });
         if (updated && updated.completed_albums < updated.total_albums) {
             await db.collection('ArtistUser').updateOne(
@@ -60,7 +59,7 @@ export const addAlbumToUser = async (req: Request, res: Response) => {
 
         res.json({ message: 'Álbum agregado a la biblioteca del usuario.' });
     } catch (err) {
-        console.error('Error al agregar álbum:', err);
+        console.error('❌ Error al agregar álbum:', err);
         res.status(500).json({ error: 'Error interno al agregar álbum', details: err });
     }
 };
@@ -70,9 +69,16 @@ export const rateAlbum = async (req: Request, res: Response) => {
         const db = await mongoClientPromise;
         const { userId, artistId, albumId, ratings } = req.body;
 
-        // 1. Obtener canciones reales del álbum
+        const token = req.headers.authorization || '';
         const musicServiceUrl = process.env.MUSIC_SERVICE_URL;
-        const response = await axios.get(`${musicServiceUrl}/api/music/songs/album/${albumId}`);
+
+        // 1. Obtener canciones del álbum desde music-service
+        const response = await axios.get(`${musicServiceUrl}/api/music/songs/album/${albumId}`, {
+            headers: {
+                Authorization: token
+            }
+        });
+
         const realSongs = response.data;
 
         if (!realSongs || realSongs.length === 0) {
@@ -123,8 +129,8 @@ export const rateAlbum = async (req: Request, res: Response) => {
         }
 
         res.json({ message: 'Álbum valorado correctamente con puntuaciones exactas.' });
-    } catch (error) {
-        console.error('Error al valorar álbum:', error);
+    } catch (error: any) {
+        console.error('❌ Error al valorar álbum:', error?.response?.data || error.message);
         res.status(500).json({ error: 'Error interno al valorar álbum', details: error });
     }
 };

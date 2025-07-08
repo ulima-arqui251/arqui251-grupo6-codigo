@@ -171,7 +171,7 @@ const Register = () => {
                 <div className="register-right">
                     <div className="register-logo">
                         <div className="register-logo">
-                        <img src="/src/assets/singletone-logo.svg" alt="Logo" width="200" height="200" />
+                        <img src="/src/assets/singletone-logo-white.svg" alt="Logo" width="200" height="200" />
                     </div>
                     </div>
                 </div>

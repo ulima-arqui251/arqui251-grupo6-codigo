@@ -4,7 +4,7 @@ const Header = () => {
     const navigate = useNavigate();
 
     const handleLogout = () => {
-        // Más adelante: cerrar sesión, limpiar token, etc.
+        localStorage.removeItem('token');
         navigate('/login');
     };
 

@@ -1,64 +1,184 @@
-.login-container {
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;600;700;800&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    }
+
+    html, body {
+    height: 100%;
+    overflow: hidden;
+    }
+
+    .login-container {
     display: flex;
     height: 100vh;
-    font-family: sans-serif;
-}
+    width: 100vw;
+    font-family: 'Roboto', sans-serif;
+    overflow: hidden;
+    }
 
-.login-form {
+    .login-form {
     width: 50%;
-    padding: 40px;
+    padding: 60px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-}
+    background-color: #f5f5f5;
+    }
 
-.login-form h1 {
-    font-size: 2.5rem;
-    margin-bottom: 20px;
-}
+    .title {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 800;
+    font-size: 50px;
+    color: #535353;
+    margin-bottom: 40px;
+    text-align: center;
+    }
 
-.logo-placeholder {
-    width: 100px;
-    height: 100px;
-    background-color: lightgray;
+    .logo-container {
+    margin-bottom: 50px;
+    }
+
+    .logo-image {
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
+    }
+
+    form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 400px;
+    }
+
+    .input-group {
     margin-bottom: 30px;
     display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-form {
-    display: flex;
     flex-direction: column;
-    width: 80%;
-    max-width: 400px;
-}
+    }
 
-input {
-    margin-bottom: 15px;
-    padding: 12px;
-    font-size: 1rem;
-    border: 1px solid #ccc;
+    .input-group label {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 600;
+    font-size: 21px;
+    color: #333;
+    margin-bottom: 8px;
+    }
+
+    .input-group input {
+    padding: 15px 20px;
+    font-size: 16px;
+    border: 1px solid #ddd;
     border-radius: 8px;
-}
+    background-color: white;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    }
 
-button {
-    background-color: #e50914;
+    .input-group input::placeholder {
+    color: #999;
+    font-style: italic;
+    }
+
+    .input-group input:focus {
+    outline: none;
+    border-color: #BF4141;
+    box-shadow: 0 0 0 2px rgba(191, 65, 65, 0.1);
+    }
+
+    .login-button {
+    background-color: #BF4141;
     color: white;
     border: none;
-    padding: 12px;
-    font-size: 1rem;
+    padding: 17px 35px;
+    font-size: 16px;
+    font-weight: 600;
     border-radius: 8px;
     cursor: pointer;
-}
+    margin-top: 10px;
+    font-family: 'Roboto', sans-serif;
+    transition: background-color 0.3s ease;
+    }
 
-.register-link {
-    margin-top: 20px;
-    font-size: 0.9rem;
-}
+    .login-button:hover {
+    background-color: #a63636;
+    }
 
-.login-image {
+    .register-link {
+    margin-top: 30px;
+    text-align: center;
+    }
+
+    .register-link a {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 200;
+    font-size: 19px;
+    color: #666;
+    text-decoration: underline;
+    transition: color 0.3s ease;
+    }
+
+    .register-link a:hover {
+    color: #BF4141;
+    }
+
+    .login-image {
     width: 50%;
-    background-color: #ccc;
+    position: relative;
+    overflow: hidden;
+    }
+
+    .login-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: right center;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+    .login-container {
+        flex-direction: column;
+        height: 100vh;
+        overflow: hidden;
+    }
+    
+    .login-form {
+        width: 100%;
+        height: 60vh;
+        min-height: 60vh;
+        padding: 30px;
+    }
+    
+    .login-image {
+        width: 100%;
+        height: 40vh;
+        min-height: 40vh;
+    }
+    
+    .title {
+        font-size: 36px;
+        margin-bottom: 20px;
+    }
+    
+    .logo-image {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .logo-container {
+        margin-bottom: 25px;
+    }
+    
+    .input-group {
+        margin-bottom: 20px;
+    }
+    
+    .input-group label {
+        font-size: 18px;
+    }
 }

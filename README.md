@@ -246,3 +246,13 @@ curl -X POST http://localhost:8080/api/huggingface/generate \
   -H "Content-Type: application/json" \
   -d '{"prompt": "Hola, ¿cómo estás?"}'
 ```
+
+6. Validar redis gateway (mostrar guardado de id y suscripcion)
+
+```
+docker exec -it redis-gateway redis-cli
+KEYS *
+GET 106
+```
+
+7. Funciona el bloque de rutas del frontend, necesitas el token de logeo
