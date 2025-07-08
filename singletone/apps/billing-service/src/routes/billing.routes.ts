@@ -3,8 +3,8 @@ import { createCheckoutSession, getPaymentStatus, health } from '../controllers/
 
 const router = Router();
 
-router.get('/health', health);
-router.post('/checkout', createCheckoutSession);
-router.get('/status/:sessionId', getPaymentStatus);
+router.get('/billing/health', health); // <-- cambia aquí
+router.post('/billing/checkout', createCheckoutSession); // <-- aquí también
+router.get('/billing/status/:sessionId', getPaymentStatus); // <-- y aquí
 
 export default router;
