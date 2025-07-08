@@ -2,18 +2,20 @@ import { Request, Response } from 'express';
 import { mongoClientPromise } from '../db/mongo';
 import axios from 'axios';
 import { ObjectId } from 'mongodb';
+import { getUserSubscriptionType } from '../utils/subscription';
+import { redis as redisLibrary } from '../db/redis';
 
 export const getUserArtists = async (req: Request, res: Response) => {
     const db = await mongoClientPromise;
     const { userId } = req.params;
-    const result = await db.collection('ArtistUser').find({ user_id: userId }).toArray();
+    const result = await db.collection('ArtistUser').find({ user_id: parseInt(userId) }).toArray();
     res.json(result);
 };
 
 export const getUserAlbums = async (req: Request, res: Response) => {
     const db = await mongoClientPromise;
     const { userId } = req.params;
-    const result = await db.collection('AlbumUser').find({ user_id: userId }).toArray();
+    const result = await db.collection('AlbumUser').find({ user_id: parseInt(userId) }).toArray();
     res.json(result);
 };
 
@@ -64,33 +66,49 @@ export const addAlbumToUser = async (req: Request, res: Response) => {
     }
 };
 
+const getCurrentMonthKey = (userId: number) => {
+    const now = new Date();
+    const yearMonth = `${now.getFullYear()}-${now.getMonth() + 1}`;
+    return `ratings:${userId}:${yearMonth}`;
+};
+
 export const rateAlbum = async (req: Request, res: Response) => {
     try {
         const db = await mongoClientPromise;
         const { userId, artistId, albumId, ratings } = req.body;
-
         const token = req.headers.authorization || '';
         const musicServiceUrl = process.env.MUSIC_SERVICE_URL;
 
-        // 1. Obtener canciones del álbum desde music-service
-        const response = await axios.get(`${musicServiceUrl}/api/music/songs/album/${albumId}`, {
-            headers: {
-                Authorization: token
+        // Obtener tipo de suscripción desde redis-gateway
+        const subscriptionType = await getUserSubscriptionType(userId);
+
+        // Si es FREE, validar el límite de valoraciones
+        if (subscriptionType === 'free') {
+            const key = getCurrentMonthKey(userId);
+            const currentCount = parseInt(await redisLibrary.get(key) || '0');
+
+            if (currentCount >= 10) {
+                return res.status(403).json({ error: 'Has alcanzado el límite de 10 valoraciones este mes.' });
             }
+
+            await redisLibrary.set(key, (currentCount + 1).toString(), 'EX', 60 * 60 * 24 * 31); // expira en ~1 mes
+        }
+
+        // Obtener canciones del álbum
+        const response = await axios.get(`${musicServiceUrl}/music/songs/album/${albumId}`, {
+            headers: { Authorization: token }
         });
 
         const realSongs = response.data;
-
         if (!realSongs || realSongs.length === 0) {
             return res.status(400).json({ error: 'Álbum no encontrado o sin canciones' });
         }
 
-        // 2. Validar que se están valorando todas
         if (ratings.length !== realSongs.length) {
             return res.status(400).json({ error: 'Debe valorar todas las canciones del álbum' });
         }
 
-        // 3. Guardar cada valoración
+        // Guardar valoraciones
         for (const rating of ratings) {
             await db.collection('SongUser').insertOne({
                 _id: new ObjectId(),
@@ -102,25 +120,19 @@ export const rateAlbum = async (req: Request, res: Response) => {
             });
         }
 
-        // 4. Marcar el álbum como valorado
+        // Marcar álbum como valorado
         await db.collection('AlbumUser').updateOne(
             { user_id: userId, album_id: albumId },
-            {
-                $set: {
-                    rank_state: 'valued',
-                    rank_date: new Date()
-                }
-            }
+            { $set: { rank_state: 'valued', rank_date: new Date() } }
         );
 
-        // 5. Incrementar completados y actualizar estado del artista
+        // Incrementar completados y estado del artista
         await db.collection('ArtistUser').updateOne(
             { user_id: userId, artist_id: artistId },
             { $inc: { completed_albums: 1 } }
         );
 
         const artistUser = await db.collection('ArtistUser').findOne({ user_id: userId, artist_id: artistId });
-
         if (artistUser && artistUser.completed_albums >= artistUser.total_albums) {
             await db.collection('ArtistUser').updateOne(
                 { user_id: userId, artist_id: artistId },
@@ -128,9 +140,86 @@ export const rateAlbum = async (req: Request, res: Response) => {
             );
         }
 
-        res.json({ message: 'Álbum valorado correctamente con puntuaciones exactas.' });
+        res.json({ message: 'Álbum valorado correctamente.' });
     } catch (error: any) {
         console.error('❌ Error al valorar álbum:', error?.response?.data || error.message);
         res.status(500).json({ error: 'Error interno al valorar álbum', details: error });
+    }
+};
+
+export const getUserSummary = async (req: Request, res: Response) => {
+    const db = await mongoClientPromise;
+    const { userId } = req.params;
+    const musicServiceUrl = process.env.MUSIC_SERVICE_URL;
+    const token = req.headers.authorization;
+
+    try {
+        const [artistLinks, albumLinks, songLinks] = await Promise.all([
+            db.collection('ArtistUser').find({ user_id: parseInt(userId) }).toArray(),
+            db.collection('AlbumUser').find({ user_id: parseInt(userId) }).toArray(),
+            db.collection('SongUser').find({ user_id: parseInt(userId) }).toArray()
+        ]);
+
+        const [artistsRes, albumsRes] = await Promise.all([
+            axios.get(`${musicServiceUrl}/music/artists`, { headers: { Authorization: token || '' } }),
+            axios.get(`${musicServiceUrl}/music/albums`, { headers: { Authorization: token || '' } })
+        ]);
+
+        const artistsMap = Object.fromEntries(artistsRes.data.map((a: any) => [a._id, a]));
+        const albumsMap = Object.fromEntries(albumsRes.data.map((a: any) => [a._id, a]));
+
+        const userAlbums = await Promise.all(albumLinks.map(async (entry: any) => {
+            const album = albumsMap[entry.album_id];
+            if (!album) return null;
+
+            let average_score = null;
+            if (entry.rank_state === 'valued') {
+                const ratings = await db.collection('SongUser')
+                    .find({ user_id: parseInt(userId), album_id: entry.album_id })
+                    .toArray();
+                if (ratings.length > 0) {
+                    const total = ratings.reduce((acc, r) => acc + r.score, 0);
+                    average_score = Math.round(total / ratings.length);
+                }
+            }
+
+            return {
+                albumId: album._id,
+                title: album.title,
+                cover_url: album.cover_url,
+                rank_state: entry.rank_state,
+                average_score: average_score ?? '—'
+            };
+        }));
+
+        const userArtists = artistLinks.map((entry: any) => {
+            const artist = artistsMap[entry.artist_id];
+            return {
+                artistId: artist?._id,
+                name: artist?.name,
+                picture_url: artist?.picture_url
+            };
+        }).filter(Boolean);
+
+        // Lógica de valoraciones restantes (solo si es free)
+        const subscriptionType = await getUserSubscriptionType(parseInt(userId));
+        let remainingRatings = null;
+        if (subscriptionType === 'free') {
+            const key = getCurrentMonthKey(parseInt(userId));
+            const used = parseInt(await redisLibrary.get(key) || '0');
+            remainingRatings = 10 - used;
+        }
+
+        res.json({
+            artistCount: userArtists.length,
+            albumCount: userAlbums.filter(Boolean).length,
+            songCount: songLinks.length,
+            albums: userAlbums.filter(Boolean),
+            artists: userArtists,
+            remainingRatings
+        });
+    } catch (err: any) {
+        console.error('❌ Error en summary:', err.message);
+        res.status(500).json({ error: 'Error al obtener summary', details: err });
     }
 };

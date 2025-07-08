@@ -39,3 +39,19 @@ export const getSongsByAlbum = async (req: Request, res: Response) => {
     const result = await db.collection('Song').find({ album_id: new ObjectId(albumId) }).toArray();
     res.json(result);
 };
+
+export const getAlbumById = async (req: Request, res: Response) => {
+    const { albumId } = req.params;
+    const db = await mongoClientPromise;
+
+    try {
+        const album = await db.collection('Album').findOne({ _id: new ObjectId(albumId) });
+        if (!album) {
+            return res.status(404).json({ error: 'Álbum no encontrado' });
+        }
+
+        res.json(album);
+    } catch (err) {
+        res.status(500).json({ error: 'Error al obtener álbum', details: err });
+    }
+};

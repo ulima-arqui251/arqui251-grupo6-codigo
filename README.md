@@ -256,3 +256,53 @@ GET 106
 ```
 
 7. Funciona el bloque de rutas del frontend, necesitas el token de logeo
+
+8. Obteniendo albums desde terminal
+```
+curl -X GET http://localhost:8080/api/music/albums \
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEwNiwiaWF0IjoxNzUxOTY2ODE0LCJleHAiOjE3NTE5NzA0MTR9.aazhQBRv9d5ARqfwPjmE4OwN-qTX543sqJ1jsXwnQaY"
+```
+
+9. Agregando un album desde terminal
+```
+curl -X POST http://localhost:8080/api/library/add-album \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEwNiwiaWF0IjoxNzUxOTY2ODE0LCJleHAiOjE3NTE5NzA0MTR9.aazhQBRv9d5ARqfwPjmE4OwN-qTX543sqJ1jsXwnQaY" \
+  -d '{"userId": 106, "artistId": "686ce3717e17a3dd2ff47071", "albumId": "686ce3717e17a3dd2ff47072"}
+```
+
+10. Valorando un album desde terminal
+```
+curl -X POST http://localhost:8080/api/library/rate-album \
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEwNiwiaWF0IjoxNzUxOTY2ODE0LCJleHAiOjE3NTE5NzA0MTR9.aazhQBRv9d5ARqfwPjmE4OwN-qTX543sqJ1jsXwnQaY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "userId": 106,
+    "artistId": "686ce3717e17a3dd2ff47071",
+    "albumId": "686ce3727e17a3dd2ff470c5",
+    "ratings": [
+      { "songId": "686ce3727e17a3dd2ff470c6", "score": 80 },
+      { "songId": "686ce3727e17a3dd2ff470c7", "score": 85 },
+      { "songId": "686ce3727e17a3dd2ff470c8", "score": 90 },
+      { "songId": "686ce3727e17a3dd2ff470c9", "score": 95 },
+      { "songId": "686ce3727e17a3dd2ff470ca", "score": 100 },
+      { "songId": "686ce3727e17a3dd2ff470cb", "score": 85 },
+      { "songId": "686ce3727e17a3dd2ff470cc", "score": 90 },
+      { "songId": "686ce3727e17a3dd2ff470cd", "score": 95 },
+      { "songId": "686ce3727e17a3dd2ff470ce", "score": 100 },
+      { "songId": "686ce3727e17a3dd2ff470cf", "score": 85 },
+      { "songId": "686ce3727e17a3dd2ff470d0", "score": 90 },
+      { "songId": "686ce3727e17a3dd2ff470d1", "score": 95 },
+      { "songId": "686ce3727e17a3dd2ff470d2", "score": 100 }
+    ]
+}'
+```
+
+
+11. Ver valoraciones mensual
+```
+docker exec -it redis-library redis-cli
+KEYS *
+{te dará un key en ""}
+GET { la key }
+```

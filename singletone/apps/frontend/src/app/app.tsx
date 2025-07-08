@@ -80,7 +80,7 @@ function App() {
           }
         />
         <Route
-          path="/album"
+          path="/album/:albumId"
           element={
             <PrivateRoute>
               <Album />

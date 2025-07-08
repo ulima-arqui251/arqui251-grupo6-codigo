@@ -21,6 +21,7 @@ export const getUserProfile = async (req: Request, res: Response) => {
             profileId: user.profile_id,
             name: user.name,
             lastName: user.last_name,
+            nickname: user.nickname,
             picture: user.picture,
             subscriptionType: user.sub_type || 'free',
         });
