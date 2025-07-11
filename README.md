@@ -306,3 +306,8 @@ KEYS *
 {te dará un key en ""}
 GET { la key }
 ```
+
+12. Para bajar y subir un solo archivo
+```
+docker compose up -d --build { imagen }
+```

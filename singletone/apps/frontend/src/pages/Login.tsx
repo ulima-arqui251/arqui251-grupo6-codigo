@@ -32,7 +32,7 @@ export default function Login() {
     return (
         <div className="login-container">
             <div className="login-form">
-                <h1 className="title">Singletone</h1>
+                <h1 className="title">SingletoneEEEEEEEEEEE</h1>
                 
                 <div className="logo-container">
                 <img src="/src/assets/singletone-logo-grey.svg" alt="Logo" className="logo-image" />
