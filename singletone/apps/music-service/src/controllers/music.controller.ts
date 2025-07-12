@@ -67,11 +67,21 @@ export const getArtistById = async (req: Request, res: Response) => {
 
     try {
         const artist = await db.collection('Artist').findOne({ _id: new ObjectId(artistId) });
+
         if (!artist) {
             return res.status(404).json({ error: 'Artista no encontrado' });
         }
 
-        res.json(artist);
+        let genreName = '—';
+        if (artist.genre) {
+            const genreDoc = await db.collection('Genre').findOne({ _id: artist.genre });
+            genreName = genreDoc?.name || '—';
+        }
+
+        res.json({
+            ...artist,
+            genre: genreName
+        });
     } catch (err) {
         res.status(500).json({ error: 'Error al obtener artista', details: err });
     }

@@ -8,18 +8,18 @@ function createGenre(name) {
 }
 
 // Función para crear un artista
-function createArtist(name, pictureUrl, debutYear) {
+function createArtist(name, pictureUrl, debutYear, genreId) {
     const artistId = ObjectId();
     db.Artist.insertOne({
         _id: artistId,
         name,
         picture_url: pictureUrl,
         debut_year: ISODate(debutYear),
+        genre: genreId,
         albums: []
     });
     return artistId;
 }
-
 // Función para crear un álbum con canciones
 function createAlbumWithSongs(artistId, albumData, songNames) {
     const albumId = ObjectId();
@@ -60,7 +60,7 @@ function createMultipleArtists(artistsData) {
         const existingGenre = db.Genre.findOne({ name: artistData.genre });
         genreId = existingGenre ? existingGenre._id : createGenre(artistData.genre);
 
-        const artistId = createArtist(artistData.name, artistData.pictureUrl, artistData.debutYear);
+        const artistId = createArtist(artistData.name, artistData.pictureUrl, artistData.debutYear, genreId);
 
         const albumResults = artistData.albums.map(albumData =>
             createAlbumWithSongs(artistId, {

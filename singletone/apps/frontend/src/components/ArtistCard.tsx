@@ -1,5 +1,6 @@
+// src/components/ArtistCard.tsx
 import './ArtistCard.css';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 interface ArtistCardProps {
     artistId: string;
@@ -10,11 +11,18 @@ interface ArtistCardProps {
 
 const ArtistCard = ({ artistId, name, picture_url, rank_state }: ArtistCardProps) => {
     const navigate = useNavigate();
+    const location = useLocation();
+
+    const isFromProfile = location.pathname.includes('/profile');
 
     const handleClick = () => {
-        navigate(`/artist/${artistId}`, {
-            state: { rank_state: rank_state ?? '' }
-        });
+        if (isFromProfile) {
+            navigate(`/my-artist/${artistId}`);
+        } else {
+            navigate(`/artist/${artistId}`, {
+                state: { rank_state: rank_state ?? '' }
+            });
+        }
     };
 
     return (
