@@ -39,7 +39,8 @@ function createAlbumWithSongs(artistId, albumData, songNames) {
         db.Song.insertOne({
             _id: songIds[index],
             name: songName,
-            album_id: albumId
+            album_id: albumId,
+            artist_id: artistId
         });
     });
 
