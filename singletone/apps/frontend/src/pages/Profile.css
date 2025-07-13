@@ -77,3 +77,18 @@ a {
 a:hover {
     text-decoration: underline;
 }
+
+.edit-button {
+    margin-top: 10px;
+    padding: 6px 12px;
+    background-color: #0077cc;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.edit-button:hover {
+    background-color: #005fa3;
+}

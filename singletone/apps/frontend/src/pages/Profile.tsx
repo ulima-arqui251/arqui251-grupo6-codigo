@@ -61,6 +61,12 @@ const Profile = () => {
 
             <div className="profile-picture">
                 <img src={profile.picture} alt="Foto de perfil" />
+                <button
+                    className="edit-button"
+                    onClick={() => navigate('/edit_profile')}
+                >
+                    ✏️ Editar perfil
+                </button>
             </div>
 
             <h2>@{profile.nickname}</h2>
