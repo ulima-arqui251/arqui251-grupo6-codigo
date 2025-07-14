@@ -106,7 +106,7 @@ export async function registerUser(req: Request, res: Response) {
             lastName,
             nickname,
             email,
-            'src/assets/default.png',
+            'https://m.media-amazon.com/images/I/61Ym0lrtUwL.__AC_SX300_SY300_QL70_ML2_.jpg',
             hashedPassword
         ]);
 
