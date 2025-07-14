@@ -1,159 +1,131 @@
 /* Header.module.css */
 .header {
-background: #6B6B6B;
-padding: 12px 0;
-border-radius: 0 0 25px 25px;
-box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-position: fixed;
-top: 0;
-left: 0;
-right: 0;
-z-index: 1000;
-margin-right: 418px;
-margin-left: 418px;
+  background: #6B6B6B;
+  padding: 12px 0;
+  border-radius: 0 0 30px 30px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  margin-right: 418px;
+  margin-left: 418px;
 }
 
 .nav {
-display: flex;
-justify-content: center;
-align-items: center;
-gap: 100px;
-margin: 0 auto;
-max-width: 1512px;
-padding: 0 40px; /* Agregado margen lateral */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 100px;
+  margin: 0 auto;
+  max-width: 1512px;
+  padding: 0 40px;
 }
 
 .navLink {
-display: flex;
-align-items: center;
-justify-content: center;
-width: 50px;
-height: 50px;
-border-radius: 50%;
-background-color: transparent;
-transition: all 0.3s ease;
-text-decoration: none;
-position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Removemos width y height fijos para usar los inline styles */
+  border-radius: 50%;
+  background-color: transparent;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  position: relative;
+  flex-shrink: 0; /* Evita que se comprima */
 }
 
 .navLink.active {
-background-color: #E5E5E5;
+  background-color: #E5E5E5;
 }
 
 .navLink:hover:not(.active) {
-background-color: rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 .navIcon {
-width: 32px;
-height: 32px;
-transition: filter 0.3s ease;
-}
-
-/* Iconos más grandes para el primer y tercer elemento */
-.navLink:nth-child(1) .navIcon,
-.navLink:nth-child(3) .navIcon {
-width: 36px;
-height: 36px;
+  /* Removemos width y height fijos para usar los inline styles */
+  transition: filter 0.3s ease;
+  object-fit: contain; /* Mantiene la proporción de la imagen */
 }
 
 .navIcon.inactive {
-filter: brightness(0) invert(1);
+  filter: brightness(0) invert(1);
 }
 
 .logoutButton {
-display: flex;
-align-items: center;
-justify-content: center;
-width: 50px;
-height: 50px;
-border-radius: 50%;
-background-color: transparent;
-border: none;
-cursor: pointer;
-transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Removemos width y height fijos para usar los inline styles */
+  border-radius: 50%;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  flex-shrink: 0; /* Evita que se comprima */
 }
 
 .logoutButton:hover {
-background-color: rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 .logoutIcon {
-width: 32px;
-height: 32px;
-filter: brightness(0) invert(1);
+  /* Removemos width y height fijos para usar los inline styles */
+  filter: brightness(0) invert(1);
+  transition: filter 0.3s ease;
+  object-fit: contain;
 }
 
 .main {
-padding-top: 90px; /* Espacio para el header fijo */
-padding-left: 2rem;
-padding-right: 2rem;
-padding-bottom: 2rem;
+  padding-top: 90px;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  padding-bottom: 2rem;
 }
 
 /* Responsive */
 @media (max-width: 1512px) {
-.nav {
-padding: 0 30px;
-gap: 80px;
- }
+  .nav {
+    padding: 0 30px;
+    gap: 60px;
+  }
 }
 
 @media (max-width: 1024px) {
-.nav {
-padding: 0 25px;
-gap: 60px;
- }
+  .nav {
+    padding: 0 25px;
+    gap: 40px;
+  }
 }
 
 @media (max-width: 768px) {
-.nav {
-padding: 0 20px;
-gap: 40px;
- }
-
-.navLink,
-.logoutButton {
-width: 45px;
-height: 45px;
- }
-
-.navIcon,
-.logoutIcon {
-width: 28px;
-height: 28px;
- }
-
-/* Ajuste para iconos más grandes en responsive */
-.navLink:nth-child(1) .navIcon,
-.navLink:nth-child(3) .navIcon {
-width: 32px;
-height: 32px;
- }
+  .nav {
+    padding: 0 20px;
+    gap: 20px;
+  }
+  
+  /* En responsive, mantenemos proporciones pero reducimos un poco */
+  .navLink {
+    transform: scale(0.9);
+  }
+  
+  .logoutButton {
+    transform: scale(0.9);
+  }
 }
 
 @media (max-width: 480px) {
-.nav {
-padding: 0 15px;
-gap: 30px;
- }
-
-.navLink,
-.logoutButton {
-width: 40px;
-height: 40px;
- }
-
-.navIcon,
-.logoutIcon {
-width: 24px;
-height: 24px;
- }
-
-/* Ajuste para iconos más grandes en responsive */
-.navLink:nth-child(1) .navIcon,
-.navLink:nth-child(3) .navIcon {
-width: 28px;
-height: 28px;
- }
+  .nav {
+    padding: 0 15px;
+    gap: 30px;
+  }
+  
+  .navLink {
+    transform: scale(0.8);
+  }
+  
+  .logoutButton {
+    transform: scale(0.8);
+  }
 }
