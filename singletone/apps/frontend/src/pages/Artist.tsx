@@ -10,7 +10,6 @@ const Artist = () => {
     const { artistId } = useParams();
     const [artist, setArtist] = useState<any>(null);
     const [albums, setAlbums] = useState<any[]>([]);
-    const [userAlbums, setUserAlbums] = useState<any[]>([]);
     const [songCount, setSongCount] = useState(0);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
@@ -25,68 +24,31 @@ const Artist = () => {
             try {
                 const headers = { Authorization: `Bearer ${token}` };
 
+                // 🎯 Obtener datos del artista
                 const resArtist = await fetch(`${API_URL}/music/artists/${artistId}`, { headers });
                 const artistData = await resArtist.json();
-                setArtist(artistData);
+                setArtist({
+                    name: artistData.name,
+                    picture_url: artistData.picture_url,
+                    genre: artistData.genre || '—',
+                    debut_year: artistData.debut_year?.split('T')[0] ?? '—'
+                });
 
-                const resAlbums = await fetch(`${API_URL}/music/albums`, { headers });
-                const allAlbums = await resAlbums.json();
-                const artistAlbums = allAlbums.filter((a: any) => a.artist_id === artistId);
+                // 🎯 Obtener álbumes del artista
+                const resAlbums = await fetch(`${API_URL}/music/albums/artist/${artistId}`, { headers });
+                const artistAlbums = await resAlbums.json();
                 setAlbums(artistAlbums);
 
-                const [userAlbumsRes, userArtistsRes] = await Promise.all([
-                    fetch(`${API_URL}/library/albums/${userId}`, { headers }),
-                    fetch(`${API_URL}/library/artists/${userId}`, { headers })
-                ]);
+                // 🎯 Obtener canciones
+                const resSongs = await fetch(`${API_URL}/music/songs/artist/${artistId}`, { headers });
+                const songs = await resSongs.json();
+                setSongCount(songs.length);
 
-                const userAlbumsData = await userAlbumsRes.json();
-                const userArtistAlbums = userAlbumsData.filter((a: any) => a.artist_id === artistId);
-
-                const fullAlbums = allAlbums; // ya los trajiste arriba
-
-                const enrichedUserAlbums = await Promise.all(userArtistAlbums.map(async (ua: any) => {
-                    const fullAlbum = fullAlbums.find((a: any) => a._id === ua.album_id);
-                    if (!fullAlbum) return null;
-
-                    let average_score = '—';
-                    if (ua.rank_state === 'valued') {
-                        const resRatings = await fetch(`${API_URL}/library/songs/${userId}/${ua.album_id}`, { headers });
-                        const ratings = await resRatings.json();
-                        if (ratings.length > 0) {
-                            const total = ratings.reduce((acc: number, r: any) => acc + r.score, 0);
-                            average_score = `${Math.round(total / ratings.length)}`;
-                        }
-                    }
-
-                    return {
-                        albumId: ua.album_id,
-                        title: fullAlbum.title,
-                        cover_url: fullAlbum.cover_url,
-                        rank_state: ua.rank_state,
-                        average_score
-                    };
-                }));
-
-                setUserAlbums(enrichedUserAlbums.filter(Boolean));
-
-                const artistDataList = await userArtistsRes.json();
-                const userArtist = artistDataList.find((a: any) => a.artist_id === artistId);
+                // 🎯 Verificar si el usuario ya tiene al artista
+                const resUserArtists = await fetch(`${API_URL}/library/artists/${userId}`, { headers });
+                const userArtistList = await resUserArtists.json();
+                const userArtist = userArtistList.find((a: any) => a.artist_id === artistId);
                 setArtistUser(userArtist);
-
-                if (userArtist) {
-                    const songUserEntries = await Promise.all(
-                        userArtistAlbums.map(async (album: any) => {
-                            const res = await fetch(`${API_URL}/library/songs/${userId}/${album.album_id}`, { headers });
-                            return await res.json();
-                        })
-                    );
-                    setSongCount(songUserEntries.flat().length);
-                } else {
-                    const resSongs = await fetch(`${API_URL}/music/songs/artist/${artistId}`, { headers });
-                    const artistSongs = await resSongs.json();
-                    setSongCount(artistSongs.length);
-                }
-
             } catch (err: any) {
                 setError('Error al cargar el artista');
                 console.error(err);
@@ -131,12 +93,12 @@ const Artist = () => {
 
     const isAdded = !!artistUser;
 
-    const renderedAlbums = (isAdded ? userAlbums : albums).map((album: any, index: number) => ({
-        albumId: album.albumId || album._id || album.album_id,
+    const renderedAlbums = albums.map((album: any, index: number) => ({
+        albumId: album._id || index,
         title: album.title,
         cover_url: album.cover_url,
-        rank_state: album.rank_state,
-        average_score: album.average_score ?? '—'
+        average_score: '—',
+        rank_state: null
     }));
 
     return (
@@ -145,16 +107,16 @@ const Artist = () => {
             <img className="circle" src={artist.picture_url} alt={artist.name} width={150} />
             <h2>{artist.name}</h2>
             <p><strong>Género:</strong> {artist.genre}</p>
-            <p><strong>Año Fundación:</strong> {artist.founding_year}</p>
-            <p><strong>N° Álbumes:</strong> {isAdded ? userAlbums.length : albums.length}</p>
+            <p><strong>Año Debut:</strong> {new Date(artist.debut_year).getFullYear()}</p>
+            <p><strong>N° Álbumes:</strong> {albums.length}</p>
             <p><strong>N° Canciones:</strong> {songCount}</p>
             {isAdded && <p><strong>Estado:</strong> {artistUser?.rank_state}</p>}
 
             <h3>Álbumes</h3>
             <div className="artist-albums-scroll">
-                {renderedAlbums.map((album: any, index: number) => (
+                {renderedAlbums.map((album: any) => (
                     <AlbumCard
-                        key={album.albumId || index}
+                        key={album.albumId}
                         albumId={album.albumId}
                         title={album.title}
                         cover_url={album.cover_url}

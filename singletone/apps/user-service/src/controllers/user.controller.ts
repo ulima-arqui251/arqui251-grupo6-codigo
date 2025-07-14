@@ -106,7 +106,7 @@ export async function registerUser(req: Request, res: Response) {
             lastName,
             nickname,
             email,
-            'src/assets/default.png',
+            'https://m.media-amazon.com/images/I/61Ym0lrtUwL.__AC_SX300_SY300_QL70_ML2_.jpg',
             hashedPassword
         ]);
 
@@ -154,5 +154,39 @@ export async function getUserCredentials(req: Request, res: Response) {
         res.json(result.rows[0]);
     } catch (err) {
         res.status(500).json({ error: 'Error al obtener credenciales', details: err });
+    }
+}
+
+// user.controller.ts (agrega al final)
+export async function updateUserProfile(req: Request, res: Response) {
+    const { id } = req.params;
+    const { name, lastName, picture, password } = req.body;
+
+    try {
+        const profileRes = await pg.query(`SELECT profile_id FROM UserProfile WHERE user_id = $1`, [id]);
+        if (profileRes.rows.length === 0) {
+            return res.status(404).json({ error: 'Perfil no encontrado' });
+        }
+
+        const profileId = profileRes.rows[0].profile_id;
+
+        if (name) {
+            await pg.query(`UPDATE BasicData SET name = $1 WHERE profile_id = $2`, [name, profileId]);
+        }
+        if (lastName) {
+            await pg.query(`UPDATE BasicData SET last_name = $1 WHERE profile_id = $2`, [lastName, profileId]);
+        }
+        if (picture) {
+            await pg.query(`UPDATE BasicData SET picture = $1 WHERE profile_id = $2`, [picture, profileId]);
+        }
+        if (password) {
+            const hashedPassword = bcrypt.hashSync(password, 10);
+            await pg.query(`UPDATE BasicData SET password = $1 WHERE profile_id = $2`, [hashedPassword, profileId]);
+        }
+
+        res.json({ message: 'Perfil actualizado correctamente' });
+    } catch (err) {
+        console.error('❌ Error al actualizar perfil:', err);
+        res.status(500).json({ error: 'Error interno al actualizar perfil' });
     }
 }

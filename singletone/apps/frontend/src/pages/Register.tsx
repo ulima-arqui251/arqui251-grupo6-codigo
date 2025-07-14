@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Modal from '../components/Modal';
 import './Register.css';
 
 const Register = () => {
@@ -62,7 +63,7 @@ const Register = () => {
             }
 
             console.log('✅ Usuario creado:', data);
-            navigate('/login'); // ✅ Redirección al login
+            navigate('/login');
 
         } catch (err) {
             console.error('❌ Error en el fetch', err);
@@ -77,18 +78,16 @@ const Register = () => {
 
     return (
         <>
-            {showModal && (
-                <div className="modal-overlay" onClick={handleCloseModal}>
-                    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-                        <p>{error}</p>
-                        <button onClick={handleCloseModal}>Cerrar</button>
-                    </div>
-                </div>
-            )}
+            <Modal 
+                show={showModal} 
+                message={error} 
+                onClose={handleCloseModal} 
+            />
 
             <div className={`register-container ${showModal ? 'blurred' : ''}`}>
                 <div className="register-left">
                     <h2 className="register-title">Registro de usuario</h2>
+                    
                     <form onSubmit={handleSubmit} className="register-form">
                         <div className="register-row">
                             <div className="register-group">
@@ -136,26 +135,30 @@ const Register = () => {
                             </div>
                         </div>
 
-                        <div className="register-group">
-                            <label>Contraseña</label>
-                            <input 
-                                name="password" 
-                                type="password" 
-                                placeholder="{ escribir aquí }" 
-                                value={form.password} 
-                                onChange={handleChange} 
-                            />
+                        <div className="register-single-row">
+                            <div className="register-group">
+                                <label>Contraseña</label>
+                                <input 
+                                    name="password" 
+                                    type="password" 
+                                    placeholder="{ escribir aquí }" 
+                                    value={form.password} 
+                                    onChange={handleChange} 
+                                />
+                            </div>
                         </div>
 
-                        <div className="register-group">
-                            <label>Repetir contraseña</label>
-                            <input 
-                                name="repeatPassword" 
-                                type="password" 
-                                placeholder="{ escribir aquí }" 
-                                value={form.repeatPassword} 
-                                onChange={handleChange} 
-                            />
+                        <div className="register-single-row">
+                            <div className="register-group">
+                                <label>Repetir contraseña</label>
+                                <input 
+                                    name="repeatPassword" 
+                                    type="password" 
+                                    placeholder="{ escribir aquí }" 
+                                    value={form.repeatPassword} 
+                                    onChange={handleChange} 
+                                />
+                            </div>
                         </div>
 
                         <button type="submit" className="register-button">
@@ -170,9 +173,7 @@ const Register = () => {
 
                 <div className="register-right">
                     <div className="register-logo">
-                        <div className="register-logo">
-                        <img src="/src/assets/singletone-logo-white.svg" alt="Logo" width="200" height="200" />
-                    </div>
+                        <img src="/src/assets/singletone-logo-white.svg" alt="Logo" className="logo-image" />
                     </div>
                 </div>
             </div>

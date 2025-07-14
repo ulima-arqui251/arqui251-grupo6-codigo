@@ -15,6 +15,7 @@ import Album from '../pages/Album';
 import Search from '../pages/Search';
 import Recommendation from '../pages/Recommendation';
 import PrivateRoute from '../components/PrivateRoute';
+import MyArtist from '../pages/MyArtist';
 
 function App() {
   return (
@@ -100,6 +101,14 @@ function App() {
           element={
             <PrivateRoute>
               <Recommendation />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/my-artist/:artistId"
+          element={
+            <PrivateRoute>
+              <MyArtist />
             </PrivateRoute>
           }
         />
