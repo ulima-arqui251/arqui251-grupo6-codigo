@@ -52,8 +52,47 @@ const Profile = () => {
     }
   }, [token]);
 
+  // Función para ordenar los albums
+  const sortAlbums = (albums: any[]) => {
+    return albums.sort((a, b) => {
+      const scoreA = a.average_score;
+      const scoreB = b.average_score;
+      
+      // Si ambos tienen puntuación numérica, ordenar de mayor a menor
+      if (typeof scoreA === 'number' && typeof scoreB === 'number') {
+        return scoreB - scoreA;
+      }
+      
+      // Si A tiene puntuación y B no, A va primero
+      if (typeof scoreA === 'number' && (scoreB === '—' || scoreB === null || scoreB === undefined)) {
+        return -1;
+      }
+      
+      // Si B tiene puntuación y A no, B va primero
+      if (typeof scoreB === 'number' && (scoreA === '—' || scoreA === null || scoreA === undefined)) {
+        return 1;
+      }
+      
+      // Si ninguno tiene puntuación, mantener orden original
+      return 0;
+    });
+  };
+
   const itemsPerPage = 12;
-  const currentItems = activeTab === 'albums' ? summary?.albums || [] : summary?.artists || [];
+  
+  // Obtener y ordenar los items según el tab activo
+  const getRawItems = () => {
+    if (activeTab === 'albums') {
+      return summary?.albums || [];
+    } else {
+      return summary?.artists || [];
+    }
+  };
+
+  const currentItems = activeTab === 'albums' 
+    ? sortAlbums([...getRawItems()]) // Crear copia para no mutar el original
+    : getRawItems();
+
   const totalPages = Math.ceil(currentItems.length / itemsPerPage);
   const startIndex = currentPage * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
