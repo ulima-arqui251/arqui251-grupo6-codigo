@@ -10,7 +10,7 @@
   font-style: normal;
   font-weight: 800;
   line-height: normal;
-  margin-bottom: 80px;
+  margin-bottom: 150px;
   margin-top: 100px;
 }
 
@@ -69,13 +69,13 @@
 }
 
 .profile-albums-tab.active {
-  background: var(--Foundation-Grey-Dark, #535353);
+  background: var(--Foundation-Grey-Dark, #6E6E6E);
   color: var(--Foundation-Grey-Light, #F1F1F1);
 }
 
 .profile-albums-tab:hover:not(.active) {
-  background: var(--Foundation-Grey-Normal, #6E6E6E);
-  color: var(--Foundation-Grey-Light, #F1F1F1);
+  background: var(--Foundation-Grey-Normal, #a8a7a7);
+  color: var(--Foundation-Grey-Light, #f5f4f4);
 }
 
 .profile-albums-content {
