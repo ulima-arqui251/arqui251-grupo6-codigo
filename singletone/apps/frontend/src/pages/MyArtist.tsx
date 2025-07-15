@@ -105,28 +105,47 @@ const MyArtist = () => {
     }));
 
     return (
-        <div className="artist-detail">
-            <h1>MI Artista</h1>
-            <img className="circle" src={artist.picture_url} alt={artist.name} width={150} />
-            <h2>{artist.name}</h2>
-            <p><strong>Género:</strong> {artist.genre}</p>
-            <p><strong>Año Debut:</strong> {new Date(artist.debut_year).getFullYear()}</p>
-            <p><strong>Nº Álbumes:</strong> {userAlbums.length}</p>
-            <p><strong>Nº Canciones:</strong> {songCount}</p>
-            <p><strong>Estado:</strong> {artistUser?.rank_state}</p>
+        <div className="artist-page">
+            <div className="artist-container">
+                <h1 className="artist-title">Artista</h1>
+                <div className="artist-picture-container">
+                    <div className="artist-picture">
+                        <img src={artist.picture_url} alt={artist.name} />
+                    </div>
+                </div>
+                <h2 className="artist-name">{artist.name}</h2>
+                <p className="artist-genre">Género principal: {artist.genre}</p>
+                <div className="artist-stats">
+                    <div className="stat-item">
+                        <div className="stat-label">N° Albums</div>
+                        <div className="stat-number light">{userAlbums.length}</div>
+                    </div>
+                    <div className="stat-item">
+                        <div className="stat-label">Año fundación</div>
+                        <div className="stat-number dark">{new Date(artist.debut_year).getFullYear()}</div>
+                    </div>
+                    <div className="stat-item">
+                        <div className="stat-label">N° Canciones</div>
+                        <div className="stat-number light">{songCount}</div>
+                    </div>
+                </div>
+            </div>
 
-            <h3>Mis Álbumes</h3>
-            <div className="artist-albums-scroll">
-                {renderedAlbums.map((album: any) => (
-                    <AlbumCard
-                        key={album.albumId}
-                        albumId={album.albumId}
-                        title={album.title}
-                        cover_url={album.cover_url}
-                        average_score={album.average_score}
-                        rank_state={album.rank_state}
-                    />
-                ))}
+            {/* Sección temporal para álbumes - se reemplazará después */}
+            <div className="temp-albums-section">
+                <h3>Mis Álbumes</h3>
+                <div className="artist-albums-scroll">
+                    {renderedAlbums.map((album: any) => (
+                        <AlbumCard
+                            key={album.albumId}
+                            albumId={album.albumId}
+                            title={album.title}
+                            cover_url={album.cover_url}
+                            average_score={album.average_score}
+                            rank_state={album.rank_state}
+                        />
+                    ))}
+                </div>
             </div>
         </div>
     );

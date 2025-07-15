@@ -1,50 +1,227 @@
-/* src/pages/Artist.css */
-.artist-detail {
-    max-width: 600px;
+:root {
+    --Foundation-Grey-Dark: #535353;
+    --Foundation-Grey-Normal: #6E6E6E;
+    --foundation-grey-normal-active: #585858;
+    --foundation-grey-light-active: #D2D2D2;
+    --Foundation-Grey-Light: #F1F1F1;
+}
+
+.artist-page {
+    width: 100%;
+    min-height: 100vh;
+}
+
+.artist-container {
+    max-width: 800px;
     margin: 0 auto;
     padding: 2rem;
+    font-family: 'Roboto', sans-serif;
+    color: #333;
+}
+
+.artist-title {
+    margin-top: 90px;
+    color: var(--Foundation-Grey-Dark, #535353);
+    font-family: Roboto;
+    font-size: 50px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
     text-align: center;
-    background-color: #fff;
-    border-radius: 12px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
 }
 
-.artist-detail .circle {
-    border-radius: 50%;
-    margin: 1rem 0;
+.artist-picture-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
 }
 
-.artist-detail h1 {
-    font-size: 2rem;
+.artist-picture {
+    position: relative;
+    display: inline-block;
 }
 
-.artist-detail h2 {
-    margin-bottom: 0.5rem;
+.artist-picture img {
+    width: 247px;
+    height: 247px;
+    border-radius: 100%;
+    object-fit: cover;
+    border: 15px solid var(--Foundation-Grey-Normal, #6E6E6E);
+    opacity: 0.7;
 }
 
-.artist-detail p {
-    margin: 0.4rem 0;
+.artist-name {
+    color: var(--Foundation-Grey-Dark, #535353);
+    font-family: Roboto;
+    font-size: 25px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    text-align: center;
+    margin-bottom: 1rem;
+    margin-top: 25px;
+}
+
+.artist-genre {
+    color: var(--Foundation-Grey-Dark, #535353);
+    font-family: Roboto;
+    font-size: 19px;
+    font-style: normal;
+    font-weight: 200;
+    line-height: normal;
+    text-align: center;
+    margin-bottom: 2rem;
+    margin-top: 25px;
+}
+
+.artist-stats {
+    display: flex;
+    justify-content: center;
+    gap: 2.3rem;
+    margin: 2rem 0;
+    margin-top: 45px;
+}
+
+.stat-item {
+    display: flex;
+    width: 131px;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.stat-label {
+    color: var(--foundation-grey-normal-active, #585858);
+    text-align: center;
+    font-family: Roboto;
+    font-size: 19px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.stat-number {
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-family: Roboto;
+    font-size: 23px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    text-align: center;
+    min-width: 110px;
+}
+
+.stat-number.light {
+    background: var(--foundation-grey-light-active, #D2D2D2);
+    color: var(--Foundation-Grey-Dark, #535353);
+}
+
+.stat-number.dark {
+    background: var(--Foundation-Grey-Dark, #535353);
+    color: var(--Foundation-Grey-Light, #F1F1F1);
+}
+
+/* Estilos temporales para la sección de álbumes - se reemplazará después */
+.temp-albums-section {
+    width: 100%;
+    margin-top: 3rem;
+    padding: 2rem;
+    background: #f9f9f9;
+    border-radius: 10px;
+}
+
+.temp-albums-section h3 {
+    color: var(--Foundation-Grey-Dark, #535353);
+    font-family: Roboto;
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    text-align: center;
 }
 
 .artist-albums-scroll {
     display: flex;
-    overflow-x: auto;
+    flex-wrap: wrap;
     gap: 1rem;
-    padding: 1rem 0;
+    justify-content: center;
+    margin-bottom: 2rem;
 }
 
-.artist-detail button {
-    margin-top: 1rem;
-    padding: 0.7rem 1.2rem;
-    background-color: #2196f3;
-    color: white;
+.temp-albums-section button {
+    display: block;
+    margin: 0 auto;
+    padding: 12px 24px;
+    background: var(--Foundation-Grey-Normal, #6E6E6E);
+    color: var(--Foundation-Grey-Light, #F1F1F1);
     border: none;
-    border-radius: 6px;
-    font-weight: bold;
+    border-radius: 8px;
+    font-family: Roboto;
+    font-size: 16px;
+    font-weight: 500;
     cursor: pointer;
     transition: background 0.3s ease;
 }
 
-.artist-detail button:hover {
-    background-color: #1976d2;
+.temp-albums-section button:hover {
+    background: var(--Foundation-Grey-Dark, #535353);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .artist-title {
+        font-size: 35px;
+        margin-top: 80px;
+    }
+    
+    .artist-stats {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .stat-item {
+        width: 100%;
+    }
+    
+    .artist-picture img {
+        width: 200px;
+        height: 200px;
+        border-width: 12px;
+        opacity: 0.7;
+    }
+    
+    .artist-name {
+        font-size: 22px;
+    }
+    
+    .artist-genre {
+        font-size: 17px;
+    }
+}
+
+@media (max-width: 480px) {
+    .artist-container {
+        padding: 1rem;
+    }
+    
+    .artist-picture img {
+        width: 150px;
+        height: 150px;
+        border-width: 10px;
+        opacity: 0.7;
+    }
+    
+    .artist-name {
+        font-size: 20px;
+    }
+    
+    .artist-genre {
+        font-size: 16px;
+    }
+    
+    .stat-number {
+        font-size: 20px;
+        min-width: 100px;
+    }
 }
