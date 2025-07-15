@@ -61,6 +61,13 @@ const Artist = () => {
         fetchData();
     }, [artistId]);
 
+    const getStatusText = () => {
+        if (!artistUser) return 'No agregado';
+        if (artistUser.rank_state === 'valued') return 'Valorado';
+        if (artistUser.rank_state === 'to_value') return 'Por valorar';
+        return 'No agregado';
+    };
+
     const handleAddArtist = async () => {
         try {
             const headers = {
@@ -119,14 +126,14 @@ const Artist = () => {
     return (
         <div className="artist-page">
             <div className="artist-container">
-                <h1 className="artist-title">Artista</h1>
+                <h1 className="artist-title">{artist.name}</h1>
                 <div className="artist-picture-container">
                     <div className="artist-picture">
                         <img src={artist.picture_url} alt={artist.name} />
                     </div>
                 </div>
-                <h2 className="artist-name">{artist.name}</h2>
-                <p className="artist-genre">Género principal: {artist.genre}</p>
+                <h2 className="artist-name">Género principal: {artist.genre}</h2>
+                <p className="artist-genre">Estado: {getStatusText()}</p>
                 <div className="artist-stats">
                     <div className="stat-item">
                         <div className="stat-label">N° Albums</div>
@@ -173,14 +180,6 @@ const Artist = () => {
                         )}
                     </div>
                     
-                    {!isAdded && (
-                        <div className="add-artist-section">
-                            <button onClick={handleAddArtist} className="add-artist-btn">
-                                ➕ Agregar artista
-                            </button>
-                        </div>
-                    )}
-                    
                     {renderedAlbums.length > 0 && totalPages > 1 && (
                         <div className="albums-footer">
                             <button className="carousel-btn prev" onClick={handlePrevPage}>
@@ -193,6 +192,14 @@ const Artist = () => {
                     )}
                 </div>
             </div>
+
+            {!isAdded && (
+                <div className="button-container">
+                    <button onClick={handleAddArtist} className="artist-button">
+                        Agregar artista
+                    </button>
+                </div>
+            )}
         </div>
     );
 };

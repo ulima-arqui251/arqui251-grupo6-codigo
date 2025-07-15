@@ -94,6 +94,13 @@ const MyArtist = () => {
         fetchData();
     }, [artistId]);
 
+    const getStatusText = () => {
+        if (!artistUser) return 'No agregado';
+        if (artistUser.rank_state === 'valued') return 'Valorado';
+        if (artistUser.rank_state === 'to_value') return 'Por valorar';
+        return 'No agregado';
+    };
+
     const itemsPerPage = 6;
     const totalPages = Math.ceil(userAlbums.length / itemsPerPage);
     const startIndex = currentPage * itemsPerPage;
@@ -114,14 +121,14 @@ const MyArtist = () => {
     return (
         <div className="artist-page">
             <div className="artist-container">
-                <h1 className="artist-title">Artista</h1>
+                <h1 className="artist-title">{artist.name}</h1>
                 <div className="artist-picture-container">
                     <div className="artist-picture">
                         <img src={artist.picture_url} alt={artist.name} />
                     </div>
                 </div>
-                <h2 className="artist-name">{artist.name}</h2>
-                <p className="artist-genre">Género principal: {artist.genre}</p>
+                <h2 className="artist-name">Género principal: {artist.genre}</h2>
+                <p className="artist-genre">Estado: {getStatusText()}</p>
                 <div className="artist-stats">
                     <div className="stat-item">
                         <div className="stat-label">N° Albums</div>

@@ -4,6 +4,7 @@
     --foundation-grey-normal-active: #585858;
     --foundation-grey-light-active: #D2D2D2;
     --Foundation-Grey-Light: #F1F1F1;
+    --Foundation-Red-Dark: #BF4141;
 }
 
 .artist-page {
@@ -208,30 +209,43 @@
     padding: 2rem;
 }
 
-/* Sección para agregar artista */
-.add-artist-section {
-    padding: 20px 30px;
-    background: var(--Foundation-Grey-Light, #F1F1F1);
-    border-top: 1px solid var(--foundation-grey-light-active, #D2D2D2);
+/* Botón fuera del contenedor */
+.button-container {
     display: flex;
     justify-content: center;
+    margin-top: 50px;
+}
+
+.artist-button {
+    padding: 15px;
+    border: none;
+    border-radius: 10px;
+    background: var(--Foundation-Red-Dark, #BF4141);
+    color: #FFF;
+    font-family: Roboto;
+    font-size: 21px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.artist-button:hover {
+    background: #A63636;
+}
+
+.artist-button:active {
+    background: #9B2F2F;
+}
+
+/* Remuevo la sección anterior que estaba dentro del contenedor */
+.add-artist-section {
+    display: none;
 }
 
 .add-artist-btn {
-    padding: 12px 24px;
-    background: var(--Foundation-Grey-Normal, #6E6E6E);
-    color: var(--Foundation-Grey-Light, #F1F1F1);
-    border: none;
-    border-radius: 8px;
-    font-family: Roboto;
-    font-size: 16px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background 0.3s ease;
-}
-
-.add-artist-btn:hover {
-    background: var(--Foundation-Grey-Dark, #535353);
+    display: none;
 }
 
 .albums-footer {
