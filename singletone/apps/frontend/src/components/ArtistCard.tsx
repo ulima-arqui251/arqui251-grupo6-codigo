@@ -12,23 +12,36 @@ interface ArtistCardProps {
 const ArtistCard = ({ artistId, name, picture_url, rank_state }: ArtistCardProps) => {
     const navigate = useNavigate();
     const location = useLocation();
-
     const isFromProfile = location.pathname.includes('/profile');
 
     const handleClick = () => {
         if (isFromProfile) {
-            navigate(`/my-artist/${artistId}`);
+        navigate(`/my-artist/${artistId}`);
         } else {
-            navigate(`/artist/${artistId}`, {
-                state: { rank_state: rank_state ?? '' }
-            });
+        navigate(`/artist/${artistId}`, {
+            state: { rank_state: rank_state ?? '' }
+        });
         }
     };
 
     return (
+        <div className="artist-card-wrapper">
         <div className="artist-card" onClick={handleClick}>
-            <img src={picture_url} alt={name} />
-            <p>{name}</p>
+            <div className="artist-card-top">
+            <div className="artist-card-circle"></div>
+            <div className="artist-card-mic-icon">
+                <img
+                src="src/assets/microph.png"
+                alt="Microphone"
+                className="mic-icon-image"
+                />
+            </div>
+            <img src={picture_url} alt={name} className="artist-card-image" />
+            </div>
+            <div className="artist-card-bottom">
+            <p className="artist-card-title">{name}</p>
+            </div>
+        </div>
         </div>
     );
 };

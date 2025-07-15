@@ -64,7 +64,7 @@
     align-items: center;
     justify-content: center;
     border: 6px solid var(--Foundation-Grey-Light, #F1F1F1);
-    z-index: -1;
+    z-index: 10;
 }
 
 .edit-button-circle:hover {
@@ -238,7 +238,6 @@
 
 .library-content {
     padding: 30px;
-    padding-top: 50px; /* Espacio adicional arriba para los tabs */
     min-height: 400px;
     display: flex;
     align-items: center;
