@@ -13,6 +13,7 @@ const MyArtist = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     const [artistUser, setArtistUser] = useState<any>(null);
+    const [currentPage, setCurrentPage] = useState(0);
 
     const token = localStorage.getItem('token');
     const decoded = token ? JSON.parse(atob(token.split('.')[1])) : null;
@@ -93,16 +94,22 @@ const MyArtist = () => {
         fetchData();
     }, [artistId]);
 
+    const itemsPerPage = 6;
+    const totalPages = Math.ceil(userAlbums.length / itemsPerPage);
+    const startIndex = currentPage * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const currentDisplayAlbums = userAlbums.slice(startIndex, endIndex);
+
+    const handlePrevPage = () => {
+        setCurrentPage(prev => (prev > 0 ? prev - 1 : totalPages - 1));
+    };
+
+    const handleNextPage = () => {
+        setCurrentPage(prev => (prev < totalPages - 1 ? prev + 1 : 0));
+    };
+
     if (loading) return <p>⏳ Cargando artista...</p>;
     if (error) return <p>❌ {error}</p>;
-
-    const renderedAlbums = userAlbums.map((album: any, index: number) => ({
-        albumId: album.albumId || index,
-        title: album.title,
-        cover_url: album.cover_url,
-        average_score: album.average_score,
-        rank_state: album.rank_state
-    }));
 
     return (
         <div className="artist-page">
@@ -131,20 +138,46 @@ const MyArtist = () => {
                 </div>
             </div>
 
-            {/* Sección temporal para álbumes - se reemplazará después */}
-            <div className="temp-albums-section">
-                <h3>Mis Álbumes</h3>
-                <div className="artist-albums-scroll">
-                    {renderedAlbums.map((album: any) => (
-                        <AlbumCard
-                            key={album.albumId}
-                            albumId={album.albumId}
-                            title={album.title}
-                            cover_url={album.cover_url}
-                            average_score={album.average_score}
-                            rank_state={album.rank_state}
-                        />
-                    ))}
+            <div className="albums-section">
+                <div className="albums-container">
+                    <div className="tabs-container">
+                        <button className="tab active">
+                            Albums
+                        </button>
+                    </div>
+                    
+                    <div className="albums-content">
+                        {currentDisplayAlbums.length === 0 ? (
+                            <p className="empty-message">
+                                No tienes álbumes de este artista en tu biblioteca
+                            </p>
+                        ) : (
+                            <div className="albums-grid">
+                                {currentDisplayAlbums.map((album: any) => (
+                                    <div key={album.albumId} className="album-item">
+                                        <AlbumCard
+                                            albumId={album.albumId}
+                                            title={album.title}
+                                            cover_url={album.cover_url}
+                                            average_score={album.average_score}
+                                            rank_state={album.rank_state}
+                                        />
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+                    
+                    {currentDisplayAlbums.length > 0 && totalPages > 1 && (
+                        <div className="albums-footer">
+                            <button className="carousel-btn prev" onClick={handlePrevPage}>
+                                <img src="src/assets/back.png" alt="Anterior" />
+                            </button>
+                            <button className="carousel-btn next" onClick={handleNextPage}>
+                                <img src="src/assets/next.png" alt="Siguiente" />
+                            </button>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>
