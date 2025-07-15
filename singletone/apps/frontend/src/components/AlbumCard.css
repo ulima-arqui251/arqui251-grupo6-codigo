@@ -33,7 +33,7 @@
   height: 70px;
   background: #6E6E6E;
   border-radius: 50%;
-  z-index: -1; /* Cambiado de z-index: 2 a z-index: -1 para que esté detrás */
+  z-index: -1;
 }
 
 .album-card-image {
@@ -47,42 +47,48 @@
 .album-card-bottom {
   background: #6E6E6E;
   border-radius: 0px 0px 10px 10px;
-  padding: 12px;
+  padding: 12px 12px 0px 12px; /* Eliminé el padding bottom */
   text-align: center;
   position: relative;
-  width: 100%; /* Agregado para ocupar todo el ancho */
-  box-sizing: border-box; /* Agregado para incluir padding en el ancho total */
+  width: 100%;
+  box-sizing: border-box;
+  height: 73px;
 }
 
 .album-card-title {
   color: #FFF;
   font-family: Roboto, sans-serif;
-  font-size: 18px; /* REGRESADO: vuelve a 18px */
+  font-size: 18px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
-  margin: 0 14px 8px 14px; /* CAMBIADO: márgenes laterales de 14px */
+  margin: 0 14px 8px 14px;
   text-align: center;
-  white-space: nowrap; /* AGREGADO: evita el wrap */
-  overflow: hidden; /* AGREGADO: oculta el texto que no cabe */
-  text-overflow: ellipsis; /* AGREGADO: agrega ... al final si es necesario */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .album-card-score-container {
-  position: relative;
-  display: block; /* CAMBIADO: de inline-block a block */
-  width: 100%; /* Agregado para ocupar todo el ancho disponible */
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  height: 30px; /* Altura del score */
 }
 
 .album-card-score-bg {
   position: absolute;
-  top: 50%;
-  left: 0; /* CAMBIADO: de 50% a 0 */
-  transform: translateY(-50%); /* CAMBIADO: removido translateX */
-  width: 100%; /* CAMBIADO: de 60px a 100% */
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
   height: 30px;
   background: #D2D2D2;
-  border-radius: 4px;
+  border-radius: 10px 10px 0px 0px; /* Solo esquinas superiores redondeadas */
   z-index: 1;
 }
 
@@ -97,5 +103,5 @@
   position: relative;
   z-index: 2;
   padding: 4px 8px;
-  text-align: center; /* Agregado para centrar el texto */
+  text-align: center;
 }
