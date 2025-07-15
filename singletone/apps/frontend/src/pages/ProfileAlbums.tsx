@@ -11,6 +11,7 @@ const ProfileAlbums = () => {
     const [filter, setFilter] = useState('todos');
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
+    const [currentPage, setCurrentPage] = useState(0);
 
     const token = localStorage.getItem('token');
     const decoded = token ? JSON.parse(atob(token.split('.')[1])) : null;
@@ -69,35 +70,93 @@ const ProfileAlbums = () => {
         } else {
             setFilteredAlbums(albums.filter((a: any) => a.rank_state === filter));
         }
+        setCurrentPage(0); // Reset page when filter changes
     }, [filter, albums]);
+
+    const itemsPerPage = 24;
+    const totalPages = Math.ceil(filteredAlbums.length / itemsPerPage);
+    const startIndex = currentPage * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const currentDisplayItems = filteredAlbums.slice(startIndex, endIndex);
+
+    const handlePrevPage = () => {
+        setCurrentPage(prev => (prev > 0 ? prev - 1 : totalPages - 1));
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    const handleNextPage = () => {
+        setCurrentPage(prev => (prev < totalPages - 1 ? prev + 1 : 0));
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    const handleTabChange = (newFilter: string) => {
+        setFilter(newFilter);
+        setCurrentPage(0);
+    };
 
     if (loading) return <p>⏳ Cargando álbumes...</p>;
     if (error) return <p>❌ {error}</p>;
 
     return (
         <div className="profile-albums-page">
-            <h1>Mis Álbumes</h1>
-            <div className="filter-buttons">
-                <button onClick={() => setFilter('todos')} className={filter === 'todos' ? 'active' : ''}>Todos</button>
-                <button onClick={() => setFilter('to_value')} className={filter === 'to_value' ? 'active' : ''}>Por valorar</button>
-                <button onClick={() => setFilter('valued')} className={filter === 'valued' ? 'active' : ''}>Valorados</button>
-            </div>
-
-            <div className="profile-albums-scroll-vertical">
-                {filteredAlbums.length === 0 ? (
-                    <p>No hay álbumes en esta categoría.</p>
-                ) : (
-                    filteredAlbums.map((album, index) => (
-                        <AlbumCard
-                            key={index}
-                            albumId={album.albumId}
-                            title={album.title}
-                            cover_url={album.cover_url}
-                            average_score={album.average_score}
-                            rank_state={album.rank_state}
-                        />
-                    ))
-                )}
+            <h1 className="profile-albums-title">Mis Álbumes</h1>
+            
+            <div className="profile-albums-section">
+                <div className="profile-albums-container">
+                    <div className="profile-albums-tabs-container">
+                        <button
+                            className={`profile-albums-tab ${filter === 'todos' ? 'active' : ''}`}
+                            onClick={() => handleTabChange('todos')}
+                        >
+                            Todos
+                        </button>
+                        <button
+                            className={`profile-albums-tab ${filter === 'to_value' ? 'active' : ''}`}
+                            onClick={() => handleTabChange('to_value')}
+                        >
+                            Por valorar
+                        </button>
+                        <button
+                            className={`profile-albums-tab ${filter === 'valued' ? 'active' : ''}`}
+                            onClick={() => handleTabChange('valued')}
+                        >
+                            Valorados
+                        </button>
+                    </div>
+                    
+                    <div className="profile-albums-content">
+                        {currentDisplayItems.length === 0 ? (
+                            <p className="profile-albums-empty-message">
+                                No hay álbumes en esta categoría.
+                            </p>
+                        ) : (
+                            <div className="profile-albums-grid">
+                                {currentDisplayItems.map((album, index) => (
+                                    <div key={index} className="profile-albums-result-item">
+                                        <AlbumCard
+                                            albumId={album.albumId}
+                                            title={album.title}
+                                            cover_url={album.cover_url}
+                                            average_score={album.average_score}
+                                            rank_state={album.rank_state}
+                                        />
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+                    
+                    {currentDisplayItems.length > 0 && totalPages > 1 && (
+                        <div className="profile-albums-footer">
+                            <button className="profile-albums-carousel-btn prev" onClick={handlePrevPage}>
+                                <img src="src/assets/back.png" alt="Anterior" />
+                            </button>
+                            <button className="profile-albums-carousel-btn next" onClick={handleNextPage}>
+                                <img src="src/assets/next.png" alt="Siguiente" />
+                            </button>
+                        </div>
+                    )}
+                </div>
             </div>
         </div>
     );
