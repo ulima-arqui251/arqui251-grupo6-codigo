@@ -1,0 +1,101 @@
+/* AlbumCard.css */
+.album-card {
+  width: 160px;
+  cursor: pointer;
+  position: relative;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+  margin-top: 25px; /* Espacio para el círculo */
+}
+
+.album-card:hover {
+  transform: translateY(-2px);
+}
+
+.album-card-top {
+  position: relative;
+  background: #D2D2D2;
+  border-radius: 10px 10px 0px 0px;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.album-card-circle {
+  position: absolute;
+  top: -25px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70px;
+  height: 70px;
+  background: #6E6E6E;
+  border-radius: 50%;
+  z-index: -1; /* Cambiado de z-index: 2 a z-index: -1 para que esté detrás */
+}
+
+.album-card-image {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 8px;
+  opacity: 0.7;
+}
+
+.album-card-bottom {
+  background: #6E6E6E;
+  border-radius: 0px 0px 10px 10px;
+  padding: 12px;
+  text-align: center;
+  position: relative;
+  width: 100%; /* Agregado para ocupar todo el ancho */
+  box-sizing: border-box; /* Agregado para incluir padding en el ancho total */
+}
+
+.album-card-title {
+  color: #FFF;
+  font-family: Roboto, sans-serif;
+  font-size: 18px; /* REGRESADO: vuelve a 18px */
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  margin: 0 14px 8px 14px; /* CAMBIADO: márgenes laterales de 14px */
+  text-align: center;
+  white-space: nowrap; /* AGREGADO: evita el wrap */
+  overflow: hidden; /* AGREGADO: oculta el texto que no cabe */
+  text-overflow: ellipsis; /* AGREGADO: agrega ... al final si es necesario */
+}
+
+.album-card-score-container {
+  position: relative;
+  display: block; /* CAMBIADO: de inline-block a block */
+  width: 100%; /* Agregado para ocupar todo el ancho disponible */
+}
+
+.album-card-score-bg {
+  position: absolute;
+  top: 50%;
+  left: 0; /* CAMBIADO: de 50% a 0 */
+  transform: translateY(-50%); /* CAMBIADO: removido translateX */
+  width: 100%; /* CAMBIADO: de 60px a 100% */
+  height: 30px;
+  background: #D2D2D2;
+  border-radius: 4px;
+  z-index: 1;
+}
+
+.album-card-score {
+  color: #6E6E6E;
+  font-family: Roboto, sans-serif;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  margin: 0;
+  position: relative;
+  z-index: 2;
+  padding: 4px 8px;
+  text-align: center; /* Agregado para centrar el texto */
+}
