@@ -992,7 +992,7 @@ const artistsData = [
         {
             "title": "The Division Bell",
             "releaseYear": "1994",
-            "coverUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music114/v4/63/a2/c9/63a2c91a-0d7f-634d-b672-a38493b9e0ed/886445635935.jpg/600x600bf-60.jpg",
+            "coverUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/c6/49/fc/c649fc21-4c65-d55d-71a4-dac0c39e7a56/886445627572.jpg/600x600bf-60.jpg",
             "songs": [
             "Cluster One", "What Do You Want from Me", "Poles Apart", "Marooned", "A Great Day for Freedom", "Wearing the Inside Out", "Take It Back", "Coming Back to Life", "Keep Talking", "Lost for Words", "High Hopes"
             ]
