@@ -206,19 +206,19 @@
 
 /* Tabs con margen vertical de 18px */
 .tab {
-  flex: none;
-  padding: 18px 28px; /* 18px arriba y abajo como solicitaste */
-  border: none;
-  font-family: Roboto;
-  font-size: 19px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  text-align: center;
-  border-radius: 8px 8px 0 0;
-  margin: 0;
+    flex: none;
+    padding: 18px 28px; /* 18px arriba y abajo como solicitaste */
+    border: none;
+    font-family: Roboto;
+    font-size: 19px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+    border-radius: 8px 8px 0 0;
+    margin: 0;
 }
 
 .tab:not(.active) {
@@ -273,48 +273,48 @@
 }
 
 .library-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 14px 30px;
-  background: var(--Foundation-Grey-Normal, #6E6E6E);
-  border-top: 1px solid var(--foundation-grey-normal-active, #585858);
-  height: 58px;
-  box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 30px;
+    background: var(--Foundation-Grey-Normal, #6E6E6E);
+    border-top: 1px solid var(--foundation-grey-normal-active, #585858);
+    height: 58px;
+    box-sizing: border-box;
 }
 
 .carousel-btn {
-  background: transparent;
-  border: none;
-  width: 50px;
-  height: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  border-radius: 50%;
+    background: transparent;
+    border: none;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 50%;
 }
 
 .carousel-btn:hover {
-  background: var(--Foundation-Grey-Dark, #535353);
-  transform: scale(1.1);
+    background: var(--Foundation-Grey-Dark, #535353);
+    transform: scale(1.1);
 }
 
 .carousel-btn:active {
-  transform: scale(0.95);
+    transform: scale(0.95);
 }
 
 .carousel-btn img {
-  width: 24px;
-  height: 24px;
+    width: 24px;
+    height: 24px;
 }
 
 /* Link "Ver todos" alineado a la derecha */
 .see-all-link {
-  text-align: right; /* Cambiado de left a right */
-  margin-top: 60px;
-  padding: 0 107px;
+    text-align: right; /* Cambiado de left a right */
+    margin-top: 60px;
+    padding: 0 107px;
 }
 
 .see-all-link a {
