@@ -17,6 +17,40 @@ const ProfileAlbums = () => {
     const decoded = token ? JSON.parse(atob(token.split('.')[1])) : null;
     const userId = decoded?.userId;
 
+    // Función para ordenar los albums
+    const sortAlbums = (albums: any[]) => {
+        return albums.sort((a, b) => {
+            const scoreA = a.average_score;
+            const scoreB = b.average_score;
+            
+            // Convertir strings numéricos a números para comparación
+            const numScoreA = scoreA === '—' || scoreA === null || scoreA === undefined 
+                ? null 
+                : parseInt(scoreA);
+            const numScoreB = scoreB === '—' || scoreB === null || scoreB === undefined 
+                ? null 
+                : parseInt(scoreB);
+            
+            // Si ambos tienen puntuación numérica, ordenar de mayor a menor
+            if (numScoreA !== null && numScoreB !== null) {
+                return numScoreB - numScoreA;
+            }
+            
+            // Si A tiene puntuación y B no, A va primero
+            if (numScoreA !== null && numScoreB === null) {
+                return -1;
+            }
+            
+            // Si B tiene puntuación y A no, B va primero
+            if (numScoreB !== null && numScoreA === null) {
+                return 1;
+            }
+            
+            // Si ninguno tiene puntuación, mantener orden original
+            return 0;
+        });
+    };
+
     useEffect(() => {
         const fetchAlbums = async () => {
             try {
@@ -51,8 +85,10 @@ const ProfileAlbums = () => {
                 }));
 
                 const filtered = enriched.filter(Boolean);
-                setAlbums(filtered);
-                setFilteredAlbums(filtered);
+                // Ordenar los albums después de cargarlos
+                const sortedAlbums = sortAlbums([...filtered]);
+                setAlbums(sortedAlbums);
+                setFilteredAlbums(sortedAlbums);
             } catch (err: any) {
                 setError('Error al cargar los álbumes');
                 console.error(err);
@@ -65,11 +101,16 @@ const ProfileAlbums = () => {
     }, []);
 
     useEffect(() => {
+        let filtered;
         if (filter === 'todos') {
-            setFilteredAlbums(albums);
+            filtered = albums;
         } else {
-            setFilteredAlbums(albums.filter((a: any) => a.rank_state === filter));
+            filtered = albums.filter((a: any) => a.rank_state === filter);
         }
+        
+        // Ordenar los albums filtrados
+        const sortedFiltered = sortAlbums([...filtered]);
+        setFilteredAlbums(sortedFiltered);
         setCurrentPage(0); // Reset page when filter changes
     }, [filter, albums]);
 
