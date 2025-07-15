@@ -1,41 +1,42 @@
 // src/components/AlbumCard.tsx
 import { useNavigate } from 'react-router-dom';
+import './AlbumCard.css'; // Asegúrate de importar el CSS
 
 interface AlbumCardProps {
-    albumId: string;
-    title: string;
-    cover_url: string;
-    average_score: string; // ← solo string, ya no necesitas | number
-    rank_state?: 'valued' | 'to_value' | string;
+  albumId: string;
+  title: string;
+  cover_url: string;
+  average_score: string;
+  rank_state?: 'valued' | 'to_value' | string;
 }
 
 const AlbumCard = ({ albumId, title, cover_url, average_score, rank_state }: AlbumCardProps) => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+  const showScore = rank_state === 'valued' ? average_score : '—';
 
-    const showScore = rank_state === 'valued' ? average_score : '—';
-
-    return (
-        <div
-            className="album-card"
-            onClick={() => navigate(`/album/${albumId}`)}
-            style={{
-                cursor: 'pointer',
-                border: '1px solid #ccc',
-                borderRadius: '12px',
-                padding: '12px',
-                textAlign: 'center',
-                width: '160px'
-            }}
-        >
-            <img
-                src={cover_url}
-                alt={title}
-                style={{ width: '100%', height: '160px', objectFit: 'cover', borderRadius: '8px' }}
-            />
-            <h3 style={{ fontSize: '16px', margin: '8px 0 4px' }}>{title}</h3>
-            <p style={{ fontWeight: 'bold' }}>Nota: {showScore}</p>
+  return (
+    <div
+      className="album-card"
+      onClick={() => navigate(`/album/${albumId}`)}
+    >
+      <div className="album-card-top">
+        <div className="album-card-circle"></div>
+        <img
+          src={cover_url}
+          alt={title}
+          className="album-card-image"
+        />
+      </div>
+      
+      <div className="album-card-bottom">
+        <h3 className="album-card-title">{title}</h3>
+        <div className="album-card-score-container">
+          <div className="album-card-score-bg"></div>
+          <p className="album-card-score">{showScore}</p>
         </div>
-    );
+      </div>
+    </div>
+  );
 };
 
 export default AlbumCard;

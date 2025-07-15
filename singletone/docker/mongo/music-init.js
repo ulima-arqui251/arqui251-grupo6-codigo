@@ -82,7 +82,7 @@ function createMultipleArtists(artistsData) {
 const artistsData = [
     {
         name: "Twenty One Pilots",
-        pictureUrl: "https://portalpopline.com.br/wp-content/uploads/2025/05/twenty-one-pilots-breach-novo-album.png",
+        pictureUrl: "https://thepostcalvin.com/wp-content/uploads/2025/01/clancy.jpg",
         debutYear: "2009-01-01",
         genre: "Alternative Rock",
         albums: [
@@ -661,6 +661,374 @@ const artistsData = [
                     "On the Run", "Lost in the Ocean"
                 ]
             }
+        ]
+    },
+    {
+    "name": "Billie Eilish",
+    "pictureUrl": "https://i.pinimg.com/736x/d8/cd/4f/d8cd4f9780ce7d493892f3d614db10e6.jpg",
+    "debutYear": "2015-01-01",
+    "genre": "Pop",
+    "albums": [
+        {
+            "title": "dont smile at me",
+            "releaseYear": "2017",
+            "coverUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/02/1d/30/021d3036-5503-3ed3-df00-882f2833a6ae/17UM1IM17026.rgb.jpg/600x600bf-60.jpg",
+            "songs": [
+            "COPYCAT", "idontwannabeyouanymore", "my boy", "watch", "party favor", "bellyache", "ocean eyes", "hostage", "&burn"
+            ]
+        },
+        {
+            "title": "WHEN WE ALL FALL ASLEEP, WHERE DO WE GO?",
+            "releaseYear": "2019",
+            "coverUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/1a/37/d1/1a37d1b1-8508-54f2-f541-bf4e437dda76/19UMGIM05028.rgb.jpg/600x600bf-60.jpg",
+            "songs": [
+            "!!!!!!!!", "bad guy", "xanny", "you should see me in a crown", "all the good girls go to hell", "wish you were gay", "when the party's over", "8", "my strange addiction", "bury a friend", "ilomilo", "listen before i go", "i love you", "goodbye"
+            ]
+        },
+        {
+            "title": "Happier Than Ever",
+            "releaseYear": "2021",
+            "coverUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/2d/f3/c9/2df3c9fd-e0eb-257c-c035-b04f05a66580/21UMGIM36691.rgb.jpg/600x600bf-60.jpg",
+            "songs": [
+            "Getting Older", "I Didn't Change My Number", "Billie Bossa Nova", "my future", "Oxytocin", "GOLDWING", "Lost Cause", "Halley's Comet", "Not My Responsibility", "OverHeated", "Everybody Dies", "Your Power", "NDA", "Therefore I Am", "Happier Than Ever", "Male Fantasy"
+            ]
+        },
+        {
+            "title": "HIT ME HARD AND SOFT",
+            "releaseYear": "2024",
+            "coverUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/92/9f/69/929f69f1-9977-3a44-d674-11f70c852d1b/24UMGIM36186.rgb.jpg/600x600bf-60.jpg",
+            "songs": [
+            "SKINNY", "LUNCH", "CHIHIRO", "BIRDS OF A FEATHER", "WILDFLOWER", "THE GREATEST", "L'AMOUR DE MA VIE", "THE DINER", "BITTERSUITE", "BLUE"
+            ]
+        }
+        ]
+    },
+    {
+        "name": "Linkin Park",
+        "pictureUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/LPLogo-black.svg/2048px-LPLogo-black.svg.png",
+        "debutYear": "1996-01-01",
+        "genre": "Nu Metal",
+        "albums": [
+        {
+            "title": "Hybrid Theory",
+            "releaseYear": "2000",
+            "coverUrl": "https://is1-ssl.mzstatic.com/image/thumb/Features115/v4/f0/31/b2/f031b2b2-bcf0-6102-426f-e0b2c7437415/dj.vrgpwamf.jpg/600x600bf-60.jpg",
+            "songs": [
+            "Papercut", "One Step Closer", "With You", "Points of Authority", "Crawling", "Runaway", "By Myself", "In the End", "A Place for My Head", "Forgotten", "Cure for the Itch", "Pushing Me Away"
+            ]
+        },
+        {
+            "title": "Meteora",
+            "releaseYear": "2003",
+            "coverUrl": "https://is1-ssl.mzstatic.com/image/thumb/Features125/v4/dd/7d/72/dd7d7259-d27f-5b3e-ce64-9e304d2cb40f/dj.rxzrauer.jpg/600x600bf-60.jpg",
+            "songs": [
+            "Foreword", "Don't Stay", "Somewhere I Belong", "Lying from You", "Hit the Floor", "Easier to Run", "Faint", "Figure.09", "Breaking the Habit", "From the Inside", "Nobody's Listening", "Session", "Numb"
+            ]
+        },
+        {
+            "title": "Minutes to Midnight",
+            "releaseYear": "2007",
+            "coverUrl": "https://is1-ssl.mzstatic.com/image/thumb/Features/v4/a4/79/73/a479733b-940e-a627-0b83-235bdd24d715/dj.oyjmpqvq.jpg/600x600bf-60.jpg",
+            "songs": [
+            "Wake", "Given Up", "Leave Out All the Rest", "Bleed It Out", "Shadow of the Day", "What I've Done", "Hands Held High", "No More Sorrow", "Valentine's Day", "In Between", "In Pieces", "The Little Things Give You Away"
+            ]
+        },
+        {
+            "title": "A Thousand Suns",
+            "releaseYear": "2010",
+            "coverUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/3c/07/96/3c07965d-a7f1-3c31-02e6-1abc9861c30d/093624961680.jpg/600x600bf-60.jpg",
+            "songs": [
+            "The Requiem", "The Radiance", "Burning in the Skies", "Empty Spaces", "When They Come for Me", "Robot Boy", "Jornada del Muerto", "Waiting for the End", "Blackout", "Wretches and Kings", "Wisdom, Justice, and Love", "Iridescent", "Fallout", "The Catalyst", "The Messenger"
+            ]
+        },
+        {
+            "title": "Living Things",
+            "releaseYear": "2012",
+            "coverUrl": "https://is1-ssl.mzstatic.com/image/thumb/Features115/v4/ae/96/55/ae965544-a29d-5355-910a-1cc14dab7542/contsched.ltemslzy.jpg/600x600bf-60.jpg",
+            "songs": [
+            "Lost in the Echo", "In My Remains", "Burn It Down", "Lies Greed Misery", "I'll Be Gone", "Castle of Glass", "Victimized", "Roads Untraveled", "Skin to Bone", "Until It Breaks", "Tinfoil", "Powerless"
+            ]
+        },
+        {
+            "title": "The Hunting Party",
+            "releaseYear": "2014",
+            "coverUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/2e/d4/0c/2ed40c04-6385-5dec-21bc-37eda2e09cff/093624936602.jpg/600x600bf-60.jpg",
+            "songs": [
+            "Keys to the Kingdom", "All for Nothing", "Guilty All the Same", "The Summoning", "War", "Wastelands", "Until It's Gone", "Rebellion", "Mark the Graves", "Drawbar", "Final Masquerade", "A Line in the Sand"
+            ]
+        },
+        {
+            "title": "One More Light",
+            "releaseYear": "2017",
+            "coverUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/de/b4/76/deb4760b-1733-d09f-8ab5-3da9381d5080/093624913214.jpg/600x600bf-60.jpg",
+            "songs": [
+            "Nobody Can Save Me", "Good Goodbye", "Talking to Myself", "Battle Symphony", "Invisible", "Heavy", "Sorry for Now", "Halfway Right", "One More Light", "Sharp Edges"
+            ]
+        },
+        {
+            "title": "From Zero",
+            "releaseYear": "2024",
+            "coverUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/69/21/cf/6921cff3-7074-118a-ece2-4012450e6c75/093624839811.jpg/1200x630bb.jpg",
+            "songs": [
+            "From Zero (Intro)", "The Emptiness Machine", "Cut the Bridge", "Heavy Is the Crown", "Over Each Other", "Casualty", "Overflow", "Two Faced", "Stained", "IGYEIH", "Good Things Go"
+            ]
+        }
+        ]
+    },
+    {
+        "name": "Gorillaz",
+        "pictureUrl": "https://media.revistagq.com/photos/5ca5f4d3267a322393724870/4:3/w_1864,h_1398,c_limit/gorillaz_425.jpg",
+        "debutYear": "1998-01-01",
+        "genre": "Alternative Hip Hop",
+        "albums": [
+        {
+            "title": "Gorillaz",
+            "releaseYear": "2001",
+            "coverUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/5b/8d/47/5b8d47da-71ea-93ab-dffc-733f11332659/825646290703.jpg/600x600bf-60.jpg",
+            "songs": [
+            "Re-Hash", "5/4", "Tomorrow Comes Today", "New Genius (Brother)", "Clint Eastwood", "Man Research (Clapper)", "Punk", "Sound Check (Gravity)", "Double Bass", "Rock the House", "19-2000", "Latin Simone (Que Pasa Contigo)", "Starshine", "Slow Country", "M1 A1"
+            ]
+        },
+        {
+            "title": "Demon Days",
+            "releaseYear": "2005",
+            "coverUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/1c/0f/81/1c0f818a-e458-dd84-6f1b-ccbdf5fe14d6/825646291045.jpg/600x600bf-60.jpg",
+            "songs": [
+            "Intro", "Last Living Souls", "Kids with Guns", "O Green World", "Dirty Harry", "Feel Good Inc.", "El Mañana", "Every Planet We Reach Is Dead", "November Has Come", "All Alone", "White Light", "DARE", "Fire Coming Out of the Monkey's Head", "Don't Get Lost in Heaven", "Demon Days"
+            ]
+        },
+        {
+            "title": "Plastic Beach",
+            "releaseYear": "2010",
+            "coverUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music/v4/b8/f9/b9/b8f9b9f8-a609-bde2-0302-349436ffc508/825646291038.jpg/600x600bf-60.jpg",
+            "songs": [
+            "Orchestral Intro", "Welcome to the World of the Plastic Beach", "White Flag", "Rhinestone Eyes", "Stylo", "Superfast Jellyfish", "Empire Ants", "Glitter Freeze", "Some Kind of Nature", "On Melancholy Hill", "Broken", "Sweepstakes", "Plastic Beach", "To Binge", "Cloud of Unknowing", "Pirate Jet"
+            ]
+        },
+        {
+            "title": "Humanz",
+            "releaseYear": "2017",
+            "coverUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/59/cd/b0/59cdb036-be24-a2ae-5c50-12e79acb7aa4/190295824853.jpg/600x600bf-60.jpg",
+            "songs": [
+            "Intro: I Switched My Robot Off", "Ascension", "Strobelite", "Saturnz Barz", "Momentz", "Interlude: The Non-conformist Oath", "Submission", "Charger", "Interlude: Elevator Going Up", "Andromeda", "Busted and Blue", "Interlude: Talk Radio", "Carnival", "Let Me Out", "Interlude: Penthouse", "Sex Murder Party", "She's My Collar", "Interlude: The Elephant", "Hallelujah Money", "We Got the Power"
+            ]
+        },
+        {
+            "title": "The Now Now",
+            "releaseYear": "2018",
+            "coverUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/c8/a2/c0/c8a2c0cc-28e9-c0c6-f425-f6aaf13191f4/190295620660.jpg/1200x630bb.jpg",
+            "songs": [
+            "Humility", "Tranz", "Hollywood", "Kansas", "Sorcererz", "Idaho", "Lake Zurich", "Magic City", "Fire Flies", "One Percent", "Souk Eye"
+            ]
+        },
+        {
+            "title": "Song Machine, Season One: Strange Timez",
+            "releaseYear": "2020",
+            "coverUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/01/d6/6e/01d66e09-0bcc-c560-469b-f6f3af6124b6/190295143152.jpg/600x600bf-60.jpg",
+            "songs": [
+            "Strange Timez", "The Valley of the Pagans", "The Lost Chord", "Pac-Man", "Chalk Tablet Towers", "The Pink Phantom", "Aries", "Friday 13th", "Dead Butterflies", "Désolé", "Momentary Bliss"
+            ]
+        },
+        {
+            "title": "Cracker Island",
+            "releaseYear": "2023",
+            "coverUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/b3/b9/bb/b3b9bbdf-8d38-661e-f70b-2eb5e9765bb7/5054197315893.jpg/600x600bf-60.jpg",
+            "songs": [
+            "Cracker Island", "Oil", "The Tired Influencer", "Tarantula", "Silent Running", "New Gold", "Baby Queen", "Tormenta", "Skinny Ape", "Possession Island"
+            ]
+        }
+        ]
+    },
+    {
+        "name": "The Strokes",
+        "pictureUrl": "https://static01.nyt.com/images/2020/04/16/arts/13strokes-review1/13strokes-review1-videoSixteenByNineJumbo1600.jpg",
+        "debutYear": "1998-01-01",
+        "genre": "Indie Rock",
+        "albums": [
+        {
+            "title": "Is This It",
+            "releaseYear": "2001",
+            "coverUrl": "https://is1-ssl.mzstatic.com/image/thumb/Features115/v4/ea/04/d4/ea04d45d-6f5d-ede6-fb64-71f3e6a6e62f/dj.ojkzzidd.jpg/600x600bf-60.jpg",
+            "songs": [
+            "Is This It", "The Modern Age", "Soma", "Barely Legal", "Someday", "Alone, Together", "Last Nite", "Hard to Explain", "New York City Cops", "Trying Your Luck", "Take It or Leave It"
+            ]
+        },
+        {
+            "title": "Room on Fire",
+            "releaseYear": "2003",
+            "coverUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/f7/e9/2a/f7e92a48-0e20-8286-bbbf-80bd85fbb1af/mzi.gcledsjj.jpg/600x600bf-60.jpg",
+            "songs": [
+            "What Ever Happened?", "Reptilia", "Automatic Stop", "12:51", "You Talk Way Too Much", "Between Love & Hate", "Meet Me in the Bathroom", "Under Control", "The Way It Is", "The End Has No End", "I Can't Win"
+            ]
+        },
+        {
+            "title": "First Impressions of Earth",
+            "releaseYear": "2006",
+            "coverUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/f4/c4/25/f4c42532-a348-27f5-1521-4783fdc52a55/888880789709.jpg/600x600bf-60.jpg",
+            "songs": [
+            "You Only Live Once", "Juicebox", "Heart in a Cage", "Razorblade", "On the Other Side", "Vision of Division", "Ask Me Anything", "Electricityscape", "Killing Lies", "Fear of Sleep", "15 Minutes", "Ize of the World", "Evening Sun", "Red Light"
+            ]
+        },
+        {
+            "title": "Angles",
+            "releaseYear": "2011",
+            "coverUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/8a/90/df/8a90dff0-73c6-c483-ab79-6810308414a2/884977195552.jpg/600x600bf-60.jpg",
+            "songs": [
+            "Machu Picchu", "Under Cover of Darkness", "Two Kinds of Happiness", "You're So Right", "Taken for a Fool", "Games", "Call Me Back", "Gratisfaction", "Metabolism", "Life Is Simple in the Moonlight"
+            ]
+        },
+        {
+            "title": "Comedown Machine",
+            "releaseYear": "2013",
+            "coverUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/9c/ae/7a/9cae7a72-29ed-08aa-1b42-913776bbb6ec/886443855571.jpg/600x600bf-60.jpg",
+            "songs": [
+            "Tap Out", "All the Time", "One Way Trigger", "Welcome to Japan", "80's Comedown Machine", "50/50", "Slow Animals", "Partners in Crime", "Chances", "Happy Ending", "Call It Fate, Call It Karma"
+            ]
+        },
+        {
+            "title": "The New Abnormal",
+            "releaseYear": "2020",
+            "coverUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/62/a6/ff/62a6ff2a-95c9-5302-31f4-2dcca9e40323/886448281085.jpg/600x600bf-60.jpg",
+            "songs": [
+            "The Adults Are Talking", "Selfless", "Brooklyn Bridge to Chorus", "Bad Decisions", "Eternal Summer", "At the Door", "Why Are Sundays So Depressing", "Not the Same Anymore", "Ode to the Mets"
+            ]
+        }
+        ]
+    },
+    {
+        "name": "Pink Floyd",
+        "pictureUrl": "https://s3.amazonaws.com/arc-wordpress-client-uploads/infobae-wp/wp-content/uploads/2017/08/04161627/Pink-Floyd.jpg",
+        "debutYear": "1965-01-01",
+        "genre": "Progressive Rock",
+        "albums": [
+        {
+            "title": "The Piper at the Gates of Dawn",
+            "releaseYear": "1967",
+            "coverUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music69/v4/07/cd/c9/07cdc978-7bc4-08ab-89e5-dab18a42b863/886445635799.jpg/600x600bf-60.jpg",
+            "songs": [
+            "Astronomy Domine", "Lucifer Sam", "Matilda Mother", "Flaming", "Pow R. Toc H.", "Take Up Thy Stethoscope and Walk", "Interstellar Overdrive", "The Gnome", "Chapter 24", "Scarecrow", "Bike"
+            ]
+        },
+        {
+            "title": "A Saucerful of Secrets",
+            "releaseYear": "1968",
+            "coverUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/93/89/68/93896876-df27-4e92-3a31-47113d060d1c/886445635881.jpg/600x600bf-60.jpg",
+            "songs": [
+            "Let There Be More Light", "Remember a Day", "Set the Controls for the Heart of the Sun", "Corporal Clegg", "A Saucerful of Secrets", "See-Saw", "Jugband Blues"
+            ]
+        },
+        {
+            "title": "Ummagumma",
+            "releaseYear": "1969",
+            "coverUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music2/v4/05/93/6d/05936d1f-5476-d791-438f-9b3573fd2bee/886445635812.jpg/600x600bf-60.jpg",
+            "songs": [
+            "Astronomy Domine", "Careful with That Axe, Eugene", "Set the Controls for the Heart of the Sun", "A Saucerful of Secrets", "Sysyphus", "Grantchester Meadows", "Several Species of Small Furry Animals Gathered Together in a Cave and Grooving with a Pict", "The Narrow Way", "The Grand Vizier's Garden Party"
+            ]
+        },
+        {
+            "title": "Atom Heart Mother",
+            "releaseYear": "1970",
+            "coverUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music49/v4/ac/00/35/ac0035b1-2f21-4a15-9746-646354c811c2/886445635836.jpg/600x600bf-60.jpg",
+            "songs": [
+            "Atom Heart Mother", "If", "Summer '68", "Fat Old Sun", "Alan's Psychedelic Breakfast"
+            ]
+        },
+        {
+            "title": "Meddle",
+            "releaseYear": "1971",
+            "coverUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music69/v4/ff/14/d5/ff14d50a-af6d-22d5-185a-6247bc008772/886445635911.jpg/600x600bf-60.jpg",
+            "songs": [
+            "One of These Days", "A Pillow of Winds", "Fearless", "San Tropez", "Seamus", "Echoes"
+            ]
+        },
+        {
+            "title": "The Dark Side of the Moon",
+            "releaseYear": "1973",
+            "coverUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/3c/1b/a9/3c1ba9e1-15b1-03b3-3bfd-09dbd9f1705b/dj.mggvbaou.jpg/600x600bf-60.jpg",
+            "songs": [
+            "Speak to Me", "Breathe", "On the Run", "Time", "The Great Gig in the Sky", "Money", "Us and Them", "Any Colour You Like", "Brain Damage", "Eclipse"
+            ]
+        },
+        {
+            "title": "Wish You Were Here",
+            "releaseYear": "1975",
+            "coverUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/49/ab/fe/49abfef6-0cd9-aa1f-05c3-3eb85d3fe3f5/886445635843.jpg/600x600bf-60.jpg",
+            "songs": [
+            "Shine On You Crazy Diamond (Parts I-V)", "Welcome to the Machine", "Have a Cigar", "Wish You Were Here", "Shine On You Crazy Diamond (Parts VI-IX)"
+            ]
+        },
+        {
+            "title": "Animals",
+            "releaseYear": "1977",
+            "coverUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/6d/ef/ff/6deffff9-b10f-975a-337d-88ae2ac05cd0/886445635942.jpg/600x600bf-60.jpg",
+            "songs": [
+            "Pigs on the Wing (Part One)", "Dogs", "Pigs (Three Different Ones)", "Sheep", "Pigs on the Wing (Part Two)"
+            ]
+        },
+        {
+            "title": "The Wall",
+            "releaseYear": "1979",
+            "coverUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/3c/b4/e3/3cb4e3d0-cd77-8f18-7465-d60e6949b435/886445635850.jpg/600x600bf-60.jpg",
+            "songs": [
+            "In the Flesh?", "The Thin Ice", "Another Brick in the Wall Part 1", "The Happiest Days of Our Lives", "Another Brick in the Wall Part 2", "Mother", "Goodbye Blue Sky", "Empty Spaces", "Young Lust", "One of My Turns", "Don't Leave Me Now", "Another Brick in the Wall Part 3", "Goodbye Cruel World", "Hey You", "Is There Anybody Out There?", "Nobody Home", "Vera", "Bring the Boys Back Home", "Comfortably Numb", "The Show Must Go On", "In the Flesh", "Run Like Hell", "Waiting for the Worms", "Stop", "The Trial", "Outside the Wall"
+            ]
+        },
+        {
+            "title": "The Final Cut",
+            "releaseYear": "1983",
+            "coverUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music114/v4/4d/1a/a5/4d1aa517-d701-c6cd-5965-0652f5eee7bf/886445635904.jpg/600x600bf-60.jpg",
+            "songs": [
+            "The Post War Dream", "Your Possible Pasts", "One of the Few", "The Hero's Return", "The Gunner's Dream", "Paranoid Eyes", "Get Your Filthy Hands Off My Desert", "The Fletcher Memorial Home", "Southampton Dock", "The Final Cut", "Not Now John", "Two Suns in the Sunset"
+            ]
+        },
+        {
+            "title": "A Momentary Lapse of Reason",
+            "releaseYear": "1987",
+            "coverUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music114/v4/63/a2/c9/63a2c91a-0d7f-634d-b672-a38493b9e0ed/886445635935.jpg/600x600bf-60.jpg",
+            "songs": [
+            "Signs of Life", "Learning to Fly", "The Dogs of War", "One Slip", "On the Turning Away", "Yet Another Movie", "Round and Around", "A New Machine (Part 1)", "Terminal Frost", "A New Machine (Part 2)", "Sorrow"
+            ]
+        },
+        {
+            "title": "The Division Bell",
+            "releaseYear": "1994",
+            "coverUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music114/v4/63/a2/c9/63a2c91a-0d7f-634d-b672-a38493b9e0ed/886445635935.jpg/600x600bf-60.jpg",
+            "songs": [
+            "Cluster One", "What Do You Want from Me", "Poles Apart", "Marooned", "A Great Day for Freedom", "Wearing the Inside Out", "Take It Back", "Coming Back to Life", "Keep Talking", "Lost for Words", "High Hopes"
+            ]
+        },
+        {
+            "title": "The Endless River",
+            "releaseYear": "2014",
+            "coverUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music1/v4/63/32/f8/6332f811-527a-0ec3-e3d8-dc1a997b0e3c/dj.jzdkxzku.jpg/600x600bf-60.jpg",
+            "songs": [
+            "Things Left Unsaid", "It's What We Do", "Ebb and Flow", "Sum", "Skins", "Unsung", "Anisina", "The Lost Art of Conversation", "On Noodle Street", "Night Light", "Allons-y (1)", "Autumn '68", "Allons-y (2)", "Talkin' Hawkin'", "Calling", "Eyes to Pearls", "Surfacing", "Louder Than Words"
+            ]
+        }
+        ]
+    },
+    {
+        "name": "Olivia Rodrigo",
+        "pictureUrl": "https://media.vogue.mx/photos/64fe1ecb17c20cdaa7f206d6/2:3/w_2560%2Cc_limit/olivia-rodrigo-cantante-mexicana.jpg",
+        "debutYear": "2020-01-01",
+        "genre": "Pop Rock",
+        "albums": [
+        {
+            "title": "SOUR",
+            "releaseYear": "2021",
+            "coverUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/33/fd/32/33fd32b1-0e43-9b4a-8ed6-19643f23544e/21UMGIM26092.rgb.jpg/600x600bf-60.jpg",
+            "songs": [
+            "brutal", "traitor", "drivers license", "1 step forward, 3 steps back", "deja vu", "good 4 u", "enough for you", "happier", "jealousy, jealousy", "favorite crime", "hope ur ok"
+            ]
+        },
+        {
+            "title": "GUTS",
+            "releaseYear": "2023",
+            "coverUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/9b/d8/9c/9bd89c9e-b44d-ad25-1516-b9b30f64fd2a/23UMGIM71510.rgb.jpg/600x600bf-60.jpg",
+            "songs": [
+            "all-american bitch", "bad idea right?", "vampire", "lacy", "ballad of a homeschooled girl", "making the bed", "logical", "get him back!", "love is embarrassing", "the grudge", "pretty isn't pretty", "teenage dream"
+            ]
+        }
         ]
     }
 ];

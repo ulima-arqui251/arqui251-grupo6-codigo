@@ -5,6 +5,7 @@
     background: #FFF;
     width: 100%;
     position: relative;
+    overflow: hidden;
 }
 
 .register-container.blurred {

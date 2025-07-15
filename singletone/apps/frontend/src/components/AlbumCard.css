@@ -1,0 +1,107 @@
+/* AlbumCard.css */
+.album-card {
+  width: 160px;
+  cursor: pointer;
+  position: relative;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+  margin-top: 25px; /* Espacio para el círculo */
+}
+
+.album-card:hover {
+  transform: translateY(-2px);
+}
+
+.album-card-top {
+  position: relative;
+  background: #D2D2D2;
+  border-radius: 10px 10px 0px 0px;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.album-card-circle {
+  position: absolute;
+  top: -25px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70px;
+  height: 70px;
+  background: #6E6E6E;
+  border-radius: 50%;
+  z-index: -1;
+}
+
+.album-card-image {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 8px;
+  opacity: 0.7;
+}
+
+.album-card-bottom {
+  background: #6E6E6E;
+  border-radius: 0px 0px 10px 10px;
+  padding: 12px 12px 0px 12px; /* Eliminé el padding bottom */
+  text-align: center;
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+  height: 73px;
+}
+
+.album-card-title {
+  color: #FFF;
+  font-family: Roboto, sans-serif;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  margin: 0 14px 8px 14px;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.album-card-score-container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  height: 30px; /* Altura del score */
+}
+
+.album-card-score-bg {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 30px;
+  background: #D2D2D2;
+  border-radius: 10px 10px 0px 0px; /* Solo esquinas superiores redondeadas */
+  z-index: 1;
+}
+
+.album-card-score {
+  color: #6E6E6E;
+  font-family: Roboto, sans-serif;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  margin: 0;
+  position: relative;
+  z-index: 2;
+  padding: 4px 8px;
+  text-align: center;
+}

@@ -14,6 +14,7 @@ const Artist = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     const [artistUser, setArtistUser] = useState<any>(null);
+    const [currentPage, setCurrentPage] = useState(0);
 
     const token = localStorage.getItem('token');
     const decoded = token ? JSON.parse(atob(token.split('.')[1])) : null;
@@ -60,6 +61,13 @@ const Artist = () => {
         fetchData();
     }, [artistId]);
 
+    const getStatusText = () => {
+        if (!artistUser) return 'No agregado';
+        if (artistUser.rank_state === 'valued') return 'Valorado';
+        if (artistUser.rank_state === 'to_value') return 'Por valorar';
+        return 'No agregado';
+    };
+
     const handleAddArtist = async () => {
         try {
             const headers = {
@@ -88,12 +96,26 @@ const Artist = () => {
         }
     };
 
+    const itemsPerPage = 6;
+    const totalPages = Math.ceil(albums.length / itemsPerPage);
+    const startIndex = currentPage * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const currentDisplayAlbums = albums.slice(startIndex, endIndex);
+
+    const handlePrevPage = () => {
+        setCurrentPage(prev => (prev > 0 ? prev - 1 : totalPages - 1));
+    };
+
+    const handleNextPage = () => {
+        setCurrentPage(prev => (prev < totalPages - 1 ? prev + 1 : 0));
+    };
+
     if (loading) return <p>⏳ Cargando artista...</p>;
     if (error) return <p>❌ {error}</p>;
 
     const isAdded = !!artistUser;
 
-    const renderedAlbums = albums.map((album: any, index: number) => ({
+    const renderedAlbums = currentDisplayAlbums.map((album: any, index: number) => ({
         albumId: album._id || index,
         title: album.title,
         cover_url: album.cover_url,
@@ -102,32 +124,81 @@ const Artist = () => {
     }));
 
     return (
-        <div className="artist-detail">
-            <h1>Artista</h1>
-            <img className="circle" src={artist.picture_url} alt={artist.name} width={150} />
-            <h2>{artist.name}</h2>
-            <p><strong>Género:</strong> {artist.genre}</p>
-            <p><strong>Año Debut:</strong> {new Date(artist.debut_year).getFullYear()}</p>
-            <p><strong>N° Álbumes:</strong> {albums.length}</p>
-            <p><strong>N° Canciones:</strong> {songCount}</p>
-            {isAdded && <p><strong>Estado:</strong> {artistUser?.rank_state}</p>}
+        <div className="artist-page">
+            <div className="artist-container">
+                <h1 className="artist-title">{artist.name}</h1>
+                <div className="artist-picture-container">
+                    <div className="artist-picture">
+                        <img src={artist.picture_url} alt={artist.name} />
+                    </div>
+                </div>
+                <h2 className="artist-name">Género principal: {artist.genre}</h2>
+                <p className="artist-genre">Estado: {getStatusText()}</p>
+                <div className="artist-stats">
+                    <div className="stat-item">
+                        <div className="stat-label">N° Albums</div>
+                        <div className="stat-number light">{albums.length}</div>
+                    </div>
+                    <div className="stat-item">
+                        <div className="stat-label">Año fundación</div>
+                        <div className="stat-number dark">{new Date(artist.debut_year).getFullYear()}</div>
+                    </div>
+                    <div className="stat-item">
+                        <div className="stat-label">N° Canciones</div>
+                        <div className="stat-number light">{songCount}</div>
+                    </div>
+                </div>
+            </div>
 
-            <h3>Álbumes</h3>
-            <div className="artist-albums-scroll">
-                {renderedAlbums.map((album: any) => (
-                    <AlbumCard
-                        key={album.albumId}
-                        albumId={album.albumId}
-                        title={album.title}
-                        cover_url={album.cover_url}
-                        average_score={album.average_score}
-                        rank_state={album.rank_state}
-                    />
-                ))}
+            <div className="albums-section">
+                <div className="albums-container">
+                    <div className="tabs-container">
+                        <button className="tab active">
+                            Albums
+                        </button>
+                    </div>
+                    
+                    <div className="albums-content">
+                        {renderedAlbums.length === 0 ? (
+                            <p className="empty-message">
+                                Este artista no tiene álbumes disponibles
+                            </p>
+                        ) : (
+                            <div className="albums-grid">
+                                {renderedAlbums.map((album: any) => (
+                                    <div key={album.albumId} className="album-item">
+                                        <AlbumCard
+                                            albumId={album.albumId}
+                                            title={album.title}
+                                            cover_url={album.cover_url}
+                                            average_score={album.average_score}
+                                            rank_state={album.rank_state}
+                                        />
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+                    
+                    {renderedAlbums.length > 0 && totalPages > 1 && (
+                        <div className="albums-footer">
+                            <button className="carousel-btn prev" onClick={handlePrevPage}>
+                                <img src="src/assets/back.png" alt="Anterior" />
+                            </button>
+                            <button className="carousel-btn next" onClick={handleNextPage}>
+                                <img src="src/assets/next.png" alt="Siguiente" />
+                            </button>
+                        </div>
+                    )}
+                </div>
             </div>
 
             {!isAdded && (
-                <button onClick={handleAddArtist}>➕ Agregar artista</button>
+                <div className="button-container">
+                    <button onClick={handleAddArtist} className="artist-button">
+                        Agregar artista
+                    </button>
+                </div>
             )}
         </div>
     );

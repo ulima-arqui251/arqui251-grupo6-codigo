@@ -12,7 +12,7 @@ const Album = () => {
     const [songs, setSongs] = useState<any[]>([]);
     const [userAlbum, setUserAlbum] = useState<any>(null);
     const [ratings, setRatings] = useState<number[]>([]);
-    const [averageScore, setAverageScore] = useState<number | string>('—'); // 👈 manejamos el score aquí
+    const [averageScore, setAverageScore] = useState<number | string>('—');
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
 
@@ -150,52 +150,96 @@ const Album = () => {
         }
     };
 
+    // Función para obtener el texto del estado
+    const getStatusText = () => {
+        if (!userAlbum) return 'No agregado';
+        if (userAlbum.rank_state === 'valued') return 'Valorado';
+        if (userAlbum.rank_state === 'to_value') return 'Por valorar';
+        return 'No agregado';
+    };
+
+    // Función para obtener el año de escucha
+    const getListenYear = () => {
+        if (userAlbum?.rank_date) {
+            return new Date(userAlbum.rank_date).getFullYear();
+        }
+        return '—';
+    };
+
     if (loading) return <p>⏳ Cargando álbum...</p>;
     if (error) return <p>❌ {error}</p>;
 
     return (
-        <div className="album-detail">
-            <h1>{album.title}</h1>
-            <img src={album.cover_url} alt={album.title} width={200} />
-            <p><strong>Año:</strong> {album.release_year}</p>
-            <p><strong>Nota:</strong> {userAlbum?.rank_state === 'valued' ? averageScore : '—'}</p>
-            {userAlbum?.rank_date && (
-                <p><strong>Año (escucha):</strong> {new Date(userAlbum.rank_date).getFullYear()}</p>
-            )}
-            <p><strong>Estado:</strong> {userAlbum?.rank_state || 'No agregado'}</p>
-
-            <div>
-                <h2>Canciones</h2>
-                <ul>
-                    {songs.map((song, index) => (
-                        <li key={song._id}>
-                            {song.name}
-                            {userAlbum && (
-                                <input
-                                    type="number"
-                                    min={1}
-                                    max={100}
-                                    value={ratings[index]}
-                                    onChange={(e) => {
-                                        const updated = [...ratings];
-                                        updated[index] = parseInt(e.target.value);
-                                        setRatings(updated);
-                                    }}
-                                    style={{ marginLeft: '10px' }}
-                                />
-                            )}
-                        </li>
-                    ))}
-                </ul>
+        <div className="album-page">
+            <div className="album-container">
+                <h1 className="album-title">{album.title}</h1>
+                <div className="album-cover-container">
+                    <div className="album-cover">
+                        <img src={album.cover_url} alt={album.title} />
+                    </div>
+                </div>
+                <p className="album-status">Estado: {getStatusText()}</p>
+                <div className="album-stats">
+                    <div className="stat-item">
+                        <div className="stat-label">Año (salida)</div>
+                        <div className="stat-number light">{album.release_year}</div>
+                    </div>
+                    <div className="stat-item">
+                        <div className="stat-label">Rating</div>
+                        <div className="stat-number dark">
+                            {userAlbum?.rank_state === 'valued' ? averageScore : '—'}
+                        </div>
+                    </div>
+                    <div className="stat-item">
+                        <div className="stat-label">Año (escucha)</div>
+                        <div className="stat-number light">{getListenYear()}</div>
+                    </div>
+                </div>
             </div>
 
-            {!userAlbum ? (
-                <button onClick={handleAdd}>➕ Añadir álbum</button>
-            ) : userAlbum.rank_state === 'to_value' ? (
-                <button onClick={() => handleRate('/library/rate-album')}>⭐ Valorar álbum</button>
-            ) : (
-                <button onClick={() => handleRate('/library/update-album-rating')}>🔁 Actualizar valoración</button>
-            )}
+            <div className="tracklist-section">
+                <h2 className="tracklist-title">Tracklist</h2>
+                <div className="tracklist-container">
+                    {songs.map((song, index) => (
+                        <div key={song._id} className="track-item">
+                            <div className="track-name">
+                                {song.name}
+                            </div>
+                            {userAlbum && (
+                                <div className="track-rating">
+                                    <input
+                                        type="number"
+                                        min={1}
+                                        max={100}
+                                        value={ratings[index]}
+                                        onChange={(e) => {
+                                            const updated = [...ratings];
+                                            updated[index] = parseInt(e.target.value);
+                                            setRatings(updated);
+                                        }}
+                                    />
+                                </div>
+                            )}
+                        </div>
+                    ))}
+                </div>
+                
+                <div className="button-container">
+                    {!userAlbum ? (
+                        <button className="album-button" onClick={handleAdd}>
+                            Añadir álbum
+                        </button>
+                    ) : userAlbum.rank_state === 'to_value' ? (
+                        <button className="album-button" onClick={() => handleRate('/library/rate-album')}>
+                            Valorar álbum
+                        </button>
+                    ) : (
+                        <button className="album-button" onClick={() => handleRate('/library/update-album-rating')}>
+                            Actualizar valoración
+                        </button>
+                    )}
+                </div>
+            </div>
         </div>
     );
 };

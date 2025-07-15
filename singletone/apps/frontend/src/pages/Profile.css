@@ -1,94 +1,427 @@
+:root {
+    --Foundation-Grey-Dark: #535353;
+    --Foundation-Grey-Normal: #6E6E6E;
+    --foundation-grey-normal-active: #585858;
+    --foundation-grey-light-active: #D2D2D2;
+    --Foundation-Grey-Light: #F1F1F1;
+}
+
+.profile-page {
+    width: 100%;
+    min-height: 100vh;
+}
+
 .profile-container {
     max-width: 800px;
     margin: 0 auto;
     padding: 2rem;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Roboto', sans-serif;
     color: #333;
 }
 
+.profile-title {
+    margin-top: 90px;
+    color: var(--Foundation-Grey-Dark, #535353);
+    font-family: Roboto;
+    font-size: 50px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.profile-picture-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.profile-picture {
+    position: relative;
+    display: inline-block;
+}
+
 .profile-picture img {
-    width: 120px;
-    height: 120px;
+    width: 247px;
+    height: 247px;
     border-radius: 100%;
     object-fit: cover;
+    border: 15px solid var(--Foundation-Grey-Normal, #6E6E6E);
+}
+
+.edit-button-circle {
+    position: absolute;
+    top: -4px;
+    right: -1px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: var(--Foundation-Grey-Normal, #6E6E6E);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 6px solid var(--Foundation-Grey-Light, #F1F1F1);
+    z-index: 10;
+}
+
+.edit-button-circle:hover {
+    background-color: var(--Foundation-Grey-Dark, #535353);
+}
+
+.edit-icon {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.edit-icon img {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.profile-nickname {
+    color: var(--Foundation-Grey-Dark, #535353);
+    font-family: Roboto;
+    font-size: 25px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    text-align: center;
     margin-bottom: 1rem;
-    border: 2px solid #ccc;
+    margin-top: 25px;
+}
+
+.subscription-text {
+    color: var(--Foundation-Grey-Dark, #535353);
+    font-family: Roboto;
+    font-size: 19px;
+    font-style: normal;
+    font-weight: 200;
+    line-height: normal;
+    text-align: center;
+    margin-bottom: 2rem;
+    margin-top: 25px;
+}
+
+.premium-link {
+    color: var(--Foundation-Grey-Dark, #535353);
+    font-family: Roboto;
+    font-size: 19px;
+    font-style: normal;
+    font-weight: 200;
+    line-height: normal;
+    text-decoration-line: underline;
+    text-decoration-style: solid;
+    text-decoration-skip-ink: auto;
+    text-decoration-thickness: auto;
+    text-underline-offset: auto;
+    text-underline-position: from-font;
 }
 
 .profile-stats {
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
+    gap: 2.3rem;
     margin: 2rem 0;
-    text-align: center;
+    margin-top: 45px;
 }
 
-.profile-stats h3 {
-    margin-bottom: 0.5rem;
-    font-size: 1.1rem;
-}
-
-.profile-section {
-    margin-top: 2rem;
-}
-
-.profile-albums-scroll,
-.profile-artists-scroll {
+.stat-item {
     display: flex;
-    overflow-x: auto;
-    gap: 1rem;
-    padding-bottom: 1rem;
-    margin-top: 1rem;
+    width: 131px;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
 }
 
-.album-card,
-.artist-card {
-    flex: 0 0 auto;
-    width: 140px;
-    background: #f9f9f9;
-    border-radius: 12px;
-    padding: 1rem;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+.stat-label {
+    color: var(--foundation-grey-normal-active, #585858);
     text-align: center;
+    font-family: Roboto;
+    font-size: 19px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
 }
 
-.album-card img,
-.artist-card img {
+.stat-number {
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-family: Roboto;
+    font-size: 23px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    text-align: center;
+    min-width: 110px;
+}
+
+.stat-number.light {
+    background: var(--foundation-grey-light-active, #D2D2D2);
+    color: var(--Foundation-Grey-Dark, #535353);
+}
+
+.stat-number.dark {
+    background: var(--Foundation-Grey-Dark, #535353);
+    color: var(--Foundation-Grey-Light, #F1F1F1);
+}
+
+/* Library Section - Nueva sección para la biblioteca */
+.library-section {
     width: 100%;
-    height: 140px;
-    object-fit: cover;
-    border-radius: 8px;
-    margin-bottom: 0.5rem;
+    margin-top: 3rem;
+    padding: 0 75px;
+    position: relative;
 }
 
-.album-card p,
-.artist-card p {
-    margin: 0.25rem 0;
-    font-size: 0.9rem;
+.library-container {
+  width: 100%;
+  background: #FFFFFF;
+  border-radius: 0 15px 15px 15px;
+  padding: 0;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: 2px solid #6E6E6E;
+  margin-top: 30px; /* Espacio para que los tabs se anclen arriba */
 }
 
-a {
-    display: inline-block;
-    margin-top: 0.5rem;
-    color: #007bff;
-    text-decoration: none;
-    font-weight: 500;
+/* Tabs anclados al contenedor */
+.tabs-container {
+  position: absolute;
+  top: -57px;
+  left: 75px;
+  display: flex;
+  width: fit-content;
+  gap: 20px;
+  padding: 0;
+  background: transparent;
+  z-index: 10;
 }
 
-a:hover {
-    text-decoration: underline;
-}
-
-.edit-button {
-    margin-top: 10px;
-    padding: 6px 12px;
-    background-color: #0077cc;
-    color: white;
+/* Tabs con margen vertical de 18px */
+.tab {
+    flex: none;
+    padding: 18px 28px; /* 18px arriba y abajo como solicitaste */
     border: none;
-    border-radius: 8px;
+    font-family: Roboto;
+    font-size: 19px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
     cursor: pointer;
-    font-weight: bold;
+    transition: all 0.3s ease;
+    text-align: center;
+    border-radius: 8px 8px 0 0;
+    margin: 0;
 }
 
-.edit-button:hover {
-    background-color: #005fa3;
+.tab:not(.active) {
+    background: var(--foundation-grey-light-active, #D2D2D2);
+    color: var(--Foundation-Grey-Dark, #535353);
+}
+
+.tab.active {
+    background: var(--Foundation-Grey-Dark, #535353);
+    color: var(--Foundation-Grey-Light, #F1F1F1);
+}
+
+.tab:hover:not(.active) {
+    background: var(--Foundation-Grey-Normal, #6E6E6E);
+    color: var(--Foundation-Grey-Light, #F1F1F1);
+}
+
+.library-content {
+    padding: 30px;
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.carousel-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 20px;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.carousel-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 150px;
+}
+
+.empty-message {
+    text-align: center;
+    color: var(--foundation-grey-normal-active, #585858);
+    font-family: Roboto;
+    font-size: 19px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    padding: 2rem;
+}
+
+.library-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 30px;
+    background: var(--Foundation-Grey-Normal, #6E6E6E);
+    border-top: 1px solid var(--foundation-grey-normal-active, #585858);
+    height: 58px;
+    box-sizing: border-box;
+}
+
+.carousel-btn {
+    background: transparent;
+    border: none;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 50%;
+}
+
+.carousel-btn:hover {
+    background: var(--Foundation-Grey-Dark, #535353);
+    transform: scale(1.1);
+}
+
+.carousel-btn:active {
+    transform: scale(0.95);
+}
+
+.carousel-btn img {
+    width: 24px;
+    height: 24px;
+}
+
+/* Link "Ver todos" alineado a la derecha */
+.see-all-link {
+    text-align: right; /* Cambiado de left a right */
+    margin-top: 60px;
+    padding: 0 107px;
+}
+
+.see-all-link a {
+    color: var(--Foundation-Grey-Dark, #535353);
+    font-family: Roboto;
+    font-size: 19px;
+    font-style: normal;
+    font-weight: 200;
+    line-height: normal;
+    text-decoration-line: underline;
+    text-decoration-style: solid;
+    text-decoration-skip-ink: auto;
+    text-decoration-thickness: auto;
+    text-underline-offset: auto;
+    text-underline-position: from-font;
+}
+
+.see-all-link a:hover {
+    color: var(--Foundation-Grey-Normal, #6E6E6E);
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+    .library-section {
+        padding: 0 50px;
+    }
+    
+    .see-all-link {
+        padding: 0 50px;
+    }
+}
+
+@media (max-width: 768px) {
+    .profile-title {
+        font-size: 35px;
+        margin-top: 80px;
+    }
+    
+    .profile-stats {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .stat-item {
+        width: 100%;
+    }
+    
+    .library-section {
+        padding: 0 25px;
+    }
+    
+    .see-all-link {
+        padding: 0 25px;
+    }
+    
+    .carousel-grid {
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(4, 1fr);
+        gap: 15px;
+    }
+    
+    .carousel-btn {
+        width: 40px;
+        height: 40px;
+    }
+
+    .carousel-btn img {
+        width: 20px;
+        height: 20px;
+    }
+    
+    .library-content {
+        padding: 20px;
+        padding-top: 40px;
+        min-height: 300px;
+    }
+}
+
+@media (max-width: 480px) {
+    .library-section {
+        padding: 0 15px;
+    }
+    
+    .see-all-link {
+        padding: 0 15px;
+    }
+    
+    .carousel-grid {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(6, 1fr);
+        gap: 10px;
+    }
+    
+    .profile-nickname {
+        font-size: 20px;
+    }
+    
+    .subscription-text {
+        font-size: 16px;
+    }
+    
+    .library-content {
+        padding: 15px;
+        padding-top: 35px;
+    }
+    
+    .library-footer {
+        padding: 15px 20px;
+    }
 }
